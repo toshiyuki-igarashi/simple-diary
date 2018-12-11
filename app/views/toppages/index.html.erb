@@ -1,3 +1,10 @@
 <h2>素敵な記憶と出会う場所</h2>
-<div class="h4"><%= link_to '新規登録', signup_path %></div>
-
+<% if logged_in? %>
+  <br>
+  <div class="h4">
+    <p>使い方ガイド</p>
+  </div>
+  <%= render 'user_guide' %>
+<% else %>
+  <div class="h4"><%= link_to '新規登録', signup_path %></div>
+<% end %>
