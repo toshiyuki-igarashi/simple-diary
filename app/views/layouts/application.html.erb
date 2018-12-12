@@ -17,6 +17,16 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <!-- Bootstrap JavaScript-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+          $('.datepicker').datetimepicker({
+            format: 'YYYY/MM/DD (ddd)',
+            locale: 'ja',
+            dayViewHeaderFormat: 'YYYY年 MM月'
+          });
+          return;
+        });
+    </script>
   </head>
 
   <body>
