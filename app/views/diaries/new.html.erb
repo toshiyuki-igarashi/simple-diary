@@ -1,10 +1,32 @@
 <div class="row">
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
     <%= form_for(@diary) do |f| %>
-      <div class="form-group col-xs-7 col-sm-offset-1 col-sm-3 col-lg-offset-1 col-ls-2">
-        <span id='date-form' class='input-custom'>
-          <%= f.text_field :date_of_diary, {:class => 'form-control datepicker', :required => true} %>
-        </span>
+      <div class="row">
+        <div class="form-group col-xs-1">
+            <%= button_tag(class: "btn btn-link", name: "month_before") do %>
+              <span class="glyphicon glyphicon-backward"></span><span>&emsp;月</span>
+            <% end %>
+        </div>
+        <div class="form-group col-xs-1">
+            <%= button_tag(class: "btn btn-link", name: "day_before") do %>
+              <span class="glyphicon glyphicon-triangle-left"></span><span>&emsp;日</span>
+            <% end %>
+        </div>
+        <div class="form-group col-xs-7 col-sm-3 col-ls-2">
+          <span id='date-form' class='input-custom'>
+            <%= f.text_field :date_of_diary, {:class => 'form-control datepicker', :required => true} %>
+          </span>
+        </div>
+        <div class="form-group col-xs-1">
+            <%= button_tag(class: "btn btn-link", name: "day_after") do %>
+              <span>日&emsp;</span><span class="glyphicon glyphicon-triangle-right"></span>
+            <% end %>
+        </div>
+        <div class="form-group col-xs-1">
+            <%= button_tag(class: "btn btn-link", name: "month_after") do %>
+              <span>月&emsp;</span><span class="glyphicon glyphicon-forward"></span>
+            <% end %>
+        </div>
       </div>
       <div class="form-group">
         <%= f.text_field :summary, class: 'form-control', maxlength: 50 %>

@@ -13,7 +13,7 @@
       <div class="collapse navbar-collapse" id="navbar-main-menu">
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
-          <li><a href="#">日記の入力</a></li>
+          <li><%= link_to '日記の入力', new_diary_path %></li>
           <li><a href="#">日記の表示</a></li>
           <li><a href="#">日記の検索</a></li>
 
