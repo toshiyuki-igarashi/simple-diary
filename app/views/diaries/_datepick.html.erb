@@ -1,35 +1,33 @@
-<%# = form_for(@diary) do |f| %>
-  <div class="row">
-    <div class="form-group col-xs-1">
-      <%= link_to prev_month_path, class: "btn btn-link" do %>
-        <span class="glyphicon glyphicon-backward"></span>
-        <span>&emsp;月</span>
-      <% end %>
-    </div>
-
-    <div class="form-group col-xs-1">
-      <%= link_to prev_day_path, class: "btn btn-link" do %>
-        <span class="glyphicon glyphicon-triangle-left"></span>
-        <span>&emsp;日</span>
-      <% end %>
-    </div>
-
-    <div class="form-group col-xs-7 col-sm-3 col-ls-2">
-      <input type="text" class="form-control datepicker" value="<%= @diary.date_of_diary %>"  name="diary[date_of_diary]" id="diary_date_of_diary">
-    </div>
-
-    <div class="form-group col-xs-1">
-      <%= link_to next_day_path, class: "btn btn-link" do %>
-        <span>日&emsp;</span>
-        <span class="glyphicon glyphicon-triangle-right"></span>
-      <% end %>
-    </div>
-
-    <div class="form-group col-xs-1">
-      <%= link_to next_month_path, class: "btn btn-link" do %>
-        <span>月&emsp;</span>
-        <span class="glyphicon glyphicon-forward"></span>
-      <% end %>
-    </div>
+<div class="row">
+  <div class="form-group col-xs-1">
+    <%= link_to prev_month_path, class: "btn btn-link" do %>
+      <span class="glyphicon glyphicon-backward"></span>
+      <span>&emsp;月</span>
+    <% end %>
   </div>
-<%#  end %>
+
+  <div class="form-group col-xs-1">
+    <%= link_to prev_day_path, class: "btn btn-link" do %>
+      <span class="glyphicon glyphicon-triangle-left"></span>
+      <span>&emsp;日</span>
+    <% end %>
+  </div>
+
+  <div class="form-group col-xs-7 col-sm-3 col-ls-2">
+    <input type="text" class="form-control datepicker" value="<%= @diary.date_of_diary %>"  name="diary[date_of_diary]" id="diary_date_of_diary">
+  </div>
+
+  <div class="form-group col-xs-1">
+    <%= link_to next_day_path, class: "btn btn-link" do %>
+      <span>日&emsp;</span>
+      <span class="glyphicon glyphicon-triangle-right"></span>
+    <% end %>
+  </div>
+
+  <div class="form-group col-xs-1">
+    <%= link_to next_month_path, class: "btn btn-link" do %>
+      <span>月&emsp;</span>
+      <span class="glyphicon glyphicon-forward"></span>
+    <% end %>
+  </div>
+</div>
