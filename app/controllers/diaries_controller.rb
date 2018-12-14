@@ -9,6 +9,14 @@ class DiariesController < ApplicationController
   end
 
   def show
+    @diary = Diary.find_by(id: params[:id])
+    if (@diary == nil)
+      flash[:danger] = '日記は存在しません'
+      redirect_to root_url
+    elsif (@diary.user_id != current_user.id)
+      flash[:danger] = '他人の日記は表示できません'
+      redirect_to root_url
+    end
   end
 
   def new
