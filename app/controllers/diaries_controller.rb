@@ -1,11 +1,13 @@
-# 日付表示をデフォールトの'YYYY-MM-DD HH:MM:SS'から、'YYYY/MM/DD (曜日)'に置き換える
-DAY_OF_WEEK = ['日','月','火','水','木','金','土']
-
 class DiariesController < ApplicationController
   before_action :require_user_logged_in
 
+  include SessionsHelper
+
   def index
-    redirect_to root_url
+    @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
+    if @diary == nil
+      @diary = Diary.new(user_id: current_user.id, date_of_diary: picked_date)
+    end
   end
 
   def show
@@ -21,18 +23,15 @@ class DiariesController < ApplicationController
 
   def new
     @diary = Diary.new
-    if (Time.now.hour >= 18)
-      date_of_diary = Date.today
-    else
-      date_of_diary = Date.today.prev_day
-    end
-    @diary.date_of_diary = "#{date_of_diary.strftime('%Y/%m/%d')} (#{DAY_OF_WEEK[date_of_diary.wday]})"
+    @diary.date_of_diary = session[:picked_date]
   end
 
   def create
     @diary = Diary.new(diary_params)
-    @diary[:user_id] = current_user.id
-    if params[:commit]
+    old_diary = Diary.find_by(user_id: current_user.id, date_of_diary: @diary.date_of_diary)
+
+    if old_diary == nil
+      @diary[:user_id] = current_user.id
       if @diary.save
         flash[:success] = '日記が正常に保存されました'
         @date_of_diary = nil
@@ -42,18 +41,8 @@ class DiariesController < ApplicationController
         render :new
       end
     else
-      if params[:day_before]
-        @diary.date_of_diary = @diary.date_of_diary.prev_day
-      elsif params[:month_before]
-        @diary.date_of_diary = @diary.date_of_diary.prev_month
-      elsif params[:month_after]
-        @diary.date_of_diary = @diary.date_of_diary.next_month
-      elsif params[:day_after]
-        @diary.date_of_diary = @diary.date_of_diary.next_day
-      else
-        flash.now[:danger] = 'プログラムエラーで日記が保存されませんでした'
-      end
-      render :new
+      old_diary.update(summary: @diary.summary, article: @diary.article)
+      redirect_to old_diary
     end
   end
 
@@ -64,6 +53,26 @@ class DiariesController < ApplicationController
   end
 
   def destroy
+  end
+
+  def prev_day
+    session[:picked_date] = date_to_string(picked_date.prev_day)
+    redirect_to :back
+  end
+
+  def prev_month
+    session[:picked_date] = date_to_string(picked_date.prev_month)
+    redirect_to :back
+  end
+
+  def next_day
+    session[:picked_date] = date_to_string(picked_date.next_day)
+    redirect_to :back
+  end
+
+  def next_month
+    session[:picked_date] = date_to_string(picked_date.next_month)
+    redirect_to :back
   end
 
   private

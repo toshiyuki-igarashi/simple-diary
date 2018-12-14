@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  include SessionsHelper
+
   def new
   end
 
@@ -18,6 +20,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    session[:picked_date] = nil
     flash[:success] = 'ログアウトしました。'
     redirect_to root_url
   end
@@ -29,6 +32,12 @@ class SessionsController < ApplicationController
     if @user && @user.authenticate(password)
       # ログイン成功
       session[:user_id] = @user.id
+      if (Time.now.hour >= 18)
+        date_of_diary = Date.today
+      else
+        date_of_diary = Date.today.prev_day
+      end
+      session[:picked_date] = date_to_string(date_of_diary)
       return true
     else
       # ログイン失敗
