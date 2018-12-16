@@ -28,21 +28,27 @@ class DiariesController < ApplicationController
 
   def create
     @diary = Diary.new(diary_params)
-    old_diary = Diary.find_by(user_id: current_user.id, date_of_diary: @diary.date_of_diary)
+    old_diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
 
-    if old_diary == nil
-      @diary[:user_id] = current_user.id
-      if @diary.save
-        flash[:success] = '日記が正常に保存されました'
-        @date_of_diary = nil
-        redirect_to @diary
+    if params[:commit] == "投稿"
+      if old_diary == nil
+        @diary[:user_id] = current_user.id
+        @diary[:date_of_diary] = picked_date
+        if @diary.save
+          flash[:success] = '日記が正常に保存されました'
+          @date_of_diary = nil
+          redirect_to @diary
+        else
+          flash.now[:danger] = '日記が保存されませんでした'
+          render :new
+        end
       else
-        flash.now[:danger] = '日記が保存されませんでした'
-        render :new
+        old_diary.update(summary: @diary.summary, article: @diary.article)
+        redirect_to old_diary
       end
-    else
-      old_diary.update(summary: @diary.summary, article: @diary.article)
-      redirect_to old_diary
+    elsif params[:commit] == "移動"
+      session[:picked_date] = params[:diary][:date_of_diary]
+      redirect_to :back
     end
   end
 
@@ -50,6 +56,10 @@ class DiariesController < ApplicationController
   end
 
   def update
+    if params[:commit] == "移動"
+      session[:picked_date] = params[:diary][:date_of_diary]
+      redirect_to :back
+    end
   end
 
   def destroy
@@ -79,6 +89,6 @@ class DiariesController < ApplicationController
 
   # Strong Parameter
   def diary_params
-    params.require(:diary).permit(:date_of_diary, :summary, :article)
+    params.require(:diary).permit(:summary, :article)
   end
 end
