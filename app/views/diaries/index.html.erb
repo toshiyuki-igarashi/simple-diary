@@ -1,6 +1,28 @@
-<div class="row">
-  <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-    <%= render 'datepick' %>
+<% if session[:search_keyword] %>
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col" class="col-xs-7 col-sm-3 col-ls-1">日付</th>
+          <th scope="col">要約</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @diaries.each do |diary| %>
+          <tr>
+            <td class="col-xs-7 col-sm-3 col-ls-1"><%= link_to date_to_string(diary[:date_of_diary]), diary_path(id: diary.id) %></td>
+            <td><%= diary[:summary] %></td>
+          </tr>
+        <% end %>
+        <% session[:search_keyword] = nil %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
+      <%= render 'datepick' %>
+    </div>
   </div>
 
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
@@ -8,4 +30,4 @@
     <BR>
     <%= @diary.article %>
   </div>
-</div>
+<% end %>

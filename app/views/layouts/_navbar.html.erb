@@ -15,7 +15,12 @@
         <% if logged_in? %>
           <li><%= link_to '日記の入力', new_diary_path %></li>
           <li><%= link_to '日記の表示', diaries_path %></li>
-          <li><a href="#">日記の検索</a></li>
+          <form class="navbar-form navbar-left" role="search">
+            <%= simple_form_for(diaries_url, method: :get) do %>
+              <%= text_field_tag :search, params[:search], placeholder: "検索キーワード" %>
+              <%= submit_tag '検索', class:'btn btn-default' %>
+            <% end %>
+          </form>
 
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

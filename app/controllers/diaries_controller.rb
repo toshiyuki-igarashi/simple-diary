@@ -1,11 +1,16 @@
 class DiariesController < ApplicationController
   before_action :require_user_logged_in
+  before_action :go_to_picked_date, only: [:index, :show, :new, :edit]
+  before_action :search
 
+  include DiariesHelper
   include SessionsHelper
 
   def index
     @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
-    if @diary == nil
+    if (session[:search_keyword])
+      search_diary(session[:search_keyword])
+    elsif @diary == nil
       @diary = Diary.new(user_id: current_user.id, date_of_diary: picked_date)
     end
   end
@@ -19,6 +24,8 @@ class DiariesController < ApplicationController
       flash[:danger] = '他人の日記は表示できません'
       redirect_to root_url
     end
+    session[:picked_date] = date_to_string(@diary[:date_of_diary])
+    redirect_to diaries_url
   end
 
   def new
@@ -46,9 +53,6 @@ class DiariesController < ApplicationController
         old_diary.update(summary: @diary.summary, article: @diary.article)
         redirect_to old_diary
       end
-    elsif params[:commit] == "移動"
-      session[:picked_date] = params[:diary][:date_of_diary]
-      redirect_to :back
     end
   end
 
@@ -56,10 +60,6 @@ class DiariesController < ApplicationController
   end
 
   def update
-    if params[:commit] == "移動"
-      session[:picked_date] = params[:diary][:date_of_diary]
-      redirect_to :back
-    end
   end
 
   def destroy
@@ -86,6 +86,25 @@ class DiariesController < ApplicationController
   end
 
   private
+
+  def search_diary(search_keyword)
+    @diaries_all = Diary.where(user_id: current_user.id)
+    @diaries = []
+    @diaries_all.each do |diary|
+      if diary[:summary].include?(search_keyword) || diary[:article].include?(search_keyword)
+        @diaries.push(diary)
+      end
+    end
+    @diaries = @diaries.sort { |a , b|
+      if a[:date_of_diary] < b[:date_of_diary]
+        1
+      elsif a[:date_of_diary] == b[:date_of_diary]
+        0
+      else
+        -1
+      end
+    }
+  end
 
   # Strong Parameter
   def diary_params
