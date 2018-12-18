@@ -80,6 +80,14 @@ class DiariesController < ApplicationController
   end
 
   def destroy
+    @diary = Diary.find(params[:id])
+    if @diary.user_id == current_user.id && @diary.date_of_diary == picked_date
+      @diary.destroy
+      flash[:success] = '日記が正常に削除されました'
+    else
+      flash[:danger] = '日記が削除されませんでした'
+    end
+    redirect_to diaries_url
   end
 
   def prev_day
