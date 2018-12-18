@@ -3,9 +3,6 @@ class DiariesController < ApplicationController
   before_action :go_to_picked_date
   before_action :search
 
-  include DiariesHelper
-  include SessionsHelper
-
   def index
     @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
     if (session[:search_keyword])

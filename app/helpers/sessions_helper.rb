@@ -24,4 +24,14 @@ module SessionsHelper
       redirect_to :back
     end
   end
+
+  def logged_in_session
+    session[:user_id] = @user.id
+    if (Time.zone.now.hour >= 18)
+      date_of_diary = Date.today
+    else
+      date_of_diary = Date.today.prev_day
+    end
+    session[:picked_date] = date_to_string(date_of_diary)
+  end
 end
