@@ -28,7 +28,7 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#">マイページ</a></li>
+              <li><%= link_to 'マイページ', user_path(current_user) %></li>
               <li role="separator" class="divider"></li>
               <li><%= link_to 'ログアウト', logout_path, method: :delete %></li>
             </ul>
