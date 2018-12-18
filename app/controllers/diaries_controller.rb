@@ -1,6 +1,6 @@
 class DiariesController < ApplicationController
   before_action :require_user_logged_in
-  before_action :go_to_picked_date, only: [:index, :show, :new, :edit]
+  before_action :go_to_picked_date
   before_action :search
 
   include DiariesHelper
@@ -29,8 +29,11 @@ class DiariesController < ApplicationController
   end
 
   def new
-    @diary = Diary.new
-    @diary.date_of_diary = session[:picked_date]
+    @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
+    unless @diary
+      @diary = Diary.new
+      @diary.date_of_diary = session[:picked_date]
+    end
   end
 
   def create
@@ -50,16 +53,30 @@ class DiariesController < ApplicationController
           render :new
         end
       else
-        old_diary.update(summary: @diary.summary, article: @diary.article)
-        redirect_to old_diary
+        if old_diary.update(summary: @diary.summary, article: @diary.article)
+          flash[:success] = '日記が正常に修正されました'
+          redirect_to old_diary
+        else
+          flash.now[:danger] = '日記が修正されませんでした'
+          render :new
+        end
       end
     end
   end
 
   def edit
+    @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
   end
 
   def update
+    @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
+    if @diary.update(summary: params[:diary][:summary], article: params[:diary][:article])
+      flash[:success] = '日記が正常に修正されました'
+      redirect_to @diary
+    else
+      flash.now[:danger] = '日記が修正されませんでした'
+      render :edit
+    end
   end
 
   def destroy
@@ -91,7 +108,7 @@ class DiariesController < ApplicationController
     @diaries_all = Diary.where(user_id: current_user.id)
     @diaries = []
     @diaries_all.each do |diary|
-      if diary[:summary].include?(search_keyword) || diary[:article].include?(search_keyword)
+      if (diary[:summary] && diary[:summary].include?(search_keyword)) || (diary[:article] && diary[:article].include?(search_keyword))
         @diaries.push(diary)
       end
     end

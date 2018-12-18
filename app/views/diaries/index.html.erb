@@ -29,5 +29,12 @@
     <%= @diary.summary %>
     <BR>
     <%= @diary.article %>
+    <% if @diary[:id] %>
+      <div class="row">
+        <br class="col-xs-12">
+        <%= link_to '修正', edit_diary_path(@diary), class: 'btn btn-primary col-xs-1' %>
+        <%= link_to '削除', @diary, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-danger col-xs-1' %>
+      </div>
+    <% end %>
   </div>
 <% end %>
