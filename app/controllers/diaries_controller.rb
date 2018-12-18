@@ -95,18 +95,8 @@ class DiariesController < ApplicationController
     redirect_to :back
   end
 
-  def prev_month
-    session[:picked_date] = date_to_string(picked_date.prev_month)
-    redirect_to :back
-  end
-
   def next_day
     session[:picked_date] = date_to_string(picked_date.next_day)
-    redirect_to :back
-  end
-
-  def next_month
-    session[:picked_date] = date_to_string(picked_date.next_month)
     redirect_to :back
   end
 
