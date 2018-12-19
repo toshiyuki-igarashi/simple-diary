@@ -18,22 +18,20 @@ class DiariesController < ApplicationController
     elsif (@diary.user_id != current_user.id)
       flash[:danger] = '他人の日記は表示できません'
       redirect_to root_url
+    else
+      session[:picked_date] = date_to_string(@diary[:date_of_diary])
+      redirect_to diaries_url
     end
-    session[:picked_date] = date_to_string(@diary[:date_of_diary])
-    redirect_to diaries_url
   end
 
   def new
   end
 
   def create
-    @diary = Diary.new(diary_params)
-    old_diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
-
     if params[:commit] == "投稿"
-      if old_diary == nil
-        @diary[:user_id] = current_user.id
-        @diary[:date_of_diary] = picked_date
+      if prepare_picked_diary == nil
+        @diary[:summary] = params[:diary][:summary]
+        @diary[:article] = params[:diary][:article]
         if @diary.save
           flash[:success] = '日記が正常に保存されました'
           @date_of_diary = nil
@@ -51,6 +49,9 @@ class DiariesController < ApplicationController
           render :new
         end
       end
+    else
+      flash.now[:danger] = '日記がプログラムエラーで作成できませんでした'
+      render :new
     end
   end
 
@@ -94,6 +95,7 @@ class DiariesController < ApplicationController
     @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
     if @diary == nil
       @diary = Diary.new(user_id: current_user.id, date_of_diary: picked_date)
+      nil
     end
   end
 
@@ -114,10 +116,5 @@ class DiariesController < ApplicationController
         -1
       end
     }
-  end
-
-  # Strong Parameter
-  def diary_params
-    params.require(:diary).permit(:summary, :article)
   end
 end
