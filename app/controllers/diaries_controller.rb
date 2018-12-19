@@ -63,6 +63,10 @@ class DiariesController < ApplicationController
 
   def edit
     @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
+    unless @diary
+      @diary = Diary.new
+      @diary.date_of_diary = session[:picked_date]
+    end
   end
 
   def update
