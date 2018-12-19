@@ -2,13 +2,11 @@ class DiariesController < ApplicationController
   before_action :require_user_logged_in
   before_action :go_to_picked_date
   before_action :search
+  before_action :prepare_picked_diary, only: [:index, :new, :edit]
 
   def index
-    @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
     if (session[:search_keyword])
       search_diary(session[:search_keyword])
-    elsif @diary == nil
-      @diary = Diary.new(user_id: current_user.id, date_of_diary: picked_date)
     end
   end
 
@@ -26,11 +24,6 @@ class DiariesController < ApplicationController
   end
 
   def new
-    @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
-    unless @diary
-      @diary = Diary.new
-      @diary.date_of_diary = session[:picked_date]
-    end
   end
 
   def create
@@ -62,11 +55,6 @@ class DiariesController < ApplicationController
   end
 
   def edit
-    @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
-    unless @diary
-      @diary = Diary.new
-      @diary.date_of_diary = session[:picked_date]
-    end
   end
 
   def update
@@ -102,6 +90,12 @@ class DiariesController < ApplicationController
   end
 
   private
+  def prepare_picked_diary
+    @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
+    if @diary == nil
+      @diary = Diary.new(user_id: current_user.id, date_of_diary: picked_date)
+    end
+  end
 
   def search_diary(search_keyword)
     @diaries_all = Diary.where(user_id: current_user.id)
