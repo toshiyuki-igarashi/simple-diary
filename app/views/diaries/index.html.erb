@@ -26,9 +26,18 @@
   </div>
 
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
+    <h4>トピック</h4>
     <%= @diary.summary %>
-    <BR>
-    <%= @diary.article %>
+    <HR>
+    <h4>本文</h4>
+    <% if @diary.article %>
+      <% @diary.article.each_line do |line| %>
+        <% count_leading_blank(line).times do %>
+          &nbsp;
+        <% end %>
+        <%= line %><BR>
+      <% end %>
+    <% end %>
     <% if @diary[:id] %>
       <div class="row">
         <br class="col-xs-12">
