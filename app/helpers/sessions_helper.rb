@@ -45,4 +45,10 @@ module SessionsHelper
     end
     session[:picked_date] = date_to_string(date_of_diary)
   end
+
+  def session_clear
+    session[:user_id] = nil
+    session[:picked_date] = nil
+    session[:search_keyword] = nil
+  end
 end

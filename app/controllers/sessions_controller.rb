@@ -17,9 +17,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
-    session[:picked_date] = nil
-    session[:search_keyword] = nil
+    session_clear
     flash[:success] = 'ログアウトしました。'
     redirect_to root_url
   end

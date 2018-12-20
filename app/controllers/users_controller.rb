@@ -48,9 +48,12 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
-    session[:picked_date] = nil
-    session[:search_keyword] = nil
+    Diary.where(user_id: current_user.id).each do |diary|
+      diary.destroy
+    end
+    current_user.destroy
+
+    session_clear
     flash[:success] = 'ユーザの登録を削除しました。またのご利用をお待ちしております。'
     redirect_to root_url
   end
