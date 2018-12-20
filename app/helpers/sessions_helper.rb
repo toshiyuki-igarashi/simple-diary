@@ -25,6 +25,17 @@ module SessionsHelper
     end
   end
 
+  def password_check(email, password)
+    @user = User.find_by(email: email)
+    if @user && @user.authenticate(password)
+      # パスワードチェック成功
+      return true
+    else
+      # パスワードチェック失敗
+      return false
+    end
+  end
+
   def logged_in_session
     session[:user_id] = @user.id
     if (Time.zone.now.hour >= 18)

@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
 
   get 'signup', to: 'users#new'
-  resources :users, only: [:show, :new, :create]
+  resources :users, only: [:show, :new, :create, :edit, :update, :destroy]
 
   get 'prev_day', to: 'diaries#prev_day'
   get 'next_day', to: 'diaries#next_day'
