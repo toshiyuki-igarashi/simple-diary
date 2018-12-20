@@ -6,7 +6,8 @@ class SessionsController < ApplicationController
     email = params[:session][:email].downcase
     password = params[:session][:password]
 
-    if login(email, password)
+    if password_check(email, password)
+      logged_in_session
       flash[:success] = 'ログインに成功しました。'
       redirect_to new_diary_url
     else
@@ -21,19 +22,5 @@ class SessionsController < ApplicationController
     session[:search_keyword] = nil
     flash[:success] = 'ログアウトしました。'
     redirect_to root_url
-  end
-
-  private
-
-  def login(email, password)
-    @user = User.find_by(email: email)
-    if @user && @user.authenticate(password)
-      # ログイン成功
-      logged_in_session
-      return true
-    else
-      # ログイン失敗
-      return false
-    end
   end
 end

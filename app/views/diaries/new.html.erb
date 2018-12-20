@@ -1,16 +1,1 @@
-<div class="row">
-  <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-    <%= render 'datepick' %>
-  </div>
-
-  <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-    <%= form_for(@diary) do |f| %>
-      <div class="form-group">
-        <%= f.text_field :summary, class: 'form-control', maxlength: 50 %>
-        <%= f.text_area :article, class: 'form-control', rows: "20" %>
-      </div>
-  
-      <%= f.submit '投稿', class: 'btn btn-primary' %>
-    <% end %>
-  </div>
-</div>
+<%= render 'diary_input' %>

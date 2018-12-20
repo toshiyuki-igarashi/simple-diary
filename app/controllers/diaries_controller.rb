@@ -34,20 +34,13 @@ class DiariesController < ApplicationController
         @diary[:article] = params[:diary][:article]
         if @diary.save
           flash[:success] = '日記が正常に保存されました'
-          @date_of_diary = nil
           redirect_to @diary
         else
           flash.now[:danger] = '日記が保存されませんでした'
           render :new
         end
       else
-        if old_diary.update(summary: @diary.summary, article: @diary.article)
-          flash[:success] = '日記が正常に修正されました'
-          redirect_to old_diary
-        else
-          flash.now[:danger] = '日記が修正されませんでした'
-          render :new
-        end
+        update_diary(old_diary, @diary.summary, @diary.article)
       end
     else
       flash.now[:danger] = '日記がプログラムエラーで作成できませんでした'
@@ -60,13 +53,7 @@ class DiariesController < ApplicationController
 
   def update
     @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
-    if @diary.update(summary: params[:diary][:summary], article: params[:diary][:article])
-      flash[:success] = '日記が正常に修正されました'
-      redirect_to @diary
-    else
-      flash.now[:danger] = '日記が修正されませんでした'
-      render :edit
-    end
+    update_diary(@diary, params[:diary][:summary], params[:diary][:article])
   end
 
   def destroy
@@ -97,6 +84,16 @@ class DiariesController < ApplicationController
     if @diary == nil
       @diary = Diary.new(user_id: current_user.id, date_of_diary: picked_date)
       nil
+    end
+  end
+
+  def update_diary(diary, summary, article)
+    if diary.update(summary: summary, article: article)
+      flash[:success] = '日記が正常に修正されました'
+      redirect_to diary
+    else
+      flash.now[:danger] = '日記が修正されませんでした'
+      render :edit
     end
   end
 end
