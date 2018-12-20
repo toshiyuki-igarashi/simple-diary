@@ -6,7 +6,7 @@ class DiariesController < ApplicationController
 
   def index
     if (session[:search_keyword])
-      search_diary(session[:search_keyword])
+      @diaries = Diary.search_diary(session[:search_keyword], current_user)
     end
   end
 
@@ -91,30 +91,12 @@ class DiariesController < ApplicationController
   end
 
   private
+
   def prepare_picked_diary
     @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
     if @diary == nil
       @diary = Diary.new(user_id: current_user.id, date_of_diary: picked_date)
       nil
     end
-  end
-
-  def search_diary(search_keyword)
-    @diaries_all = Diary.where(user_id: current_user.id)
-    @diaries = []
-    @diaries_all.each do |diary|
-      if (diary[:summary] && diary[:summary].include?(search_keyword)) || (diary[:article] && diary[:article].include?(search_keyword))
-        @diaries.push(diary)
-      end
-    end
-    @diaries = @diaries.sort { |a , b|
-      if a[:date_of_diary] < b[:date_of_diary]
-        1
-      elsif a[:date_of_diary] == b[:date_of_diary]
-        0
-      else
-        -1
-      end
-    }
   end
 end
