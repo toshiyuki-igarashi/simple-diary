@@ -19,7 +19,7 @@ class DiariesController < ApplicationController
       flash[:danger] = '他人の日記は表示できません'
       redirect_to root_url
     else
-      session[:picked_date] = date_to_string(@diary[:date_of_diary])
+      session[:picked_date] = @diary[:date_of_diary]
       redirect_to diaries_url
     end
   end
@@ -68,12 +68,17 @@ class DiariesController < ApplicationController
   end
 
   def prev_day
-    session[:picked_date] = date_to_string(picked_date.prev_day)
+    session[:picked_date] = picked_date.prev_day
     redirect_to :back
   end
 
   def next_day
-    session[:picked_date] = date_to_string(picked_date.next_day)
+    session[:picked_date] = picked_date.next_day
+    redirect_to :back
+  end
+
+  def select_date
+    session[:picked_date] = params[:picked_date]
     redirect_to :back
   end
 

@@ -16,16 +16,39 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <!-- Bootstrap JavaScript-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link_rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/redmond/jquery-ui.css" >
     <script type="text/javascript">
-        $(function () {
-          $('.datepicker').datetimepicker({
-            format: 'YYYY/MM/DD (ddd)',
-            locale: 'ja',
-            dayViewHeaderFormat: 'YYYY年 MM月'
-          });
-          return;
-        });
+      function getData() {
+        var xmlhttp = createXMLHttpRequest(); //旧バージョンのIEなどに対応する場合
+        //var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function() {
+          if (xmlhttp.readyState == 4) {
+            if (xmlhttp.status == 200) {
+              var elem = document.getElementById("output");
+              elem.innerText = xmlhttp.responseText;
+            } else {
+              alert("select date error : status = " + xmlhttp.status);
+            }
+          }
+        }
+
+        var dateControl = document.querySelector('input[type="date"]');
+        xmlhttp.open("GET", "/date/"+dateControl.value);
+        xmlhttp.send();
+
+        location.reload();
+      }
+
+      function createXMLHttpRequest(){
+        if(window.XMLHttpRequest){return new XMLHttpRequest()}
+        if(window.ActiveXObject){
+          try{return new ActiveXObject("Msxml2.XMLHTTP.6.0")}catch(e){}
+          try{return new ActiveXObject("Msxml2.XMLHTTP.3.0")}catch(e){}
+          try{return new ActiveXObject("Microsoft.XMLHTTP")}catch(e){}
+        }
+        return false;
+      }
+
     </script>
   </head>
 
