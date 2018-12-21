@@ -1,19 +1,35 @@
-<%= form_for(@diary) do |f| %>
-  <div class="row">
-    <div class="form-group col-xs-1">
-      <%= link_to prev_day_path, class: "btn btn-link" do %>
-        <span class="glyphicon glyphicon-triangle-left"></span>
-      <% end %>
-    </div>
+<div class="row">
+  <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
+    <div class="row">
+      <div class="col-xs-3 col-sm-3">
+        <small>前の日</small>
+      </div>
+      <div class="col-xs-3 col-sm-3">
+        <small><%= day_of_week(session[:picked_date]) %></small>
+      </div>
+      <div class="col-xs-3 col-xs-offset-3 col-sm-3 col-sm-offset-1">
+        <small>後の日</small>
+      </div>
+     </div>
 
-    <div class="form-group col-xs-6 col-sm-4 col-ls-2">
-      <input id="date_Get" type="date" value=<%= session[:picked_date] %> onchange="getData();" />
-    </div>
+    <%= form_for(@diary) do |f| %>
+      <div class="row">
+        <div class="form-group col-xs-1">
+          <%= link_to prev_day_path, class: "btn btn-link" do %>
+            <span class="glyphicon glyphicon-triangle-left"></span>
+          <% end %>
+        </div>
 
-    <div class="form-group col-xs-1">
-      <%= link_to next_day_path, class: "btn btn-link" do %>
-        <span class="glyphicon glyphicon-triangle-right"></span>
-      <% end %>
-    </div>
+        <div class="form-group col-xs-8 col-sm-6 col-ls-2">
+          <input id="date_Get" type="date" value=<%= session[:picked_date] %> onchange="getData();" />
+        </div>
+
+        <div class="form-group col-xs-1">
+          <%= link_to next_day_path, class: "btn btn-link" do %>
+            <span class="glyphicon glyphicon-triangle-right"></span>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>

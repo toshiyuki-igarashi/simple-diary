@@ -25,6 +25,10 @@ module SessionsHelper
     "#{date.strftime('%Y/%m/%d')} (#{DAY_OF_WEEK[date.wday]})"
   end
 
+  def day_of_week(date)
+    "(#{DAY_OF_WEEK[Date.parse(date).wday]}曜日)"
+  end
+
   def password_check(email, password)
     @user = User.find_by(email: email)
     if @user && @user.authenticate(password)
