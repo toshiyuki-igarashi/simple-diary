@@ -28,7 +28,7 @@ class DiariesController < ApplicationController
   end
 
   def create
-    if params[:commit] == "投稿"
+    if params[:commit] == "保存"
       if prepare_picked_diary == nil
         @diary[:summary] = params[:diary][:summary]
         @diary[:article] = params[:diary][:article]
