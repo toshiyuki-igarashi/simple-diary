@@ -44,6 +44,7 @@ class DiariesController < ApplicationController
       end
     else
       flash.now[:danger] = '日記がプログラムエラーで作成できませんでした'
+      prepare_picked_diary
       render :new
     end
   end
