@@ -43,9 +43,9 @@ module SessionsHelper
   def logged_in_session
     session[:user_id] = @user.id
     if (Time.zone.now.hour >= 18)
-      date_of_diary = Date.today
+      date_of_diary = Time.zone.now.to_s[0..9]
     else
-      date_of_diary = Date.today.prev_day
+      date_of_diary = Time.zone.yesterday.to_s[0..9]
     end
     session[:picked_date] = date_of_diary
   end
