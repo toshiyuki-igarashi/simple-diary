@@ -28,24 +28,18 @@ class DiariesController < ApplicationController
   end
 
   def create
-    if params[:commit] == "保存"
-      if prepare_picked_diary == nil
-        @diary[:summary] = params[:diary][:summary]
-        @diary[:article] = params[:diary][:article]
-        if @diary.save
-          flash[:success] = '日記が正常に保存されました'
-          redirect_to @diary
-        else
-          flash.now[:danger] = '日記が保存されませんでした'
-          render :new
-        end
+    if prepare_picked_diary == nil
+      @diary[:summary] = params[:diary][:summary]
+      @diary[:article] = params[:diary][:article]
+      if @diary.save
+        flash[:success] = '日記が正常に保存されました'
+        redirect_to diaries_url
       else
-        update_diary(old_diary, @diary.summary, @diary.article)
+        flash.now[:danger] = '日記が保存されませんでした'
+        render :new
       end
     else
-      flash.now[:danger] = '日記がプログラムエラーで作成できませんでした'
-      prepare_picked_diary
-      render :new
+      update_diary(old_diary, @diary.summary, @diary.article)
     end
   end
 
@@ -96,7 +90,7 @@ class DiariesController < ApplicationController
   def update_diary(diary, summary, article)
     if diary.update(summary: summary, article: article)
       flash[:success] = '日記が正常に修正されました'
-      redirect_to diary
+      redirect_to diaries_url
     else
       flash.now[:danger] = '日記が修正されませんでした'
       render :edit
