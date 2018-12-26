@@ -48,10 +48,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    Diary.where(user_id: current_user.id).each do |diary|
-      diary.destroy
-    end
-    current_user.destroy
+    current_user.delete_all
 
     session_clear
     flash[:success] = 'ユーザの登録を削除しました。またのご利用をお待ちしております。'

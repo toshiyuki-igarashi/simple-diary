@@ -22,4 +22,10 @@ class Diary < ApplicationRecord
       end
     }
   end
+
+  def self.show_all
+    self.all.each do |diary|
+      puts "id:#{diary.id}, user_id:#{diary.user_id}, date:#{diary.date_of_diary}, summary:#{diary.summary}"
+    end
+  end
 end

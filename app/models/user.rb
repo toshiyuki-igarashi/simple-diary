@@ -7,4 +7,17 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :diaries
+
+  def self.show_all
+    self.all.each do |user|
+      puts "id:#{user.id}, name:#{user.name}, email:#{user.email}"
+    end
+  end
+
+  def delete_all
+    Diary.where(user_id: self.id).each do |diary|
+      diary.destroy
+    end
+    self.destroy
+  end
 end
