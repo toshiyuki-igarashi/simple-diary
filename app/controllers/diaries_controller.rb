@@ -82,7 +82,7 @@ class DiariesController < ApplicationController
   def prepare_picked_diary
     @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
     if @diary == nil
-      @diary = Diary.new(user_id: current_user.id, date_of_diary: picked_date)
+      @diary = Diary.new(user_id: current_user.id, date_of_diary: picked_date, form_id: DiaryForm.find_by(user_id: current_user.id).id)
       nil
     end
   end
