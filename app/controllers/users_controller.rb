@@ -15,6 +15,9 @@ class UsersController < ApplicationController
     if @user.save
       flash[:success] = 'ユーザを登録しました。'
       logged_in_session
+      if (!DiaryForm.new(user_id: @user.id, title: '日記帳', form: 'トピック,本文').save)
+        puts "**** Alert **** diary_form hasn't saved for user (user_id: #{@user.id})"
+      end
       redirect_to root_url
     else
       flash.now[:danger] = 'ユーザの登録に失敗しました。'
