@@ -12,12 +12,11 @@ class DiaryForm < ApplicationRecord
   end
 
   def self.initialize_forms
-    User.all.each do |user|
-      diary_form = DiaryForm.new(user_id: user.id, title: '日記帳', form: 'トピック,本文')
-      if (diary_form.save)
-        puts "成功：#{user.id}"
+    self.all.each do |diary_form|
+      if (diary_form.update(form: '{"トピック": 50,"本文": 0}'))
+        puts "成功：#{diary_form.id}"
       else
-        puts "失敗：#{user.id}"
+        puts "失敗：#{diary_form.id}"
       end
     end
   end

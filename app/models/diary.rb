@@ -1,9 +1,9 @@
 class Diary < ApplicationRecord
   belongs_to :user
-#  belongs_to :diary_form
+  belongs_to :diary_form, :foreign_key => 'form_id'
 
   validates :summary, length: { maximum: 50 }
-  validates :date_of_diary, presence: true, uniqueness: { scope: :user_id }
+  validates :date_of_diary, presence: true, uniqueness: { scope: :user }
 
   def self.search_diary(search_keyword, user)
     diaries_all = Diary.where(user_id: user.id)
