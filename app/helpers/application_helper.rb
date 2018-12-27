@@ -18,4 +18,9 @@ module ApplicationHelper
     end
     count
   end
+
+# helper for DiaryForm (this should be moved to diaryforms_helper.rb)
+  def diary_form_id(user)
+    DiaryForm.find_by(user_id: user.id).id
+  end
 end
