@@ -16,8 +16,11 @@ class User < ApplicationRecord
   end
 
   def delete_all
-    Diary.where(user_id: self.id).each do |diary|
-      diary.destroy
+    DiaryForm.where(user_id: self.id).each do |diary_form|
+      Diary.where(form_id: diary_form.id).each do |diary|
+        diary.destroy
+      end
+      diary_form.destroy
     end
     self.destroy
   end
