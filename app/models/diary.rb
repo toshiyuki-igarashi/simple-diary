@@ -1,5 +1,6 @@
 class Diary < ApplicationRecord
   belongs_to :user
+#  belongs_to :diary_form
 
   validates :summary, length: { maximum: 50 }
   validates :date_of_diary, presence: true, uniqueness: { scope: :user_id }
@@ -27,5 +28,6 @@ class Diary < ApplicationRecord
     self.all.each do |diary|
       puts "id:#{diary.id}, user_id:#{diary.user_id}, date:#{diary.date_of_diary}, summary:#{diary.summary}"
     end
+    nil
   end
 end

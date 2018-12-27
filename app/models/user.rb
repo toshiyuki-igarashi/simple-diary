@@ -12,6 +12,7 @@ class User < ApplicationRecord
     self.all.each do |user|
       puts "id:#{user.id}, name:#{user.name}, email:#{user.email}"
     end
+    nil
   end
 
   def delete_all
