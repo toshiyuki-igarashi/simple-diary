@@ -5,8 +5,12 @@ class Diary < ApplicationRecord
   validates :summary, length: { maximum: 50 }
   validates :date_of_diary, presence: true, uniqueness: { scope: :user }
 
-  def self.search_diary(search_keyword, user)
-    diaries_all = Diary.where(user_id: user.id)
+  def get_user_id
+    DiaryForm.find(self.form_id).user_id
+  end
+
+  def self.search_diary(search_keyword, form_id)
+    diaries_all = Diary.where(form_id: form_id)
     diaries = []
     diaries_all.each do |diary|
       if (diary[:summary] && diary[:summary].include?(search_keyword)) || (diary[:article] && diary[:article].include?(search_keyword))
@@ -29,18 +33,5 @@ class Diary < ApplicationRecord
       puts "id:#{diary.id}, user_id:#{diary.user_id}, form_id:#{diary.form_id}, date:#{diary.date_of_diary}, summary:#{diary.summary}"
     end
     nil
-  end
-
-  def self.initialize_form_id
-    User.all.each do |user|
-      form_id = DiaryForm.find_by(user_id: user.id).id
-      Diary.where(user_id: user.id).each do |diary|
-        if (diary.update(form_id: form_id))
-          puts "成功：#{diary.id}"
-        else
-          puts "失敗：#{diary.id}"
-        end
-      end
-    end
   end
 end

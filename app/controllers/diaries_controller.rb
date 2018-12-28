@@ -6,7 +6,7 @@ class DiariesController < ApplicationController
 
   def index
     if (session[:search_keyword])
-      @diaries = Diary.search_diary(session[:search_keyword], current_user)
+      @diaries = Diary.search_diary(session[:search_keyword], current_form)
     end
   end
 
@@ -15,7 +15,7 @@ class DiariesController < ApplicationController
     if (@diary == nil)
       flash[:danger] = '日記は存在しません'
       redirect_to root_url
-    elsif (@diary.user_id != current_user.id)
+    elsif (@diary.get_user_id != current_user.id)
       flash[:danger] = '他人の日記は表示できません'
       redirect_to root_url
     else
@@ -47,13 +47,13 @@ class DiariesController < ApplicationController
   end
 
   def update
-    @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
+    @diary = Diary.find_by(form_id: current_form, date_of_diary: picked_date)
     update_diary(@diary, params[:diary][:summary], params[:diary][:article])
   end
 
   def destroy
     @diary = Diary.find(params[:id])
-    if @diary.user_id == current_user.id && @diary.date_of_diary == picked_date
+    if @diary.get_user_id == current_user.id && @diary.date_of_diary == picked_date
       @diary.destroy
       flash[:success] = '日記が正常に削除されました'
     else
@@ -80,9 +80,9 @@ class DiariesController < ApplicationController
   private
 
   def prepare_picked_diary
-    @diary = Diary.find_by(user_id: current_user.id, date_of_diary: picked_date)
+    @diary = Diary.find_by(form_id: current_form, date_of_diary: picked_date)
     if @diary == nil
-      @diary = Diary.new(user_id: current_user.id, date_of_diary: picked_date, form_id: diary_form_id(current_user))
+      @diary = Diary.new(user_id: current_user.id, date_of_diary: picked_date, form_id: current_form)
       nil
     end
   end

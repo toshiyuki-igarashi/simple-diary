@@ -10,6 +10,10 @@ module SessionsHelper
     !!current_user
   end
 
+  def current_form
+    @current_form ||= DiaryForm.find_by(user_id: current_user.id).id
+  end
+
   def picked_date
     Date.parse(session[:picked_date])
   end
