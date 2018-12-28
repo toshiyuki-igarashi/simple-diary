@@ -29,7 +29,6 @@ class DiariesController < ApplicationController
 
   def create
     if prepare_picked_diary == nil
-      @diary[:summary] = params["トピック"]
       @diary[:article] = make_article(params)
       if @diary.save
         flash[:success] = '日記が正常に保存されました'
@@ -90,7 +89,7 @@ class DiariesController < ApplicationController
   end
 
   def update_diary(diary, articles)
-    if diary.update(summary: articles["トピック"], article: make_article(articles))
+    if diary.update(article: make_article(articles))
       flash[:success] = '日記が正常に修正されました'
       redirect_to diaries_url
     else

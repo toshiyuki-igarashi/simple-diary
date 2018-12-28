@@ -1,7 +1,6 @@
 class Diary < ApplicationRecord
   belongs_to :diary_form, :foreign_key => 'form_id'
 
-  validates :summary, length: { maximum: 50 }
   validates :date_of_diary, presence: true, uniqueness: { scope: :diary_form }
 
   def get_user_id
@@ -44,19 +43,8 @@ class Diary < ApplicationRecord
 
   def self.show_all
     self.all.each do |diary|
-      puts "id:#{diary.id}, form_id:#{diary.form_id}, date:#{diary.date_of_diary}, summary:#{diary.summary}"
+      puts "id:#{diary.id}, form_id:#{diary.form_id}, date:#{diary.date_of_diary}, summary:#{diary.get("トピック")}"
     end
     nil
-  end
-
-  def self.update_article
-    self.all.each do |diary|
-      if diary.update(article: JSON.generate({ "トピック": diary[:summary], "本文": diary[:article] }).to_s)
-        updated_diary = Diary.find(diary[:id])
-        puts "**** 成功: #{diary[:id]}, #{JSON.parse(updated_diary[:article])["トピック"]} "
-      else
-        puts "**** 失敗: #{diary[:id]} "
-      end
-    end
   end
 end
