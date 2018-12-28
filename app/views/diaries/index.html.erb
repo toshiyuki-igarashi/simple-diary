@@ -11,7 +11,7 @@
         <% @diaries.each do |diary| %>
           <tr>
             <td class="col-xs-7 col-sm-3 col-ls-1"><%= link_to date_to_string(diary[:date_of_diary]), diary_path(id: diary.id) %></td>
-            <td><%= diary[:summary] %></td>
+            <td><%= diary.get("トピック") %></td>
           </tr>
         <% end %>
         <% session[:search_keyword] = nil %>
@@ -27,11 +27,11 @@
 
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
     <h4>トピック</h4>
-    <%= @diary.summary %>
+    <%= @diary.get("トピック") %>
     <HR>
     <h4>本文</h4>
-    <% if @diary.article %>
-      <% @diary.article.each_line do |line| %>
+    <% if @diary.get("本文") %>
+      <% @diary.get("本文").each_line do |line| %>
         <% count_leading_blank(line).times do %>
           &nbsp;
         <% end %>

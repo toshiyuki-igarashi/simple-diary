@@ -4,11 +4,11 @@
   </div>
 
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-    <%= form_for(@diary) do |f| %>
-      <%= f.submit '保存', class: 'btn btn-primary col-xs-12' %>
+    <%= form_tag(diaries_path, method: :post) do %>
+      <%= submit_tag '保存', class: 'btn btn-primary col-xs-12' %>
       <div class="form-group">
-        <%= f.text_field :summary, class: 'form-control', placeholder: "その日のトピックを入力してください", maxlength: 50 %>
-        <%= f.text_area :article, class: 'form-control', placeholder: "その日の出来事を入力してください", rows: "20" %>
+        <%= text_field_tag "トピック", @diary.get("トピック"), { class: 'form-control', placeholder: "その日のトピックを入力してください", maxlength: 50 } %>
+        <%= text_area_tag "本文", @diary.get("本文"), { class: 'form-control', placeholder: "その日の出来事を入力してください", rows: "20" } %>
       </div>
     <% end %>
   </div>

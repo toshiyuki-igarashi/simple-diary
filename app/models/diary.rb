@@ -8,11 +8,26 @@ class Diary < ApplicationRecord
     DiaryForm.find(self.form_id).user_id
   end
 
+  def get(term)
+    if term && self[:article]
+      JSON.parse(self[:article])[term]
+    else
+      nil
+    end
+  end
+
+  def include?(word)
+    JSON.parse(self[:article]).each do |key, value|
+      return true if value && value.include?(word)
+    end
+    false
+  end
+
   def self.search_diary(search_keyword, form_id)
     diaries_all = Diary.where(form_id: form_id)
     diaries = []
     diaries_all.each do |diary|
-      if (diary[:summary] && diary[:summary].include?(search_keyword)) || (diary[:article] && diary[:article].include?(search_keyword))
+      if (diary.include?(search_keyword))
         diaries.push(diary)
       end
     end
@@ -32,5 +47,16 @@ class Diary < ApplicationRecord
       puts "id:#{diary.id}, form_id:#{diary.form_id}, date:#{diary.date_of_diary}, summary:#{diary.summary}"
     end
     nil
+  end
+
+  def self.update_article
+    self.all.each do |diary|
+      if diary.update(article: JSON.generate({ "トピック": diary[:summary], "本文": diary[:article] }).to_s)
+        updated_diary = Diary.find(diary[:id])
+        puts "**** 成功: #{diary[:id]}, #{JSON.parse(updated_diary[:article])["トピック"]} "
+      else
+        puts "**** 失敗: #{diary[:id]} "
+      end
+    end
   end
 end

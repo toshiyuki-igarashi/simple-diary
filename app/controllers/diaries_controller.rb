@@ -29,8 +29,8 @@ class DiariesController < ApplicationController
 
   def create
     if prepare_picked_diary == nil
-      @diary[:summary] = params[:diary][:summary]
-      @diary[:article] = params[:diary][:article]
+      @diary[:summary] = params["トピック"]
+      @diary[:article] = make_article(params)
       if @diary.save
         flash[:success] = '日記が正常に保存されました'
         redirect_to diaries_url
@@ -39,7 +39,7 @@ class DiariesController < ApplicationController
         render :new
       end
     else
-      update_diary(old_diary, @diary.summary, @diary.article)
+      update_diary(@diary, params)
     end
   end
 
@@ -48,7 +48,7 @@ class DiariesController < ApplicationController
 
   def update
     @diary = Diary.find_by(form_id: current_form, date_of_diary: picked_date)
-    update_diary(@diary, params[:diary][:summary], params[:diary][:article])
+    update_diary(@diary, params)
   end
 
   def destroy
@@ -84,16 +84,22 @@ class DiariesController < ApplicationController
     if @diary == nil
       @diary = Diary.new(date_of_diary: picked_date, form_id: current_form)
       nil
+    else
+      @diary
     end
   end
 
-  def update_diary(diary, summary, article)
-    if diary.update(summary: summary, article: article)
+  def update_diary(diary, articles)
+    if diary.update(summary: articles["トピック"], article: make_article(articles))
       flash[:success] = '日記が正常に修正されました'
       redirect_to diaries_url
     else
       flash.now[:danger] = '日記が修正されませんでした'
       render :edit
     end
+  end
+
+  def make_article(articles)
+    JSON.generate({ "トピック": articles["トピック"], "本文": articles["本文"] }).to_s
   end
 end
