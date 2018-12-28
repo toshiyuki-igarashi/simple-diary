@@ -1,7 +1,8 @@
 class DiaryForm < ApplicationRecord
   belongs_to :user
 
-  validates :title, length: { maximum: 50 }
+  validates :title, length: { maximum: 50 }, presence: true, uniqueness: { scope: :user }
+
   has_many :diaries
 
   def self.show_all

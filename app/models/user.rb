@@ -6,7 +6,7 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   has_secure_password
 
-  has_many :diaries
+  has_many :diary_forms
 
   def self.show_all
     self.all.each do |user|

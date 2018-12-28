@@ -1,9 +1,8 @@
 class Diary < ApplicationRecord
-  belongs_to :user
   belongs_to :diary_form, :foreign_key => 'form_id'
 
   validates :summary, length: { maximum: 50 }
-  validates :date_of_diary, presence: true, uniqueness: { scope: :user }
+  validates :date_of_diary, presence: true, uniqueness: { scope: :diary_form }
 
   def get_user_id
     DiaryForm.find(self.form_id).user_id
@@ -30,7 +29,7 @@ class Diary < ApplicationRecord
 
   def self.show_all
     self.all.each do |diary|
-      puts "id:#{diary.id}, user_id:#{diary.user_id}, form_id:#{diary.form_id}, date:#{diary.date_of_diary}, summary:#{diary.summary}"
+      puts "id:#{diary.id}, form_id:#{diary.form_id}, date:#{diary.date_of_diary}, summary:#{diary.summary}"
     end
     nil
   end
