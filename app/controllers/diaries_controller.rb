@@ -102,7 +102,12 @@ class DiariesController < ApplicationController
     end
   end
 
-  def make_article(articles)
-    JSON.generate({ "トピック": articles["トピック"], "本文": articles["本文"] }).to_s
+  def make_article(article_input)
+    article = {}
+    current_form.each do |key, value|
+      article[key] = article_input[key]
+    end
+
+    JSON.generate(article).to_s
   end
 end

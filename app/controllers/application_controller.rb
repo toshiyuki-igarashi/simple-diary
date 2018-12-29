@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include SessionsHelper
   include DiariesHelper
+  include DiaryFormsHelper
 
   private
 

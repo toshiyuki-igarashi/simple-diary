@@ -8,8 +8,11 @@
       <%= submit_tag '保存', class: 'btn btn-primary col-xs-12' %>
       <div class="form-group">
         <% current_form.each do |key, value| %>
-          <% if value["文字数"] == DiaryForm::SIZE_OF_AREA %>
+          <% if value["文字数"].to_i == DiaryForm::SIZE_OF_AREA %>
             <%= text_area_tag key, @diary.get(key), { class: 'form-control', placeholder: key+"を入力してください", rows: "20" } %>
+          <% elsif value["単位"] != "" %>
+            <%= text_field_tag key, @diary.get(key), { class: 'form-inline', placeholder: key+"を入力してください", maxlength: 10 } %>
+            <span><%= value["単位"] %>&nbsp;&nbsp;</span>
           <% else %>
             <%= text_field_tag key, @diary.get(key), { class: 'form-control', placeholder: key+"を入力してください", maxlength: 50 } %>
           <% end %>

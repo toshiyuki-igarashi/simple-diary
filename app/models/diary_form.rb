@@ -12,15 +12,6 @@ class DiaryForm < ApplicationRecord
     JSON.parse(form)
   end
 
-  def size_of_text(key)
-    form = get_form
-    if form[key]["文字数"] == SIZE_OF_AREA
-      '制限なし'
-    else
-      form[key]["文字数"].to_s
-    end
-  end
-
   def self.show_all
     self.all.each do |diary_form|
       puts "id:#{diary_form.id}, user_id:#{diary_form.user_id}, title:#{diary_form.title}, form:#{diary_form.form}"

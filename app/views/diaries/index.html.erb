@@ -28,9 +28,9 @@
 
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
     <% current_form.each do |key, value| %>
-      <h4><%= key %></h4>
 
-      <% if value["文字数"] == DiaryForm::SIZE_OF_AREA %>
+      <% if value["文字数"].to_i == DiaryForm::SIZE_OF_AREA %>
+        <h4><%= key %></h4>
         <% if @diary.get(key) %>
           <% @diary.get(key).each_line do |line| %>
             <% count_leading_blank(line).times do %>
@@ -39,7 +39,10 @@
             <%= line %><BR>
           <% end %>
         <% end %>
+      <% elsif value["単位"] != "" %>
+        <%= key %>：&nbsp;<%= @diary.get(key) %>&nbsp;<%= value["単位"] %>
       <% else %>
+        <h4><%= key %></h4>
         <%= @diary.get(key) %>
       <% end %>
 
