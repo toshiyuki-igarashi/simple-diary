@@ -15,7 +15,7 @@ class DiariesController < ApplicationController
     if (@diary == nil)
       flash[:danger] = '日記は存在しません'
       redirect_to root_url
-    elsif (@diary.get_user_id != current_user.id)
+    elsif (!my_diary?(@diary))
       flash[:danger] = '他人の日記は表示できません'
       redirect_to root_url
     else
@@ -77,6 +77,10 @@ class DiariesController < ApplicationController
   end
 
   private
+
+  def my_diary?(diary)
+    diary.get_user_id == current_user.id
+  end
 
   def prepare_picked_diary
     @diary = Diary.find_by(form_id: current_form_id, date_of_diary: picked_date)

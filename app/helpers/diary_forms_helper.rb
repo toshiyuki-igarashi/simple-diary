@@ -1,0 +1,2 @@
+module DiaryFormsHelper
+end
