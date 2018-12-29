@@ -5,6 +5,8 @@ class DiaryForm < ApplicationRecord
 
   has_many :diaries
 
+  DEFAULT_FORM = '{"トピック": {"文字数": 50, "単位": ""}, "本文": {"文字数": 0, "単位": ""}}'
+
   def self.show_all
     self.all.each do |diary_form|
       puts "id:#{diary_form.id}, user_id:#{diary_form.user_id}, title:#{diary_form.title}, form:#{diary_form.form}"
@@ -14,7 +16,7 @@ class DiaryForm < ApplicationRecord
 
   def self.initialize_forms
     self.all.each do |diary_form|
-      if (diary_form.update(form: '{"トピック": 50,"本文": 0}'))
+      if (diary_form.update(form: DEFAULT_FORM))
         puts "成功：#{diary_form.id}"
       else
         puts "失敗：#{diary_form.id}"

@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     if @user.save
       flash[:success] = 'ユーザを登録しました。'
       logged_in_session
-      if (!DiaryForm.new(user_id: @user.id, title: '日記帳', form: '{"トピック": 50,"本文": 0}').save)
+      if (!DiaryForm.new(user_id: @user.id, title: '日記帳', form: DiaryForm::DEFAULT_FORM).save)
         puts "**** Alert **** diary_form hasn't saved for user (user_id: #{@user.id}) [CODE 100]"
         flash[:success] = 'プログラムエラーでユーザに失敗しました。[CODE 100]'
       end
