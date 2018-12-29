@@ -7,8 +7,13 @@
     <%= form_tag(diaries_path, method: :post) do %>
       <%= submit_tag '保存', class: 'btn btn-primary col-xs-12' %>
       <div class="form-group">
-        <%= text_field_tag "トピック", @diary.get("トピック"), { class: 'form-control', placeholder: "その日のトピックを入力してください", maxlength: 50 } %>
-        <%= text_area_tag "本文", @diary.get("本文"), { class: 'form-control', placeholder: "その日の出来事を入力してください", rows: "20" } %>
+        <% current_form.each do |key, value| %>
+          <% if value["文字数"] == DiaryForm::SIZE_OF_AREA %>
+            <%= text_area_tag key, @diary.get(key), { class: 'form-control', placeholder: key+"を入力してください", rows: "20" } %>
+          <% else %>
+            <%= text_field_tag key, @diary.get(key), { class: 'form-control', placeholder: key+"を入力してください", maxlength: 50 } %>
+          <% end %>
+        <% end %>
       </div>
     <% end %>
   </div>

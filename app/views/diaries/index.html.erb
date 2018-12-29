@@ -4,20 +4,21 @@
       <thead>
         <tr>
           <th scope="col" class="col-xs-7 col-sm-3 col-ls-1">日付</th>
-          <th scope="col">トピック</th>
+          <th scope="col"><%= first_key_of_current_form %></th>
         </tr>
       </thead>
       <tbody>
         <% @diaries.each do |diary| %>
           <tr>
             <td class="col-xs-7 col-sm-3 col-ls-1"><%= link_to date_to_string(diary[:date_of_diary]), diary_path(id: diary.id) %></td>
-            <td><%= diary.get("トピック") %></td>
+            <td><%= diary.get(first_key_of_current_form) %></td>
           </tr>
         <% end %>
         <% session[:search_keyword] = nil %>
       </tbody>
     </table>
   </div>
+
 <% else %>
   <div class="row">
     <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
@@ -26,18 +27,25 @@
   </div>
 
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-    <h4>トピック</h4>
-    <%= @diary.get("トピック") %>
-    <HR>
-    <h4>本文</h4>
-    <% if @diary.get("本文") %>
-      <% @diary.get("本文").each_line do |line| %>
-        <% count_leading_blank(line).times do %>
-          &nbsp;
+    <% current_form.each do |key, value| %>
+      <h4><%= key %></h4>
+
+      <% if value["文字数"] == DiaryForm::SIZE_OF_AREA %>
+        <% if @diary.get(key) %>
+          <% @diary.get(key).each_line do |line| %>
+            <% count_leading_blank(line).times do %>
+              &nbsp;
+            <% end %>
+            <%= line %><BR>
+          <% end %>
         <% end %>
-        <%= line %><BR>
+      <% else %>
+        <%= @diary.get(key) %>
       <% end %>
+
+      <HR>
     <% end %>
+
     <% if @diary[:id] %>
       <div class="row">
         <br class="col-xs-12">

@@ -6,6 +6,7 @@ class DiaryForm < ApplicationRecord
   has_many :diaries
 
   DEFAULT_FORM = '{"トピック": {"文字数": 50, "単位": ""}, "本文": {"文字数": 0, "単位": ""}}'
+  SIZE_OF_AREA = 0
 
   def self.show_all
     self.all.each do |diary_form|

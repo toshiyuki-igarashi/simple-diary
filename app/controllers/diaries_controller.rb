@@ -6,7 +6,7 @@ class DiariesController < ApplicationController
 
   def index
     if (session[:search_keyword])
-      @diaries = Diary.search_diary(session[:search_keyword], current_form)
+      @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
     end
   end
 
@@ -46,7 +46,7 @@ class DiariesController < ApplicationController
   end
 
   def update
-    @diary = Diary.find_by(form_id: current_form, date_of_diary: picked_date)
+    @diary = Diary.find_by(form_id: current_form_id, date_of_diary: picked_date)
     update_diary(@diary, params)
   end
 
@@ -79,9 +79,9 @@ class DiariesController < ApplicationController
   private
 
   def prepare_picked_diary
-    @diary = Diary.find_by(form_id: current_form, date_of_diary: picked_date)
+    @diary = Diary.find_by(form_id: current_form_id, date_of_diary: picked_date)
     if @diary == nil
-      @diary = Diary.new(date_of_diary: picked_date, form_id: current_form)
+      @diary = Diary.new(date_of_diary: picked_date, form_id: current_form_id)
       nil
     else
       @diary
