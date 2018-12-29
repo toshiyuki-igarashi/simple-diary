@@ -10,12 +10,16 @@ module SessionsHelper
     !!current_user
   end
 
+  def current_diary_form
+    @current_diary_form ||= DiaryForm.find_by(user_id: current_user.id)
+  end
+
   def current_form_id
-    @current_form_id ||= DiaryForm.find_by(user_id: current_user.id).id
+    @current_form_id ||= current_diary_form.id
   end
 
   def current_form
-    @current_form ||= JSON.parse(DiaryForm.find_by(user_id: current_user.id).form)
+    @current_form ||= current_diary_form.get_form
   end
 
   def first_key_of_current_form
