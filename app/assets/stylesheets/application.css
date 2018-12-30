@@ -28,3 +28,11 @@
 #diary_info {
   margin-top: 40px;
 }
+
+.form_item {
+  margin-left: 20px;
+}
+
+#form_term_label {
+  text-align: right;
+}

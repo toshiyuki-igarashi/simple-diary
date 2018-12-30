@@ -5,13 +5,20 @@
     <%= form_tag(diary_form_url(id: current_form_id), method: :PATCH) do %>
       <div class="form-group">
         <% current_form.each do |key, value| %>
-          <%= text_field_tag "項目名"+key, key, { class: 'form-inline col-xs-3', placeholder: "項目名", maxlength: 50 } %>
-          <%= text_field_tag "文字数"+key, value["文字数"], { class: 'form-inline col-xs-4', placeholder: "文字数(制限無⇒空欄)", maxlength: 50 } %>
-          <%= text_field_tag "単位"+key, value["単位"], { class: 'form-inline col-xs-5', placeholder: "単位(例 kg,必要無⇒空欄)", maxlength: 50 } %>
+          <div class="row">
+            <%= text_field_tag "項目名"+key, key, { class: 'form-inline col-xs-3', placeholder: "項目名", maxlength: 50 } %>
+            <%= text_field_tag "文字数"+key, value["文字数"], { class: 'form-inline col-xs-4', placeholder: "文字数(制限無⇒空欄)", maxlength: 50 } %>
+            <%= text_field_tag "単位"+key, value["単位"], { class: 'form-inline col-xs-4', placeholder: "単位(例 kg,必要無⇒空欄)", maxlength: 50 } %>
+            <%= check_box_tag key, 'select', false, { class: 'form_item col-xs-1' } %>
+          </div>
         <% end %>
       </div>
-      <%= submit_tag '保存', class: 'btn btn-primary col-xs-2' %>
-      <%= submit_tag '項目の追加', class: 'btn btn-primary col-xs-2' %>
+      <%= submit_tag '保存', class: 'btn btn-primary col-xs-2 col-lg-1' %>
+      <span class='col-xs-3 col-lg-2' id="form_term_label">項目を</span>
+      <%= submit_tag '追加', class: 'btn btn-primary col-xs-2 col-lg-1' %>
+      <%= submit_tag '上', class: 'btn btn-primary col-xs-1' %>
+      <%= submit_tag '下', class: 'btn btn-primary col-xs-1' %>
+      <%= submit_tag '削除', class: 'btn btn-primary col-xs-2 col-lg-1' %>
     <% end %>
   </div>
 </div>
