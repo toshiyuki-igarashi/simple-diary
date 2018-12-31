@@ -27,17 +27,14 @@
   </div>
 
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-    <% inline = 0 %>
+    <% inline = false %>
     <% current_form.each do |key, value| %>
 
       <% if value["文字数"].to_i == DiaryForm::SIZE_OF_AREA %>
-        <% if inline != 0 %>
+        <% if inline %>
           </div>
-          <% if (inline < 12) %>
-            <BR />
-          <% end %>
           <HR />
-          <% inline = 0 %>
+          <% inline = false %>
         <% end %>
         <h4><%= key %></h4>
         <% if @diary.get(key) %>
@@ -49,30 +46,25 @@
           <% end %>
         <% end %>
       <% elsif value["単位"] != "" %>
-        <% if inline == 0 %>
-          <div>
+        <% if !inline %>
+          <div class="row">
+          <% inline = true %>
         <% end %>
-        <% inline += 4 %>
-        <% inline = 4 if inline >= 12 %>
-        <span class="col-xs-4"><%= key %>：&nbsp;<%= @diary.get(key) %>&nbsp;<%= value["単位"] %></span>
+        <span class="col-xs-12 col-sm-4"><%= key %>：&nbsp;<%= @diary.get(key) %>&nbsp;<%= value["単位"] %></span>
       <% else %>
-        <% if inline != 0 %>
+        <% if inline %>
           </div>
-          <% if (inline < 12) %>
-            <BR />
-          <% end %>
           <HR />
-          <% inline = 0 %>
+          <% inline = false %>
         <% end %>
         <h4><%= key %></h4>
         <%= @diary.get(key) %>
       <% end %>
-
-      <% if inline == 0 %>
+      <% if !inline %>
         <HR />
       <% end %>
     <% end %>
-    <% if inline != 0 %>
+    <% if inline %>
       <HR />
     <% end %>
 

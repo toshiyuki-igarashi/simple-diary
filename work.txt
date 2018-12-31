@@ -1,0 +1,100 @@
+2018-12-31T12:02:21.661660+00:00 app[web.1]: => Run `rails server -h` for more startup options
+2018-12-31T12:02:21.661662+00:00 app[web.1]: Puma starting in single mode...
+2018-12-31T12:02:21.661673+00:00 app[web.1]: * Version 3.12.0 (ruby 2.4.5-p335), codename: Llamas in Pajamas
+2018-12-31T12:02:21.661675+00:00 app[web.1]: * Min threads: 5, max threads: 5
+2018-12-31T12:02:21.661676+00:00 app[web.1]: * Environment: production
+2018-12-31T12:02:21.661750+00:00 app[web.1]: * Listening on tcp://0.0.0.0:52683
+2018-12-31T12:02:21.662131+00:00 app[web.1]: Use Ctrl-C to stop
+2018-12-31T12:02:24.739507+00:00 app[web.1]: I, [2018-12-31T12:02:24.739379 #4]  INFO -- : [08211f35-5f0b-4efa-8478-7ecb57740158] Started GET "/" for 64.233.172.143 at 2018-12-31 12:02:24 +0000
+2018-12-31T12:02:24.745037+00:00 app[web.1]: I, [2018-12-31T12:02:24.744953 #4]  INFO -- : [08211f35-5f0b-4efa-8478-7ecb57740158] Processing by ToppagesController#index as HTML
+2018-12-31T12:02:24.757046+00:00 app[web.1]: I, [2018-12-31T12:02:24.756931 #4]  INFO -- : [08211f35-5f0b-4efa-8478-7ecb57740158]   Rendering toppages/index.html.erb within layouts/application
+2018-12-31T12:02:26.442946+00:00 app[web.1]: D, [2018-12-31T12:02:26.442796 #4] DEBUG -- : [08211f35-5f0b-4efa-8478-7ecb57740158]   [1m[36mUser Load (349.8ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+2018-12-31T12:02:26.886682+00:00 heroku[router]: at=info method=GET path="/" host=cryptic-tor-82554.herokuapp.com request_id=08211f35-5f0b-4efa-8478-7ecb57740158 fwd="126.229.2.19,64.233.172.143" dyno=web.1 connect=0ms service=2149ms status=200 bytes=2859 protocol=https
+2018-12-31T12:02:26.876744+00:00 app[web.1]: I, [2018-12-31T12:02:26.876626 #4]  INFO -- : [08211f35-5f0b-4efa-8478-7ecb57740158]   Rendered toppages/index.html.erb within layouts/application (2119.4ms)
+2018-12-31T12:02:26.881525+00:00 app[web.1]: D, [2018-12-31T12:02:26.881425 #4] DEBUG -- : [08211f35-5f0b-4efa-8478-7ecb57740158]   [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+2018-12-31T12:02:26.882158+00:00 app[web.1]: I, [2018-12-31T12:02:26.882068 #4]  INFO -- : [08211f35-5f0b-4efa-8478-7ecb57740158]   Rendered layouts/_navbar.html.erb (2.6ms)
+2018-12-31T12:02:26.883848+00:00 app[web.1]: I, [2018-12-31T12:02:26.883764 #4]  INFO -- : [08211f35-5f0b-4efa-8478-7ecb57740158]   Rendered layouts/_flash_messages.html.erb (0.6ms)
+2018-12-31T12:02:26.884396+00:00 app[web.1]: I, [2018-12-31T12:02:26.884321 #4]  INFO -- : [08211f35-5f0b-4efa-8478-7ecb57740158] Completed 200 OK in 2139ms (Views: 2129.0ms | ActiveRecord: 1931.9ms)
+2018-12-31T12:02:27.039667+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=cryptic-tor-82554.herokuapp.com request_id=89d8fe98-6482-4575-ba49-33fde08cffb0 fwd="126.229.2.19,64.233.172.136" dyno=web.1 connect=0ms service=15ms status=200 bytes=143 protocol=https
+2018-12-31T12:09:22.000000+00:00 app[api]: Build started by user ged00475@nifty.com
+2018-12-31T12:09:53.526728+00:00 heroku[web.1]: Restarting
+2018-12-31T12:09:53.334121+00:00 app[api]: Deploy 1aa77755 by user ged00475@nifty.com
+2018-12-31T12:09:54.465241+00:00 app[web.1]: - Gracefully stopping, waiting for requests to finish
+2018-12-31T12:09:54.473640+00:00 app[web.1]: === puma shutdown: 2018-12-31 12:09:54 +0000 ===
+2018-12-31T12:09:54.473682+00:00 app[web.1]: - Goodbye!
+2018-12-31T12:09:54.473915+00:00 app[web.1]: Exiting
+2018-12-31T12:09:54.450268+00:00 heroku[web.1]: Stopping all processes with SIGTERM
+2018-12-31T12:09:54.546918+00:00 heroku[web.1]: Process exited with status 143
+2018-12-31T12:09:59.408343+00:00 heroku[web.1]: Starting process with command `bin/rails server -p 9775 -e production`
+2018-12-31T12:09:59.000000+00:00 app[api]: Build succeeded
+2018-12-31T12:10:07.019464+00:00 heroku[web.1]: State changed from starting to up
+2018-12-31T12:10:06.857186+00:00 app[web.1]: => Booting Puma
+2018-12-31T12:10:06.857214+00:00 app[web.1]: => Rails 5.0.7.1 application starting in production on http://0.0.0.0:9775
+2018-12-31T12:10:06.857220+00:00 app[web.1]: => Run `rails server -h` for more startup options
+2018-12-31T12:10:06.857226+00:00 app[web.1]: Puma starting in single mode...
+2018-12-31T12:10:06.857234+00:00 app[web.1]: * Version 3.12.0 (ruby 2.4.5-p335), codename: Llamas in Pajamas
+2018-12-31T12:10:06.857244+00:00 app[web.1]: * Min threads: 5, max threads: 5
+2018-12-31T12:10:06.857246+00:00 app[web.1]: * Environment: production
+2018-12-31T12:10:06.857397+00:00 app[web.1]: * Listening on tcp://0.0.0.0:9775
+2018-12-31T12:10:06.857836+00:00 app[web.1]: Use Ctrl-C to stop
+2018-12-31T12:10:07.897402+00:00 app[api]: Starting process with command `rails c` by user ged00475@nifty.com
+2018-12-31T12:10:14.001162+00:00 heroku[run.5459]: State changed from starting to up
+2018-12-31T12:10:14.072374+00:00 heroku[run.5459]: Awaiting client
+2018-12-31T12:10:14.122606+00:00 heroku[run.5459]: Starting process with command `rails c`
+2018-12-31T12:10:43.254347+00:00 heroku[run.5459]: State changed from up to complete
+2018-12-31T12:10:43.234699+00:00 heroku[run.5459]: Process exited with status 0
+2018-12-31T12:10:54.088683+00:00 app[web.1]: I, [2018-12-31T12:10:54.088498 #4]  INFO -- : [67d3cd3a-dd91-477c-9528-f82b932f0da8] Started GET "/" for 126.229.2.19 at 2018-12-31 12:10:54 +0000
+2018-12-31T12:10:54.140584+00:00 app[web.1]: I, [2018-12-31T12:10:54.140435 #4]  INFO -- : [67d3cd3a-dd91-477c-9528-f82b932f0da8] Processing by ToppagesController#index as HTML
+2018-12-31T12:10:54.157410+00:00 app[web.1]: I, [2018-12-31T12:10:54.157260 #4]  INFO -- : [67d3cd3a-dd91-477c-9528-f82b932f0da8]   Rendering toppages/index.html.erb within layouts/application
+2018-12-31T12:10:54.231376+00:00 app[web.1]: D, [2018-12-31T12:10:54.231219 #4] DEBUG -- : [67d3cd3a-dd91-477c-9528-f82b932f0da8]   [1m[36mUser Load (2.2ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+2018-12-31T12:10:54.246479+00:00 app[web.1]: I, [2018-12-31T12:10:54.246331 #4]  INFO -- : [67d3cd3a-dd91-477c-9528-f82b932f0da8]   Rendered toppages/index.html.erb within layouts/application (88.8ms)
+2018-12-31T12:10:54.256639+00:00 app[web.1]: D, [2018-12-31T12:10:54.256505 #4] DEBUG -- : [67d3cd3a-dd91-477c-9528-f82b932f0da8]   [1m[36mCACHE (0.0ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+2018-12-31T12:10:54.257484+00:00 app[web.1]: I, [2018-12-31T12:10:54.257384 #4]  INFO -- : [67d3cd3a-dd91-477c-9528-f82b932f0da8]   Rendered layouts/_navbar.html.erb (6.9ms)
+2018-12-31T12:10:54.259783+00:00 app[web.1]: I, [2018-12-31T12:10:54.259725 #4]  INFO -- : [67d3cd3a-dd91-477c-9528-f82b932f0da8]   Rendered layouts/_flash_messages.html.erb (1.0ms)
+2018-12-31T12:10:54.260308+00:00 app[web.1]: I, [2018-12-31T12:10:54.260248 #4]  INFO -- : [67d3cd3a-dd91-477c-9528-f82b932f0da8] Completed 200 OK in 119ms (Views: 104.9ms | ActiveRecord: 27.0ms)
+2018-12-31T12:10:54.261802+00:00 heroku[router]: at=info method=GET path="/" host=cryptic-tor-82554.herokuapp.com request_id=67d3cd3a-dd91-477c-9528-f82b932f0da8 fwd="126.229.2.19" dyno=web.1 connect=0ms service=187ms status=200 bytes=2859 protocol=https
+2018-12-31T12:10:54.571729+00:00 heroku[router]: at=info method=GET path="/assets/application-25bb2c79ed1d6dba9336b782c26a06b0196597d789d533fa0886c4725147bc0f.css" host=cryptic-tor-82554.herokuapp.com request_id=6d0b79ee-8870-4a5c-8e00-1d473d780366 fwd="126.229.2.19" dyno=web.1 connect=0ms service=3ms status=200 bytes=1572 protocol=https
+2018-12-31T12:10:55.592749+00:00 heroku[router]: at=info method=GET path="/favicon.ico" host=cryptic-tor-82554.herokuapp.com request_id=18f5cc5c-efcc-423e-b0ec-1459acfe8c61 fwd="126.229.2.19" dyno=web.1 connect=1ms service=2ms status=200 bytes=143 protocol=https
+2018-12-31T12:10:57.542079+00:00 heroku[router]: at=info method=GET path="/login" host=cryptic-tor-82554.herokuapp.com request_id=5f679dde-6d62-4075-a129-5d6a9ce03ee7 fwd="126.229.2.19" dyno=web.1 connect=1ms service=66ms status=200 bytes=3695 protocol=https
+2018-12-31T12:10:57.492349+00:00 app[web.1]: I, [2018-12-31T12:10:57.492210 #4]  INFO -- : [5f679dde-6d62-4075-a129-5d6a9ce03ee7] Started GET "/login" for 126.229.2.19 at 2018-12-31 12:10:57 +0000
+2018-12-31T12:10:57.494881+00:00 app[web.1]: I, [2018-12-31T12:10:57.494787 #4]  INFO -- : [5f679dde-6d62-4075-a129-5d6a9ce03ee7] Processing by SessionsController#new as HTML
+2018-12-31T12:10:57.498334+00:00 app[web.1]: I, [2018-12-31T12:10:57.498100 #4]  INFO -- : [5f679dde-6d62-4075-a129-5d6a9ce03ee7]   Rendering sessions/new.html.erb within layouts/application
+2018-12-31T12:10:57.512059+00:00 app[web.1]: I, [2018-12-31T12:10:57.511950 #4]  INFO -- : [5f679dde-6d62-4075-a129-5d6a9ce03ee7]   Rendered sessions/new.html.erb within layouts/application (13.5ms)
+2018-12-31T12:10:57.527768+00:00 app[web.1]: D, [2018-12-31T12:10:57.527641 #4] DEBUG -- : [5f679dde-6d62-4075-a129-5d6a9ce03ee7]   [1m[36mUser Load (3.6ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" IS NULL LIMIT $1[0m  [["LIMIT", 1]]
+2018-12-31T12:10:57.528432+00:00 app[web.1]: I, [2018-12-31T12:10:57.528372 #4]  INFO -- : [5f679dde-6d62-4075-a129-5d6a9ce03ee7]   Rendered layouts/_navbar.html.erb (15.2ms)
+2018-12-31T12:10:57.529116+00:00 app[web.1]: I, [2018-12-31T12:10:57.529054 #4]  INFO -- : [5f679dde-6d62-4075-a129-5d6a9ce03ee7]   Rendered layouts/_flash_messages.html.erb (0.1ms)
+2018-12-31T12:10:57.530690+00:00 app[web.1]: I, [2018-12-31T12:10:57.530625 #4]  INFO -- : [5f679dde-6d62-4075-a129-5d6a9ce03ee7] Completed 200 OK in 36ms (Views: 30.0ms | ActiveRecord: 3.6ms)
+2018-12-31T12:10:59.299685+00:00 app[web.1]: I, [2018-12-31T12:10:59.299501 #4]  INFO -- : [c0c64f51-0272-4640-8885-5d10e2835a56] Started POST "/login" for 126.229.2.19 at 2018-12-31 12:10:59 +0000
+2018-12-31T12:10:59.301634+00:00 app[web.1]: I, [2018-12-31T12:10:59.301535 #4]  INFO -- : [c0c64f51-0272-4640-8885-5d10e2835a56] Processing by SessionsController#create as HTML
+2018-12-31T12:10:59.301909+00:00 app[web.1]: I, [2018-12-31T12:10:59.301691 #4]  INFO -- : [c0c64f51-0272-4640-8885-5d10e2835a56]   Parameters: {"utf8"=>"✓", "authenticity_token"=>"qRbWr4auoPdmHciGDLaXoCGoM1zObHJ4x9yl11f80TQ9yqd9KMfhpkbzLaqZ6lYJ35EEPCyvY0x8wKOf9HlI+g==", "session"=>{"email"=>"taro.yamada@test.com", "password"=>"[FILTERED]"}, "commit"=>"Log in"}
+2018-12-31T12:10:59.440381+00:00 app[web.1]: D, [2018-12-31T12:10:59.440258 #4] DEBUG -- : [c0c64f51-0272-4640-8885-5d10e2835a56]   [1m[36mUser Load (20.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "taro.yamada@test.com"], ["LIMIT", 1]]
+2018-12-31T12:10:59.668987+00:00 heroku[router]: at=info method=POST path="/login" host=cryptic-tor-82554.herokuapp.com request_id=c0c64f51-0272-4640-8885-5d10e2835a56 fwd="126.229.2.19" dyno=web.1 connect=1ms service=383ms status=302 bytes=1057 protocol=https
+2018-12-31T12:10:59.668738+00:00 app[web.1]: I, [2018-12-31T12:10:59.667110 #4]  INFO -- : [c0c64f51-0272-4640-8885-5d10e2835a56] Redirected to https://cryptic-tor-82554.herokuapp.com/diaries/new
+2018-12-31T12:10:59.668760+00:00 app[web.1]: I, [2018-12-31T12:10:59.667951 #4]  INFO -- : [c0c64f51-0272-4640-8885-5d10e2835a56] Completed 302 Found in 366ms (ActiveRecord: 33.3ms)
+2018-12-31T12:11:00.056342+00:00 app[web.1]: I, [2018-12-31T12:11:00.056252 #4]  INFO -- : [0c23ba79-f760-4877-8d18-0b07a349a08f] Started GET "/diaries/new" for 126.229.2.19 at 2018-12-31 12:11:00 +0000
+2018-12-31T12:11:00.066927+00:00 app[web.1]: I, [2018-12-31T12:11:00.066799 #4]  INFO -- : [0c23ba79-f760-4877-8d18-0b07a349a08f] Processing by DiariesController#new as HTML
+2018-12-31T12:11:00.095657+00:00 app[web.1]: D, [2018-12-31T12:11:00.095531 #4] DEBUG -- : [0c23ba79-f760-4877-8d18-0b07a349a08f]   [1m[36mUser Load (1.5ms)[0m  [1m[34mSELECT  "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+2018-12-31T12:11:00.111724+00:00 app[web.1]: D, [2018-12-31T12:11:00.111576 #4] DEBUG -- : [0c23ba79-f760-4877-8d18-0b07a349a08f]   [1m[36mDiaryForm Load (4.0ms)[0m  [1m[34mSELECT  "diary_forms".* FROM "diary_forms" WHERE "diary_forms"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+2018-12-31T12:11:00.239862+00:00 app[web.1]: D, [2018-12-31T12:11:00.239745 #4] DEBUG -- : [0c23ba79-f760-4877-8d18-0b07a349a08f]   [1m[36mDiary Load (81.2ms)[0m  [1m[34mSELECT  "diaries".* FROM "diaries" WHERE "diaries"."form_id" = $1 AND "diaries"."date_of_diary" = $2 LIMIT $3[0m  [["form_id", 1], ["date_of_diary", "2018-12-31"], ["LIMIT", 1]]
+2018-12-31T12:11:00.306019+00:00 app[web.1]: I, [2018-12-31T12:11:00.305882 #4]  INFO -- : [0c23ba79-f760-4877-8d18-0b07a349a08f]   Rendering diaries/new.html.erb within layouts/application
+2018-12-31T12:11:00.340904+00:00 app[web.1]: I, [2018-12-31T12:11:00.340777 #4]  INFO -- : [0c23ba79-f760-4877-8d18-0b07a349a08f]   Rendered diaries/_datepick.html.erb (18.1ms)
+2018-12-31T12:11:00.342255+00:00 app[web.1]: I, [2018-12-31T12:11:00.342189 #4]  INFO -- : [0c23ba79-f760-4877-8d18-0b07a349a08f]   Rendered diaries/_diary_input.html.erb (22.3ms)
+2018-12-31T12:11:00.342405+00:00 app[web.1]: I, [2018-12-31T12:11:00.342342 #4]  INFO -- : [0c23ba79-f760-4877-8d18-0b07a349a08f]   Rendered diaries/new.html.erb within layouts/application (36.3ms)
+2018-12-31T12:11:00.342668+00:00 app[web.1]: I, [2018-12-31T12:11:00.342596 #4]  INFO -- : [0c23ba79-f760-4877-8d18-0b07a349a08f] Completed 500 Internal Server Error in 273ms (ActiveRecord: 101.9ms)
+2018-12-31T12:11:00.359859+00:00 app[web.1]: F, [2018-12-31T12:11:00.359092 #4] FATAL -- : [0c23ba79-f760-4877-8d18-0b07a349a08f]
+2018-12-31T12:11:00.359926+00:00 app[web.1]: F, [2018-12-31T12:11:00.359855 #4] FATAL -- : [0c23ba79-f760-4877-8d18-0b07a349a08f] ActionView::Template::Error (no implicit conversion of String into Integer):
+2018-12-31T12:11:00.367781+00:00 app[web.1]: F, [2018-12-31T12:11:00.367659 #4] FATAL -- : [0c23ba79-f760-4877-8d18-0b07a349a08f]      9:       <div class="form-group">
+2018-12-31T12:11:00.367785+00:00 app[web.1]: [0c23ba79-f760-4877-8d18-0b07a349a08f]     10:         <% inline = 0 %>
+2018-12-31T12:11:00.367787+00:00 app[web.1]: [0c23ba79-f760-4877-8d18-0b07a349a08f]     11:         <% current_form.each do |key, value| %>
+2018-12-31T12:11:00.367789+00:00 app[web.1]: [0c23ba79-f760-4877-8d18-0b07a349a08f]     12:           <% if value["文字数"].to_i == DiaryForm::SIZE_OF_AREA %>
+2018-12-31T12:11:00.367791+00:00 app[web.1]: [0c23ba79-f760-4877-8d18-0b07a349a08f]     13:             <% if inline != 0 %>
+2018-12-31T12:11:00.367792+00:00 app[web.1]: [0c23ba79-f760-4877-8d18-0b07a349a08f]     14:               </div>
+2018-12-31T12:11:00.367794+00:00 app[web.1]: [0c23ba79-f760-4877-8d18-0b07a349a08f]     15:               <% inline = 0 %>
+2018-12-31T12:11:00.367832+00:00 app[web.1]: F, [2018-12-31T12:11:00.367774 #4] FATAL -- : [0c23ba79-f760-4877-8d18-0b07a349a08f]
+2018-12-31T12:11:00.367922+00:00 app[web.1]: F, [2018-12-31T12:11:00.367858 #4] FATAL -- : [0c23ba79-f760-4877-8d18-0b07a349a08f] app/views/diaries/_diary_input.html.erb:12:in `[]'
+2018-12-31T12:11:00.367926+00:00 app[web.1]: [0c23ba79-f760-4877-8d18-0b07a349a08f] app/views/diaries/_diary_input.html.erb:12:in `block (2 levels) in _app_views_diaries__diary_input_html_erb___2641064240288975473_47062243991860'
+2018-12-31T12:11:00.367928+00:00 app[web.1]: [0c23ba79-f760-4877-8d18-0b07a349a08f] app/views/diaries/_diary_input.html.erb:11:in `each'
+2018-12-31T12:11:00.367930+00:00 app[web.1]: [0c23ba79-f760-4877-8d18-0b07a349a08f] app/views/diaries/_diary_input.html.erb:11:in `block in _app_views_diaries__diary_input_html_erb___2641064240288975473_47062243991860'
+2018-12-31T12:11:00.367932+00:00 app[web.1]: [0c23ba79-f760-4877-8d18-0b07a349a08f] app/views/diaries/_diary_input.html.erb:7:in `_app_views_diaries__diary_input_html_erb___2641064240288975473_47062243991860'
+2018-12-31T12:11:00.367934+00:00 app[web.1]: [0c23ba79-f760-4877-8d18-0b07a349a08f] app/views/diaries/new.html.erb:1:in `_app_views_diaries_new_html_erb__2656543840909842454_47062244231960'
+2018-12-31T12:11:00.368323+00:00 heroku[router]: at=info method=GET path="/diaries/new" host=cryptic-tor-82554.herokuapp.com request_id=0c23ba79-f760-4877-8d18-0b07a349a08f fwd="126.229.2.19" dyno=web.1 connect=1ms service=317ms status=500 bytes=1827 protocol=https
