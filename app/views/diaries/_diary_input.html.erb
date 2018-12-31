@@ -7,15 +7,37 @@
     <%= form_tag(diaries_path, method: :post) do %>
       <%= submit_tag '保存', class: 'btn btn-primary col-xs-12' %>
       <div class="form-group">
+        <% inline = 0 %>
         <% current_form.each do |key, value| %>
           <% if value["文字数"].to_i == DiaryForm::SIZE_OF_AREA %>
+            <% if inline != 0 %>
+              </div>
+              <% inline = 0 %>
+            <% end %>
             <%= text_area_tag key, @diary.get(key), { class: 'form-control', placeholder: key, rows: "20" } %>
           <% elsif value["単位"] != "" %>
-            <%= text_field_tag key, @diary.get(key), { class: 'form-inline', placeholder: key, maxlength: 10 } %>
-            <span><%= value["単位"] %>&nbsp;&nbsp;</span>
+            <% if inline == 0 %>
+              <div class="row diary_inline_input">
+            <% end %>
+            <% if inline > 2 %>
+              </div>
+              <div class="row diary_inline_input">
+              <% inline = 0 %>
+            <% end %>
+            <% inline += 1 %>
+            <%= text_field_tag key, @diary.get(key), { class: 'form-inline col-xs-2', placeholder: key, maxlength: 10 } %>
+            <span class='col-xs-2'><%= value["単位"] %>&nbsp;&nbsp;</span>
           <% else %>
+            <% if inline != 0 %>
+              </div>
+              <% inline = 0 %>
+            <% end %>
             <%= text_field_tag key, @diary.get(key), { class: 'form-control', placeholder: key, maxlength: 50 } %>
           <% end %>
+        <% end %>
+        <% if inline != 0 %>
+          </div>
+          <% inline = 0 %>
         <% end %>
       </div>
     <% end %>

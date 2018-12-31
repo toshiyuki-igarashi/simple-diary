@@ -36,3 +36,7 @@
 #form_term_label {
   text-align: right;
 }
+
+.diary_inline_input {
+  margin-left: 5px;
+}

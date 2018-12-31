@@ -1,5 +1,6 @@
 class DiaryFormsController < ApplicationController
   before_action :require_user_logged_in
+  before_action :search
 
   def edit
   end
