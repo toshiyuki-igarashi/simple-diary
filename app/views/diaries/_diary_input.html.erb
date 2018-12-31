@@ -18,15 +18,14 @@
           <% elsif value["単位"] != "" %>
             <% if inline == 0 %>
               <div class="row diary_inline_input">
-            <% end %>
-            <% if inline > 2 %>
+            <% elsif inline == 2 %>
               </div>
               <div class="row diary_inline_input">
               <% inline = 0 %>
             <% end %>
             <% inline += 1 %>
-            <%= text_field_tag key, @diary.get(key), { class: 'form-inline col-xs-2', placeholder: key, maxlength: 10 } %>
-            <span class='col-xs-2'><%= value["単位"] %>&nbsp;&nbsp;</span>
+            <%= text_field_tag key, @diary.get(key), { class: 'form-inline col-xs-3', placeholder: key, maxlength: 10 } %>
+            <span class='col-xs-3'><%= value["単位"] %>&nbsp;&nbsp;</span>
           <% else %>
             <% if inline != 0 %>
               </div>
