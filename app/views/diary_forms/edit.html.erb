@@ -6,10 +6,10 @@
       <div class="form-group">
         <% current_form.each do |key, value| %>
           <div class="row">
-            <%= text_field_tag "項目名"+key, key, { class: 'form-inline col-xs-3', placeholder: "項目名", maxlength: 50 } %>
-            <%= text_field_tag "文字数"+key, value["文字数"], { class: 'form-inline col-xs-4', placeholder: "文字数(制限無⇒空欄)", maxlength: 50 } %>
-            <%= text_field_tag "単位"+key, value["単位"], { class: 'form-inline col-xs-4', placeholder: "単位(例 kg,必要無⇒空欄)", maxlength: 50 } %>
             <%= check_box_tag key, 'select', false, { class: 'form_item col-xs-1' } %>
+            <%= text_field_tag "項目名"+key, key, { class: 'form-inline col-xs-3', placeholder: "項目名", maxlength: 50 } %>
+            <%= text_field_tag "文字数"+key, text_size(value["文字数"]), { class: 'form-inline col-xs-4', placeholder: "文字数(制限無⇒空欄)", maxlength: 50 } %>
+            <%= text_field_tag "単位"+key, value["単位"], { class: 'form-inline col-xs-4', placeholder: "単位(例 kg,必要無⇒空欄)", maxlength: 50 } %>
           </div>
         <% end %>
       </div>
