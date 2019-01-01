@@ -30,7 +30,7 @@
     <% inline = false %>
     <% current_form.each do |key, value| %>
 
-      <% if value["文字数"] == "長文" %>
+      <% if value["タイプ"] == "長文" %>
         <% if inline %>
           </div>
           <HR />
@@ -45,7 +45,7 @@
             <%= line %><BR>
           <% end %>
         <% end %>
-      <% elsif value["文字数"] == "数字" %>
+      <% elsif value["タイプ"] == "数字" %>
         <% if !inline %>
           <div class="row">
           <% inline = true %>

@@ -8,7 +8,7 @@
           <div class="row">
             <%= check_box_tag key, 'select', false, { class: 'form_item col-xs-1' } %>
             <%= text_field_tag "項目名"+key, key, { class: 'form-inline col-xs-3', placeholder: "項目名", maxlength: 50 } %>
-            <%= select_tag "文字数"+key, options_for_select({"短文" => "短文", "長文" => "長文", "数字" => "数字"}, value["文字数"]), { class: 'form-inline col-xs-4' } %>
+            <%= select_tag "タイプ"+key, options_for_select({"短文" => "短文", "長文" => "長文", "数字" => "数字"}, value["タイプ"]), { class: 'form-inline col-xs-4' } %>
             <%= text_field_tag "単位"+key, value["単位"], { class: 'form-inline col-xs-4', placeholder: "単位(例 kg,必要無⇒空欄)", maxlength: 50 } %>
           </div>
         <% end %>

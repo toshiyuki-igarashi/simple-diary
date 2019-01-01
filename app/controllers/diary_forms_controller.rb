@@ -41,8 +41,8 @@ class DiaryFormsController < ApplicationController
     params.each do |key, value|
       if (key[0..2] == "項目名")
         save_item(items, "項目名", key[3..-1], value)
-      elsif (key[0..2] == "文字数")
-        save_item(items, "文字数", key[3..-1], value)
+      elsif (key[0..2] == "タイプ")
+        save_item(items, "タイプ", key[3..-1], value)
       elsif (key[0..1] == "単位")
         save_item(items, "単位", key[2..-1], value)
       end
@@ -55,7 +55,7 @@ class DiaryFormsController < ApplicationController
     form = {}
     items.each do |key, value|
       form[value["項目名"]] = {}
-      form[value["項目名"]] = {"文字数": value["文字数"], "単位": value["単位"]}
+      form[value["項目名"]] = {"タイプ": value["タイプ"], "単位": value["単位"]}
     end
     form
   end
@@ -64,13 +64,13 @@ class DiaryFormsController < ApplicationController
     form = {}
     items.each do |key, value|
       if selected.include?(key)
-        form[""] = { "文字数": "", "単位": "" }
+        form[""] = { "タイプ": "", "単位": "" }
       end
       form[key] = value
     end
 
     if (selected.size == 0)
-      form[""] = { "文字数": "", "単位": "" }
+      form[""] = { "タイプ": "", "単位": "" }
     end
     form
   end

@@ -5,7 +5,7 @@ class DiaryForm < ApplicationRecord
 
   has_many :diaries
 
-  DEFAULT_FORM = '{"トピック": {"文字数": "短文", "単位": ""}, "本文": {"文字数": "長文", "単位": ""}}'
+  DEFAULT_FORM = '{"トピック": {"タイプ": "短文", "単位": ""}, "本文": {"タイプ": "長文", "単位": ""}}'
 
   def get_form
     JSON.parse(form)
@@ -23,12 +23,13 @@ class DiaryForm < ApplicationRecord
       form = JSON.parse(diary_form[:form])
       form.each do |key, value|
         if (key == "トピック")
-          value["文字数"] = "短文"
+          value["タイプ"] = "短文"
         elsif (key == "本文")
-          value["文字数"] = "長文"
+          value["タイプ"] = "長文"
         else
-          value["文字数"] = "数字"
+          value["タイプ"] = "数字"
         end
+        value.delete("文字数")
       end
       if (diary_form.update(form: JSON.generate(form)))
         puts "成功：#{diary_form.id}"
