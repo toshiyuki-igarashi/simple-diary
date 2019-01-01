@@ -40,3 +40,9 @@
 .diary_inline_input {
   margin-left: 5px;
 }
+
+.example-img {
+  margin: 5px;
+  padding: 5px;
+  border: groove 5px;
+}
