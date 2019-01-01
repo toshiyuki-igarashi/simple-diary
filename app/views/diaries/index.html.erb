@@ -30,7 +30,7 @@
     <% inline = false %>
     <% current_form.each do |key, value| %>
 
-      <% if value["文字数"].to_i == DiaryForm::SIZE_OF_AREA %>
+      <% if value["文字数"] == "長文" %>
         <% if inline %>
           </div>
           <HR />
@@ -45,7 +45,7 @@
             <%= line %><BR>
           <% end %>
         <% end %>
-      <% elsif value["単位"] != "" %>
+      <% elsif value["文字数"] == "数字" %>
         <% if !inline %>
           <div class="row">
           <% inline = true %>

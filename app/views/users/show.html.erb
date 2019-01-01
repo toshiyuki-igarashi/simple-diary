@@ -29,7 +29,7 @@
           <% current_form.each do |key, value| %>
             <tr>
               <td class="col-xs-3 col-sm-2 col-ls-1"><%= key %></td>
-              <td class="col-xs-3 col-sm-2 col-ls-1">文字数 <%= text_size_to_s(value["文字数"]) %></td>
+              <td class="col-xs-3 col-sm-2 col-ls-1"><%= value["文字数"] %></td>
               <% if (value["単位"] == "") %>
                 <td></td>
               <% else %>
