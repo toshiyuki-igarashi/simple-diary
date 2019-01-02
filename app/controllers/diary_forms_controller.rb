@@ -8,25 +8,26 @@ class DiaryFormsController < ApplicationController
   def update
     selected = []
     items = construct_form(params, selected)
+    go_to_url = edit_diary_form_url(current_diary_form)
 
-    if (params[:commit] == "保存")
-      current_diary_form.update(form: make_form(items))
-      redirect_to user_url(current_user)
+    case (params[:commit])
+    when "保存"
+      form = items
+      go_to_url = user_url(current_user)
+    when "追加"
+      form = insert_item(items, selected)
+    when "上"
+      form = move_up_item(items, selected)
+    when "下"
+      form = move_down_item(items, selected)
+    when "削除"
+      form = delete_item(items, selected)
     else
-      if (params[:commit] == "追加")
-        form = insert_item(items, selected)
-      elsif (params[:commit] == "上")
-        form = move_up_item(items, selected)
-      elsif (params[:commit] == "下")
-        form = move_down_item(items, selected)
-      elsif (params[:commit] == "削除")
-        form = delete_item(items, selected)
-      else
-        form = items
-      end
-      current_diary_form.update(form: make_form(form))
-      redirect_to edit_diary_form_url(current_diary_form)
+      form = items
     end
+
+    current_diary_form.update(form: make_form(form))
+    redirect_to go_to_url
   end
 
   private
@@ -85,7 +86,7 @@ class DiaryFormsController < ApplicationController
     form = {}
     keys = items.keys
     if (keys.length >= 2)
-      (1..keys.length-1).each do |i|
+      1.upto(keys.length-1) do |i|
         if selected.include?(keys[i])
           temp = keys[i-1]
           keys[i-1] = keys[i]
