@@ -80,6 +80,7 @@ class DiaryFormsController < ApplicationController
     (0..keys.length-1).each do |i|
       target[keys[i]] = original[keys[i]]
     end
+    target
   end
 
   def move_up_item(items, selected)
@@ -96,7 +97,6 @@ class DiaryFormsController < ApplicationController
     end
 
     copy_value(keys, items, form)
-    form
   end
 
   def move_down_item(items, selected)
@@ -113,7 +113,6 @@ class DiaryFormsController < ApplicationController
     end
 
     copy_value(keys, items, form)
-    form
   end
 
   def delete_item(items, selected)

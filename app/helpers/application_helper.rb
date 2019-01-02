@@ -6,9 +6,9 @@ module ApplicationHelper
     count = 0
     (0..str.length - 1).each do |i|
       case str[i]
-      when ' ' then
+      when ' '
         count += 1
-      when '　' then
+      when '　'
         count += 2
       when "\t"
         count = ((count + TAB_SIZE) / TAB_SIZE) * TAB_SIZE

@@ -18,7 +18,7 @@ class UsersController < ApplicationController
       logged_in_session
       if (!DiaryForm.new(user_id: @user.id, title: '日記帳', form: DiaryForm::DEFAULT_FORM).save)
         puts "**** Alert **** diary_form hasn't saved for user (user_id: #{@user.id}) [CODE 100]"
-        flash[:success] = 'プログラムエラーでユーザに失敗しました。[CODE 100]'
+        flash[:success] = 'プログラムエラーでユーザ登録に失敗しました。[CODE 100]'
       end
       redirect_to root_url
     else
