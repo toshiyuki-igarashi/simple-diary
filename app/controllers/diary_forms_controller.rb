@@ -36,11 +36,12 @@ class DiaryFormsController < ApplicationController
   end
 
   def download_file
-    if (params[:pass] == nil || params[:pass].delete(' ') == '')
+    pass = params[:pass][0]
+    if (pass == nil || pass.delete(' ') == '')
       flash[:danger] = 'パスワードが入力されていないので、日記のファイル生成に失敗しました'
     else
       session[:download_file] = make_download_file_name + '.zip'
-      compress_string(make_diary_data, make_download_file_name + '.json', "#{Rails.root.to_s}/public/data/#{download_file_name}", params[:pass])
+      compress_string(make_diary_data, make_download_file_name + '.json', "#{Rails.root.to_s}/public/data/#{download_file_name}", pass)
       flash[:success] = '日記のファイルが正常に生成されました'
     end
     redirect_to user_url(current_user)
