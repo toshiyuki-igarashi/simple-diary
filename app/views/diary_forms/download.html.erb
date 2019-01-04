@@ -1,0 +1,12 @@
+<h4>ダウンロードする日記のファイルを作成します</h4>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
+    <%= form_tag(download_file_url, method: :POST) do %>
+      <div class="form-group">
+        <%= text_field_tag "pass", '', { class: 'form-control col-xs-3', placeholder: "ファイルのパスワードを入力", maxlength: 50 } %>
+      </div>
+      <%= submit_tag 'ファイルの作成', class: 'btn btn-primary col-xs-6 col-sm-4' %>
+    <% end %>
+  </div>
+</div>

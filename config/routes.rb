@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get 'diary_forms/edit'
-
-  get 'diary_forms/update'
-
   root to: 'toppages#index'
 
   get 'login', to: 'sessions#new'
@@ -17,5 +13,7 @@ Rails.application.routes.draw do
   get 'date/:picked_date', to: 'diaries#select_date', as: 'date'
   resources :diaries
 
+  get 'download', to: 'diary_forms#download'
+  post 'download_file', to: 'diary_forms#download_file'
   resources :diary_forms, only: [:edit, :update]
 end

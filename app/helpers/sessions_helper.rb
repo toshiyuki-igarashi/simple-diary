@@ -70,5 +70,9 @@ module SessionsHelper
     session[:user_id] = nil
     session[:picked_date] = nil
     session[:search_keyword] = nil
+    if session[:download_file] != nil
+      system("rm #{Rails.root.to_s}/public/data/#{session[:download_file]}")
+    end
+    session[:download_file] = nil
   end
 end

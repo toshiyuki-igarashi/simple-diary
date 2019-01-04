@@ -64,3 +64,4 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 
 # simple form
 gem 'simple_form'
+gem 'rubyzip'

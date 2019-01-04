@@ -1,3 +1,5 @@
+require 'zip'
+
 class DiaryFormsController < ApplicationController
   before_action :require_user_logged_in
   before_action :search
@@ -28,6 +30,20 @@ class DiaryFormsController < ApplicationController
 
     current_diary_form.update(form: make_form(form))
     redirect_to go_to_url
+  end
+
+  def download
+  end
+
+  def download_file
+    if (params[:pass] == nil || params[:pass].delete(' ') == '')
+      flash[:danger] = 'パスワードが入力されていないので、日記のファイル生成に失敗しました'
+    else
+      session[:download_file] = make_download_file_name + '.zip'
+      compress_string(make_diary_data, make_download_file_name + '.json', "#{Rails.root.to_s}/public/data/#{download_file_name}", params[:pass])
+      flash[:success] = '日記のファイルが正常に生成されました'
+    end
+    redirect_to user_url(current_user)
   end
 
   private
@@ -127,5 +143,39 @@ class DiaryFormsController < ApplicationController
 
   def make_form(form)
     JSON.generate(form)
+  end
+
+  def make_download_file_name
+    User.find(current_user.id).email.gsub('@','.') + "_" + DiaryForm.find(current_form_id).title
+  end
+
+  def get_all_diary
+    diaries = '{'
+    Diary.where(form_id: current_form_id).each do |diary|
+      diaries += '"' + diary[:date_of_diary].to_s + '": ' + diary[:article] + ', '
+    end
+    diaries += '"end": ""}'
+  end
+
+  def make_diary_data
+    '{"Title": "' + current_diary_form.title +
+      '", "Form": ' + current_diary_form.form +
+      ', "Diary": ' + get_all_diary + '}'
+  end
+
+  def compress_string(string, filename, zippath, password)
+    # パスワードのオブジェクト作る
+    encrypter = password.present? ? Zip::TraditionalEncrypter.new(password) : nil
+
+    buffer = Zip::OutputStream.write_buffer(::StringIO.new(''), encrypter) do |out|
+      out.put_next_entry(filename)
+      file_buf = StringIO.open(string, &:read)
+      out.write file_buf
+    end
+    # Stream書き出す
+    f = File.open(zippath, 'wb')
+    f.write(buffer.string)
+    f.close
+    zippath
   end
 end
