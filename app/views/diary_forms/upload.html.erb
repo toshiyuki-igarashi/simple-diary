@@ -1,0 +1,14 @@
+<h4>日記のファイルをアップロードします</h4>
+
+<div class="row">
+  <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
+    <%= form_tag(upload_file_url, method: :POST, multipart: true) do %>
+      <div class="form-group">
+        <label>アップロードしたい日記ファイル:<br/>
+        <%= file_field_tag 'upload', :size => 200 %></label>
+        <%= password_field "pass", '', { class: 'form-control col-xs-3', placeholder: "ファイルのパスワード", maxlength: 50 } %>
+      </div>
+      <%= submit_tag 'アップロード', class: 'btn btn-primary col-xs-6 col-sm-4' %>
+    <% end %>
+  </div>
+</div>

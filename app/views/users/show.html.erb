@@ -43,8 +43,9 @@
   </div>
   <div class="row">
     <%= link_to '修正', edit_diary_form_path(current_diary_form), class: 'btn btn-primary col-xs-2 col-sm-2 col-ls-1' %>
+    <%= link_to '日記のアップロード', upload_path, class: 'btn btn-primary col-xs-2 col-sm-2 col-ls-1' %>
     <% if download_file_exist? %>
-      <a href=<%= "/data/" + download_file_name %> class="col-xs-8 col-xs-offset-1"><span style="font-size:large"><%= download_file_name %></span></a>
+      <a href=<%= "/data/" + download_file_name %> class="col-xs-7 col-xs-offset-1"><span style="font-size:large"><%= download_file_name %></span></a>
     <% else %>
       <%= link_to '日記のダウンロード', download_path, class: 'btn btn-primary col-xs-2 col-sm-2 col-ls-1' %>
     <% end %>

@@ -22,6 +22,13 @@ module SessionsHelper
     @current_form ||= current_diary_form.get_form
   end
 
+# 複数の日記を取り扱う際に使う
+#   def change_diary_form(new_form)
+#     @current_diary_form = new_form
+#     @current_form_id = new_form.id
+#     @current_form = new_form.get_form
+#   end
+
   def first_key_of_current_form
     current_form.keys[0]
   end

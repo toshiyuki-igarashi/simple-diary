@@ -1,4 +1,5 @@
 require 'zip'
+require 'kconv'
 
 class DiaryFormsController < ApplicationController
   before_action :require_user_logged_in
@@ -44,6 +45,34 @@ class DiaryFormsController < ApplicationController
       compress_string(make_diary_data, make_download_file_name + '.json', "#{Rails.root.to_s}/public/data/#{download_file_name}", pass)
       flash[:success] = '日記のファイルが正常に生成されました'
     end
+    redirect_to user_url(current_user)
+  end
+
+  def upload
+  end
+
+  def upload_file
+    pass = params[:pass][0]
+    file = params['upload']
+
+    name = file.original_filename
+    name = name.kconv(Kconv::UTF8, Kconv::AUTO)
+    File.open("tmp/diary/#{name}", 'wb') { |f| f.write(file.read) }
+    if File.extname(name).downcase == '.zip'
+      diary_file_name = uncompress("tmp/diary", "tmp/diary/#{name}", pass)
+      system("rm tmp/diary/#{name}")
+    else
+      diary_file_name = "tmp/diary/#{name}"
+    end
+
+    if diary_file_name && diary_file_name.delete(' ') != ''
+      load_diary(diary_file_name)
+      system("rm #{diary_file_name}")
+      flash[:success] = '日記が正常にアップロードされました'
+    else
+      flash[:danger] = 'パスワードエラーまたは他の理由で日記のアップロードに失敗しました'
+    end
+
     redirect_to user_url(current_user)
   end
 
@@ -164,6 +193,48 @@ class DiaryFormsController < ApplicationController
       ', "Diary": ' + get_all_diary + '}'
   end
 
+  def load_diary_form(title, form)
+#     target = DiaryForm.find_by(user_id: current_user.id, title: title)  # 複数の日記を取り扱う際に使う
+    target = DiaryForm.find_by(user_id: current_user.id)  # 単数の日記を扱う場合の記述
+    if target
+#       target.update(form: JSON.generate(form))  # 複数の日記を取り扱う際に使う
+      target.update(title: title, form: JSON.generate(form))  # 単数の日記を扱う場合の記述
+    else
+      DiaryForm.new(user_id: current_user.id, title: title, form: DiaryForm::DEFAULT_FORM).save
+      target = DiaryForm.find_by(user_id: current_user.id, title: title)
+    end
+    target
+  end
+
+  def load_one_diary(date, diary)
+    target = Diary.find_by(form_id: current_form_id, date_of_diary: date)
+    if target
+      target.update(article: JSON.generate(diary))
+    else
+      Diary.new(form_id: current_form_id, date_of_diary: date, article: JSON.generate(diary)).save
+    end
+  end
+
+  def load_diaries(diaries)
+    diaries.each do |date, diary|
+      load_one_diary(date,  diary)
+    end
+  end
+
+  def load_diary(diary_file_name)
+    File.open(diary_file_name) do |file|
+      @diary = file.read
+    end
+    @diary_data = JSON.parse(@diary)
+    @title = @diary_data["Title"]
+    @form = @diary_data["Form"]
+    @diaries = @diary_data["Diary"]
+
+#     change_diary_form(load_diary_form(@title, @form)) # 複数の日記を取り扱う際に使う
+    load_diary_form(@title, @form)  # 単数の日記を扱う場合の記述
+    load_diaries(@diaries)
+  end
+
   def compress_string(string, filename, zippath, password)
     # パスワードのオブジェクト作る
     encrypter = password.present? ? Zip::TraditionalEncrypter.new(password) : nil
@@ -179,4 +250,26 @@ class DiaryFormsController < ApplicationController
     f.close
     zippath
   end
+
+  def uncompress(path, zippath, password)
+    # zipパスワードを作成
+    encrypter = password.present? ? Zip::TraditionalDecrypter.new(password) : nil
+
+    begin
+      # 第3引数にパスワードを指定、第2引数は0固定
+      Zip::InputStream.open(zippath, 0, encrypter) do |input|
+        entry = input.get_next_entry
+        if (entry)
+          file_name = path + '/' + entry.name
+          Dir.mkdir(File.dirname(file_name)) unless Dir.exist?(File.dirname(file_name))
+          File.binwrite(file_name, input.read)
+        end
+        file_name
+      end
+    rescue Zlib::DataError
+      # password error発生時
+      nil
+    end
+  end
+
 end
