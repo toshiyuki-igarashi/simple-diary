@@ -17,4 +17,15 @@ class DiaryForm < ApplicationRecord
     end
     nil
   end
+
+  def self.create_dir(dir_name)
+    unless Dir.exist?(dir_name)
+      Dir.mkdir(dir_name)
+    end
+  end
+
+  def self.initialize_directory
+    create_dir("#{Rails.root.to_s}/public/data")
+    create_dir("#{Rails.root.to_s}/tmp/diary")
+  end
 end

@@ -37,15 +37,19 @@ class DiaryFormsController < ApplicationController
   end
 
   def download_file
-    pass = params[:pass][0]
-    if (pass == nil || pass.delete(' ') == '')
-      flash[:danger] = 'パスワードが入力されていないので、日記のファイル生成に失敗しました'
+    if (params[:commit] == 'ファイルの作成')
+      pass = params[:pass][0]
+      if (pass == nil || pass.delete(' ') == '')
+        flash[:danger] = 'パスワードが入力されていないので、日記のファイル生成に失敗しました'
+      else
+        session[:download_file] = make_download_file_name + '.zip'
+        compress_string(make_diary_data, make_download_file_name + '.json', "#{Rails.root.to_s}/public/data/#{download_file_name}", pass)
+        flash[:success] = '日記のファイルが正常に生成されました'
+      end
     else
-      session[:download_file] = make_download_file_name + '.zip'
-      compress_string(make_diary_data, make_download_file_name + '.json', "#{Rails.root.to_s}/public/data/#{download_file_name}", pass)
-      flash[:success] = '日記のファイルが正常に生成されました'
+      download_file_clear
     end
-    redirect_to user_url(current_user)
+    render :download
   end
 
   def upload
@@ -217,7 +221,7 @@ class DiaryFormsController < ApplicationController
 
   def load_diaries(diaries)
     diaries.each do |date, diary|
-      load_one_diary(date,  diary)
+      load_one_diary(date,  diary) unless date == "end"
     end
   end
 

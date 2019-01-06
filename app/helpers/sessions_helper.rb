@@ -73,13 +73,17 @@ module SessionsHelper
     session[:picked_date] = date_of_diary
   end
 
-  def session_clear
-    session[:user_id] = nil
-    session[:picked_date] = nil
-    session[:search_keyword] = nil
+  def download_file_clear
     if session[:download_file] != nil
       system("rm #{Rails.root.to_s}/public/data/#{session[:download_file]}")
     end
     session[:download_file] = nil
+  end
+
+  def session_clear
+    session[:user_id] = nil
+    session[:picked_date] = nil
+    session[:search_keyword] = nil
+    download_file_clear
   end
 end
