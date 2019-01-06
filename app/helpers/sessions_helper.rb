@@ -71,6 +71,7 @@ module SessionsHelper
       date_of_diary = Time.zone.yesterday.to_s[0..9]
     end
     session[:picked_date] = date_of_diary
+    session[:search_keyword] = ""
   end
 
   def download_file_clear

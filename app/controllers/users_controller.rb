@@ -41,14 +41,14 @@ class UsersController < ApplicationController
     if password_check(email, password) && @user.id == current_user.id
       if (@user.update(user_params))
         flash[:success] = 'ユーザ情報の修正に成功しました。'
-        redirect_to diaries_url
+        redirect_to show_day_url
       else
         flash.now[:danger] = 'ユーザ情報の修正に失敗しました。'
         render :edit
       end
     else
       flash[:danger] = 'ユーザ情報の修正に失敗しました。'
-      redirect_to diaries_url
+      redirect_to show_day_url
     end
   end
 

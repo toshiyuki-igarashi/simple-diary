@@ -10,7 +10,7 @@
   <p>「修正」ボタンで、日記の修正ができます。「削除」ボタンで、日記を削除します。</p>
   <p>見たい日記の日付を変更するには、上部の日付の欄をクリックして、カレンダーを表示させて、見たい日を選択します。
   前の日の日記を見たい場合は、上部の左側の▲をクリックします。次の日の日記を見たい場合は、右側の▲をクリックします。</p>
-  <p><%= link_to '日記の表示へ', diaries_path %></a>
+  <p><%= link_to '日記の表示へ', show_day_path %></a>
   <BR />
   <BR />
   <h5 id="input">「日記の入力」</h5>
@@ -22,7 +22,7 @@
   <h5 id="show_with_weight">「体重の入力を追加」</h5>
   <p><img src="/images/show_diary_with_weight.png" class="img-responsive example-img" alt="体重の入力を追加"></p>
   <p>体重と、血圧の入力を追加した時の画面です。項目の追加は<a href="#go_to_my_page">マイページ</a>より行うことができます。</p>
-  <p><%= link_to '日記の表示へ', diaries_path %></a>
+  <p><%= link_to '日記の表示へ', show_day_path %></a>
   <BR />
   <BR />
   <h5 id="go_to_my_page">「マイページへの移動」</h5>
@@ -50,14 +50,14 @@
   <p>最後に「保存」ボタンを押して、日記情報の修正がされます。</p>
   <p>※ 「保存」ボタンを押さなくても、修正の途中結果は保存されています。</p>
   <p><%= link_to '日記情報の修正へ', edit_diary_form_path(current_diary_form) %></p>
-  <p><%= link_to '日記の表示へ', diaries_path %></a>
+  <p><%= link_to '日記の表示へ', show_day_path %></a>
   <BR />
   <BR />
   <h5 id="search_diary"> 「日記の検索の結果画面」</h5>
   <p><img src="/images/search_diary.png" class="img-responsive example-img" alt="日記の検索"></p>
   <p>上部の「検索キーワード」と書かれたボックスに検索キーワードを入力し、「検索」ボタンを押すと、この画面になります。</p>
   <p>日記の日付をクリックすると、その日の日記の表示となります。</p>
-  <p><%= link_to '日記の表示へ', diaries_path %></a>
+  <p><%= link_to '日記の表示へ', show_day_path %></a>
   <BR />
   <BR />
 </div>

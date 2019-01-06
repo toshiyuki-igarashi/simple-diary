@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   get 'prev_day', to: 'diaries#prev_day'
   get 'next_day', to: 'diaries#next_day'
   get 'date/:picked_date', to: 'diaries#select_date', as: 'date'
-  resources :diaries
+  get 'show_day', to: 'diaries#show_day'
+  get 'show_search', to: 'diaries#show_search'
+  resources :diaries, except: [:index]
 
   get 'download', to: 'diary_forms#download'
   get 'upload', to: 'diary_forms#upload'

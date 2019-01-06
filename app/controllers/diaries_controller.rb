@@ -2,12 +2,13 @@ class DiariesController < ApplicationController
   before_action :require_user_logged_in
   before_action :go_to_picked_date
   before_action :search
-  before_action :prepare_picked_diary, only: [:index, :new, :edit]
+  before_action :prepare_picked_diary, only: [:show_day, :new, :edit]
 
-  def index
-    if (session[:search_keyword])
-      @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
-    end
+  def show_day
+  end
+
+  def show_search
+    @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
   end
 
   def show
@@ -20,7 +21,7 @@ class DiariesController < ApplicationController
       redirect_to root_url
     else
       session[:picked_date] = @diary[:date_of_diary]
-      redirect_to diaries_url
+      redirect_to show_day_url
     end
   end
 
@@ -32,7 +33,7 @@ class DiariesController < ApplicationController
       @diary[:article] = make_article(params)
       if @diary.save
         flash[:success] = '日記が正常に保存されました'
-        redirect_to diaries_url
+        redirect_to show_day_url
       else
         flash.now[:danger] = '日記が保存されませんでした'
         render :new
@@ -58,7 +59,7 @@ class DiariesController < ApplicationController
     else
       flash[:danger] = '日記が削除されませんでした'
     end
-    redirect_to diaries_url
+    redirect_to show_day_url
   end
 
   def prev_day
@@ -95,7 +96,7 @@ class DiariesController < ApplicationController
   def update_diary(diary, articles)
     if diary.update(article: make_article(articles))
       flash[:success] = '日記が正常に修正されました'
-      redirect_to diaries_url
+      redirect_to show_day_url
     else
       flash.now[:danger] = '日記が修正されませんでした'
       render :edit
