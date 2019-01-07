@@ -32,6 +32,8 @@ class DiariesController < ApplicationController
 
   def show_search
     if (params[:commit] == "検索")
+      session[:search_keyword] = params[:search]
+    elsif (params[:commit] == "絞り込み検索")
       session[:search_keyword] += ' ' + params[:search]
     end
     @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
