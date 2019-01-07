@@ -31,7 +31,7 @@
           </li>
           <form class="navbar-form navbar-left" role="search">
             <%= simple_form_for(show_search_url, method: :get) do %>
-              <%= text_field_tag :search, params[:search], placeholder: "検索キーワード" %>
+              <%= text_field_tag :search, '', placeholder: "検索キーワード" %>
               <%= submit_tag '検索', class:'btn btn-default' %>
             <% end %>
           </form>

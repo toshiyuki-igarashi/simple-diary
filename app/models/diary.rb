@@ -15,9 +15,17 @@ class Diary < ApplicationRecord
     end
   end
 
+  def include_all?(words, value)
+    words.each do |word|
+      return false unless value && value.include?(word)
+    end
+    true
+  end
+
   def include?(word)
+    words = word.gsub(/　/,' ').split(' ')
     JSON.parse(self[:article]).each do |key, value|
-      return true if value && value.include?(word)
+      return true if include_all?(words, value)
     end
     false
   end

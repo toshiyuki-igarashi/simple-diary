@@ -1,7 +1,7 @@
 class DiariesController < ApplicationController
   before_action :require_user_logged_in
   before_action :go_to_picked_date
-  before_action :search
+  before_action :search, except: [:show_search]
   before_action :prepare_picked_diary, only: [:show_day, :show_week, :show_month, :show_3years, :show_5years, :new, :create, :edit]
   before_action :prepare_move_date, only: [:show_day, :show_3years, :show_5years, :new, :edit]
 
@@ -31,6 +31,9 @@ class DiariesController < ApplicationController
   end
 
   def show_search
+    if (params[:commit] == "検索")
+      session[:search_keyword] += ' ' + params[:search]
+    end
     @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
   end
 
