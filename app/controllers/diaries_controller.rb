@@ -2,8 +2,8 @@ class DiariesController < ApplicationController
   before_action :require_user_logged_in
   before_action :go_to_picked_date
   before_action :search, except: [:show_search]
-  before_action :prepare_picked_diary, only: [:show_day, :show_week, :show_month, :show_3years, :show_5years, :new, :create, :edit]
-  before_action :prepare_move_date, only: [:show_day, :show_3years, :show_5years, :new, :edit]
+  before_action :prepare_picked_diary, only: [:show_day, :show_week, :show_month, :show_3years, :show_5years, :show_10years, :new, :create, :edit]
+  before_action :prepare_move_date, only: [:show_day, :show_3years, :show_5years, :show_10years, :new, :edit]
 
   def show_day
   end
@@ -28,6 +28,10 @@ class DiariesController < ApplicationController
 
   def show_5years
     @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 4)
+  end
+
+  def show_10years
+    @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 9)
   end
 
   def show_search

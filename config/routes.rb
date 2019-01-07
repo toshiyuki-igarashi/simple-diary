@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   get 'show_month', to: 'diaries#show_month'
   get 'show_3years', to: 'diaries#show_3years'
   get 'show_5years', to: 'diaries#show_5years'
+  get 'show_10years', to: 'diaries#show_10years'
   get 'show_search', to: 'diaries#show_search'
   resources :diaries, except: [:index]
 
