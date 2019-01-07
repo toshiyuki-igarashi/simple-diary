@@ -41,6 +41,23 @@ class Diary < ApplicationRecord
     }
   end
 
+  def self.prepare_diary(form_id, date)
+    diary = Diary.find_by(form_id: form_id, date_of_diary: date)
+    if diary == nil
+      diary = Diary.new(form_id: form_id, date_of_diary: date)
+    else
+      diary
+    end
+  end
+
+  def self.get_one_week(form_id, date)
+    diaries = []
+    0.upto(6) do |i|
+      diaries[i] = Diary.prepare_diary(form_id, date - i)
+    end
+    diaries
+  end
+
   def self.show_all
     self.all.each do |diary|
       puts "id:#{diary.id}, form_id:#{diary.form_id}, date:#{diary.date_of_diary}, summary:#{diary.get("トピック")}"

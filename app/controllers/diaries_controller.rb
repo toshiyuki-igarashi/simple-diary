@@ -2,9 +2,18 @@ class DiariesController < ApplicationController
   before_action :require_user_logged_in
   before_action :go_to_picked_date
   before_action :search
-  before_action :prepare_picked_diary, only: [:show_day, :new, :edit]
+  before_action :prepare_picked_diary, only: [:show_day, :show_week, :new, :create, :edit]
+  before_action :prepare_move_date, only: [:show_day, :new, :edit]
 
   def show_day
+  end
+
+
+  def show_week
+    @show_mode = '週'
+    @set_prev_date_path = prev_week_path
+    @set_next_date_path = next_week_path
+    @diaries = Diary.get_one_week(current_form_id, picked_date)
   end
 
   def show_search
@@ -29,7 +38,7 @@ class DiariesController < ApplicationController
   end
 
   def create
-    if prepare_picked_diary == nil
+    if @diary.id == nil
       @diary[:article] = make_article(params)
       if @diary.save
         flash[:success] = '日記が正常に保存されました'
@@ -72,6 +81,16 @@ class DiariesController < ApplicationController
     redirect_to :back
   end
 
+  def prev_week
+    session[:picked_date] = picked_date - 7
+    redirect_to :back
+  end
+
+  def next_week
+    session[:picked_date] = picked_date + 7
+    redirect_to :back
+  end
+
   def select_date
     session[:picked_date] = params[:picked_date]
     redirect_to :back
@@ -84,13 +103,13 @@ class DiariesController < ApplicationController
   end
 
   def prepare_picked_diary
-    @diary = Diary.find_by(form_id: current_form_id, date_of_diary: picked_date)
-    if @diary == nil
-      @diary = Diary.new(date_of_diary: picked_date, form_id: current_form_id)
-      nil
-    else
-      @diary
-    end
+    @diary = Diary.prepare_diary(current_form_id, picked_date)
+  end
+
+  def prepare_move_date
+    @show_mode = '日'
+    @set_prev_date_path = prev_day_path
+    @set_next_date_path = next_day_path
   end
 
   def update_diary(diary, articles)
