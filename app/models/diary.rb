@@ -17,7 +17,8 @@ class Diary < ApplicationRecord
 
   def include_all?(words, value)
     words.each do |word|
-      return false unless value && value.include?(word)
+      r = Regexp.compile(word)
+      return false unless value && r.match?(value)
     end
     true
   end
