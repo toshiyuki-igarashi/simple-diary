@@ -12,9 +12,12 @@ Rails.application.routes.draw do
   get 'next_day', to: 'diaries#next_day'
   get 'prev_week', to: 'diaries#prev_week'
   get 'next_week', to: 'diaries#next_week'
+  get 'prev_month', to: 'diaries#prev_month'
+  get 'next_month', to: 'diaries#next_month'
   get 'date/:picked_date', to: 'diaries#select_date', as: 'date'
   get 'show_day', to: 'diaries#show_day'
   get 'show_week', to: 'diaries#show_week'
+  get 'show_month', to: 'diaries#show_month'
   get 'show_search', to: 'diaries#show_search'
   resources :diaries, except: [:index]
 

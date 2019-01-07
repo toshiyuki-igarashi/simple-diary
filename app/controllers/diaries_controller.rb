@@ -2,18 +2,24 @@ class DiariesController < ApplicationController
   before_action :require_user_logged_in
   before_action :go_to_picked_date
   before_action :search
-  before_action :prepare_picked_diary, only: [:show_day, :show_week, :new, :create, :edit]
+  before_action :prepare_picked_diary, only: [:show_day, :show_week, :show_month, :new, :create, :edit]
   before_action :prepare_move_date, only: [:show_day, :new, :edit]
 
   def show_day
   end
 
-
   def show_week
     @show_mode = '週'
     @set_prev_date_path = prev_week_path
     @set_next_date_path = next_week_path
-    @diaries = Diary.get_one_week(current_form_id, picked_date)
+    @diaries = Diary.get_diaries(current_form_id, picked_date, 6)
+  end
+
+  def show_month
+    @show_mode = '月'
+    @set_prev_date_path = prev_month_path
+    @set_next_date_path = next_month_path
+    @diaries = Diary.get_diaries(current_form_id, picked_date, 31)
   end
 
   def show_search
@@ -88,6 +94,16 @@ class DiariesController < ApplicationController
 
   def next_week
     session[:picked_date] = picked_date + 7
+    redirect_to :back
+  end
+
+  def prev_month
+    session[:picked_date] = picked_date.prev_month
+    redirect_to :back
+  end
+
+  def next_month
+    session[:picked_date] = picked_date.next_month
     redirect_to :back
   end
 

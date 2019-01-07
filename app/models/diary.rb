@@ -50,9 +50,9 @@ class Diary < ApplicationRecord
     end
   end
 
-  def self.get_one_week(form_id, date)
+  def self.get_diaries(form_id, date, number)
     diaries = []
-    0.upto(6) do |i|
+    0.upto(number) do |i|
       diaries[i] = Diary.prepare_diary(form_id, date - i)
     end
     diaries

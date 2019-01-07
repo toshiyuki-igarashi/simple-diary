@@ -1,18 +1,1 @@
-  <div class="row">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col" class="col-xs-7 col-sm-3 col-ls-1">日付</th>
-          <th scope="col"><%= first_key_of_current_form %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @diaries.each do |diary| %>
-          <tr>
-            <td class="col-xs-7 col-sm-3 col-ls-1"><%= link_to date_to_string(diary[:date_of_diary]), diary_path(id: diary.id) %></td>
-            <td><%= diary.get(first_key_of_current_form) %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+<%= render 'show_diaries' %>
