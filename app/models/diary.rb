@@ -25,10 +25,8 @@ class Diary < ApplicationRecord
 
   def include?(word)
     words = word.gsub(/　/,' ').split(' ')
-    JSON.parse(self[:article]).each do |key, value|
-      return true if include_all?(words, value)
-    end
-    false
+    values = ''
+    include_all?(words, JSON.parse(self[:article]).values.join(''))
   end
 
   def self.search_diary(search_keyword, form_id)
