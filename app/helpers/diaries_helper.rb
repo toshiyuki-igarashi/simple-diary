@@ -4,7 +4,7 @@ module DiariesHelper
       session[:search_keyword] = params[:search]
       redirect_to show_search_url
     else
-      session[:search_keyword] = nil
+      session[:search_keyword] = ''
     end
   end
 end
