@@ -2,8 +2,8 @@ class DiariesController < ApplicationController
   before_action :require_user_logged_in
   before_action :go_to_picked_date
   before_action :search
-  before_action :prepare_picked_diary, only: [:show_day, :show_week, :show_month, :new, :create, :edit]
-  before_action :prepare_move_date, only: [:show_day, :new, :edit]
+  before_action :prepare_picked_diary, only: [:show_day, :show_week, :show_month, :show_3years, :show_5years, :new, :create, :edit]
+  before_action :prepare_move_date, only: [:show_day, :show_3years, :show_5years, :new, :edit]
 
   def show_day
   end
@@ -20,6 +20,14 @@ class DiariesController < ApplicationController
     @set_prev_date_path = prev_month_path
     @set_next_date_path = next_month_path
     @diaries = Diary.get_diaries(current_form_id, picked_date, 31)
+  end
+
+  def show_3years
+    @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 2)
+  end
+
+  def show_5years
+    @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 4)
   end
 
   def show_search

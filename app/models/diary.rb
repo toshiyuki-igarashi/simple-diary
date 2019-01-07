@@ -58,6 +58,14 @@ class Diary < ApplicationRecord
     diaries
   end
 
+  def self.get_diaries_of_years(form_id, date, number)
+    diaries = []
+    0.upto(number) do |i|
+      diaries[i] = Diary.prepare_diary(form_id, Date.commercial(date.cwyear - i, date.cweek, date.cwday))
+    end
+    diaries
+  end
+
   def self.show_all
     self.all.each do |diary|
       puts "id:#{diary.id}, form_id:#{diary.form_id}, date:#{diary.date_of_diary}, summary:#{diary.get("トピック")}"
