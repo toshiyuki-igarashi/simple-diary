@@ -72,6 +72,7 @@ module SessionsHelper
     end
     session[:picked_date] = date_of_diary
     session[:search_keyword] = ''
+    session[:view_mode] = ''
   end
 
   def download_file_clear
@@ -85,6 +86,7 @@ module SessionsHelper
     session[:user_id] = nil
     session[:picked_date] = nil
     session[:search_keyword] = nil
+    session[:view_mode] = nil
     download_file_clear
   end
 end

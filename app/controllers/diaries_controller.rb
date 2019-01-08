@@ -4,6 +4,7 @@ class DiariesController < ApplicationController
   before_action :search, except: [:show_search]
   before_action :prepare_picked_diary, only: [:show_day, :show_week, :show_month, :show_3years, :show_5years, :show_10years, :create, :edit]
   before_action :prepare_move_date, only: [:show_day, :show_3years, :show_5years, :show_10years, :new, :edit]
+  before_action :save_view_mode, only: [:show_day, :show_week, :show_month, :show_3years, :show_5years, :show_10years, :new, :create, :edit]
 
   def show_day
   end
@@ -104,37 +105,37 @@ class DiariesController < ApplicationController
 
   def prev_day
     session[:picked_date] = picked_date.prev_day
-    redirect_to :back
+    redirect_to_back
   end
 
   def next_day
     session[:picked_date] = picked_date.next_day
-    redirect_to :back
+    redirect_to_back
   end
 
   def prev_week
     session[:picked_date] = picked_date - 7
-    redirect_to :back
+    redirect_to_back
   end
 
   def next_week
     session[:picked_date] = picked_date + 7
-    redirect_to :back
+    redirect_to_back
   end
 
   def prev_month
     session[:picked_date] = picked_date.prev_month
-    redirect_to :back
+    redirect_to_back
   end
 
   def next_month
     session[:picked_date] = picked_date.next_month
-    redirect_to :back
+    redirect_to_back
   end
 
   def select_date
     session[:picked_date] = params[:picked_date]
-    redirect_to :back
+    redirect_to_back
   end
 
   private
@@ -151,6 +152,33 @@ class DiariesController < ApplicationController
     @show_mode = '日'
     @set_prev_date_path = prev_day_path
     @set_next_date_path = next_day_path
+  end
+
+  def redirect_to_back
+    case (session[:view_mode])
+    when 'show_day'
+      redirect_to show_day_url
+    when 'show_week'
+      redirect_to show_week_url
+    when 'show_month'
+      redirect_to show_month_url
+    when 'show_3years'
+      redirect_to show_3years_url
+    when 'show_5years'
+      redirect_to show_5years_url
+    when 'show_10years'
+      redirect_to show_10years_url
+    when 'new'
+      redirect_to new_diary_url
+    when 'edit'
+      redirect_to edit_diary_url
+    else
+      redirect_to root_url
+    end
+  end
+
+  def save_view_mode
+    session[:view_mode] = action_name
   end
 
   def update_diary(diary, articles)
