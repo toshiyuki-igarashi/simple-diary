@@ -12,7 +12,7 @@
             <% if diary.id %>
               <td class="col-xs-4 col-sm-2 col-ls-1"><%= link_to date_to_string(diary[:date_of_diary]), diary_path(id: diary.id) %></td>
             <% else %>
-              <td class="col-xs-4 col-sm-2 col-ls-1"><p><%= date_to_string(diary[:date_of_diary]) %></p></td>
+              <td class="col-xs-4 col-sm-2 col-ls-1"><%= link_to date_to_string(diary[:date_of_diary]), new_diary_path(date_of_diary: diary[:date_of_diary]) %></td>
             <% end %>
             <td><%= diary.get(first_key_of_current_form) %></td>
           </tr>

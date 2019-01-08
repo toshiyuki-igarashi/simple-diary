@@ -2,7 +2,7 @@ class DiariesController < ApplicationController
   before_action :require_user_logged_in
   before_action :go_to_picked_date
   before_action :search, except: [:show_search]
-  before_action :prepare_picked_diary, only: [:show_day, :show_week, :show_month, :show_3years, :show_5years, :show_10years, :new, :create, :edit]
+  before_action :prepare_picked_diary, only: [:show_day, :show_week, :show_month, :show_3years, :show_5years, :show_10years, :create, :edit]
   before_action :prepare_move_date, only: [:show_day, :show_3years, :show_5years, :show_10years, :new, :edit]
 
   def show_day
@@ -13,6 +13,7 @@ class DiariesController < ApplicationController
     @set_prev_date_path = prev_week_path
     @set_next_date_path = next_week_path
     @diaries = Diary.get_diaries(current_form_id, picked_date, 6)
+    render '_show_several_diaries'
   end
 
   def show_month
@@ -24,14 +25,17 @@ class DiariesController < ApplicationController
 
   def show_3years
     @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 2)
+    render '_show_several_diaries'
   end
 
   def show_5years
     @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 4)
+    render '_show_several_diaries'
   end
 
   def show_10years
     @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 9)
+    render '_show_several_diaries'
   end
 
   def show_search
@@ -58,6 +62,10 @@ class DiariesController < ApplicationController
   end
 
   def new
+    if params[:date_of_diary]
+      session[:picked_date] = params[:date_of_diary]
+    end
+    prepare_picked_diary
   end
 
   def create
