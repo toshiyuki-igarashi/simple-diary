@@ -104,32 +104,32 @@ class DiariesController < ApplicationController
   end
 
   def prev_day
-    session[:picked_date] = picked_date.prev_day
+    session[:picked_date] = picked_date.prev_day.to_s
     redirect_to_back
   end
 
   def next_day
-    session[:picked_date] = picked_date.next_day
+    session[:picked_date] = picked_date.next_day.to_s
     redirect_to_back
   end
 
   def prev_week
-    session[:picked_date] = picked_date - 7
+    session[:picked_date] = (picked_date - 7).to_s
     redirect_to_back
   end
 
   def next_week
-    session[:picked_date] = picked_date + 7
+    session[:picked_date] = (picked_date + 7).to_s
     redirect_to_back
   end
 
   def prev_month
-    session[:picked_date] = picked_date.prev_month
+    session[:picked_date] = picked_date.prev_month.to_s
     redirect_to_back
   end
 
   def next_month
-    session[:picked_date] = picked_date.next_month
+    session[:picked_date] = picked_date.next_month.to_s
     redirect_to_back
   end
 
@@ -171,7 +171,12 @@ class DiariesController < ApplicationController
     when 'new'
       redirect_to new_diary_url
     when 'edit'
-      redirect_to edit_diary_url
+      prepare_picked_diary
+      if (@diary.id)
+        redirect_to edit_diary_url(@diary)
+      else
+        redirect_to new_diary_url
+      end
     else
       redirect_to root_url
     end
