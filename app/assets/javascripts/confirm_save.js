@@ -15,38 +15,74 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   var diary_data = get_diary_data();
 
-  // 移動ボタンを取得
-  var confirm_to_move = function(move_date, event_name) {
-    if (move_date !== null) {
-      move_date.addEventListener(event_name, function(e) {
-        if (get_diary_data() !== diary_data) {
-          if (!window.confirm('変更された日記が保存されません。良いですか？')) {
-            e.preventDefault();
-          }
-        }
-      }, false);
-    }
-  }
-
-  var prev_date = document.getElementById("prev_date");
-  confirm_to_move(prev_date, 'click');
-  var next_date = document.getElementById("next_date");
-  confirm_to_move(next_date, 'click');
-//   var select_date = document.getElementById("date_Get");
-//   confirm_to_move(select_date, 'onchange');
-  var new_diary = document.getElementById("new_diary");
-  confirm_to_move(new_diary, 'click');
-  var show_diary = document.getElementById("show_diary");
-  confirm_to_move(show_diary, 'click');
-  var search_diary = document.getElementById("search_diary");
-  confirm_to_move(search_diary, 'click');
-  var user_profile = document.getElementById("user_profile");
-  confirm_to_move(user_profile, 'click');
-
-  window.addEventListener('beforeunload', function(e) {
+  var confirm_to_leave = function(e) {
     if (get_diary_data() !== diary_data) {
       e.preventDefault();
       e.returnValue = '';
     }
-  }, false);
+  }
+
+  window.addEventListener('beforeunload', confirm_to_leave, false);
+
+  var cancel_confirm = function(e) {
+    window.removeEventListener('beforeunload', confirm_to_leave, false);
+  }
+
+  var set_confirm_to_move = function(move_date, event_name, handler) {
+    if (move_date !== null) {
+      move_date.addEventListener(event_name, handler, false);
+    }
+  }
+
+  var diary_save = document.getElementById("diary_save");
+  set_confirm_to_move(diary_save, 'click', cancel_confirm);
+
+  var createXMLHttpRequest = function() {
+    if(window.XMLHttpRequest){return new XMLHttpRequest()}
+    if(window.ActiveXObject){
+      try{return new ActiveXObject("Msxml2.XMLHTTP.6.0")}catch(e){}
+      try{return new ActiveXObject("Msxml2.XMLHTTP.3.0")}catch(e){}
+      try{return new ActiveXObject("Microsoft.XMLHTTP")}catch(e){}
+    }
+    return false;
+  }
+
+  var getData = function() {
+    var xmlhttp = createXMLHttpRequest();
+    var wait_time = 300;    // wait to reload page
+
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == 4) {
+        if (xmlhttp.status == 200) {
+          document.open();
+          document.write(xmlhttp.responseText);
+          document.close();
+        } else {
+          alert("select date error : status = " + xmlhttp.status);
+        }
+      }
+    }
+
+    var dateControl = document.querySelector('input[type="date"]');
+    xmlhttp.open("GET", "/date/"+dateControl.value);
+    xmlhttp.send();
+  }
+
+  var confirm_to_move = function(e) {
+    if (get_diary_data() !== diary_data) {
+      if (!window.confirm('変更された日記が保存されません。良いですか？')) {
+        date_Get.value = date_value;
+        e.preventDefault();
+      } else {
+        getData();
+      }
+    } else {
+      getData();
+    }
+  }
+
+  var date_Get = document.getElementById("date_Get");
+  date_value = date_Get.value;
+  set_confirm_to_move(date_Get, 'change', confirm_to_move);
+
 }, false);
