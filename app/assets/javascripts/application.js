@@ -14,7 +14,6 @@
 //= require jquery-ui/widgets/datepicker
 //= require jquery-ui/i18n/datepicker-ja
 //= require jquery_ujs
-//= require turbolinks
 //= require_tree .
 //= require moment
 //= require moment/ja
