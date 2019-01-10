@@ -13,8 +13,8 @@
       <div class="collapse navbar-collapse" id="navbar-main-menu">
       <ul class="nav navbar-nav navbar-right">
         <% if logged_in? %>
-          <li><%= link_to '日記の入力', new_diary_path %></li>
-          <li class="dropdown">
+          <li><%= link_to '日記の入力', new_diary_path, id: "new_diary" %></li>
+          <li class="dropdown" id="show_diary" >
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               日記の表示
               <span class="caret"></span>
@@ -33,11 +33,11 @@
           <form class="navbar-form navbar-left" role="search">
             <%= simple_form_for(show_search_url, method: :get) do %>
               <%= text_field_tag :search, '', placeholder: "検索キーワード" %>
-              <%= submit_tag '検索', class:'btn btn-default' %>
+              <%= submit_tag '検索', { class:'btn btn-default', id: 'search_diary' } %>
             <% end %>
           </form>
 
-          <li class="dropdown">
+          <li class="dropdown" id="user_profile">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               <%= current_user[:name] %>
               <span class="caret"></span>
