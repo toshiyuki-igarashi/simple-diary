@@ -8,6 +8,14 @@ document.addEventListener('DOMContentLoaded', function() {
       diary_form_group.childNodes.forEach(function(element) {
         if (element.value !== undefined) {
           data = data + element.value;
+        } else {
+          if (element.childNodes.length != 0) {
+            element.childNodes.forEach(function(child_element) {
+              if (child_element.value !== undefined) {
+                data = data + child_element.value;
+              }
+            });
+          }
         }
       });
     }
@@ -82,7 +90,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   var date_Get = document.getElementById("date_Get");
-  date_value = date_Get.value;
+  if (date_Get !== null) {
+    date_value = date_Get.value;
+  }
   set_confirm_to_move(date_Get, 'change', confirm_to_move);
 
 }, false);
