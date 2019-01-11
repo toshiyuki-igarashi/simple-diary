@@ -25,7 +25,11 @@ module DiariesHelper
       0.upto(data[i][:data].values.length-1) do |j|
         min_data.push(data[i][:data].values[j]) if is_valid_number?(data[i][:data].values[j])
       end
-      @min_values[i] = min_data.map(&:to_f).each.min
+      if min_data.length > 0
+        @min_values[i] = min_data.map(&:to_f).each.min
+      else
+        @min_values[i] = 0
+      end
     end
     (@min_values.each.min * 0.95).round(2)
   end

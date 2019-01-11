@@ -19,9 +19,14 @@
   <p><%= link_to '日記の入力へ', new_diary_path %></a>
   <BR />
   <BR />
-  <h5 id="show_with_weight">「体重の入力を追加」</h5>
+  <h5 id="show_with_weight">「体重、血圧を追加」</h5>
   <p><img src="/images/show_diary_with_weight.png" class="img-responsive example-img" alt="体重の入力を追加"></p>
   <p>体重と、血圧の入力を追加した時の画面です。項目の追加は<a href="#go_to_my_page">マイページ</a>より行うことができます。</p>
+  <p><%= link_to '日記の表示へ', show_day_path %></a>
+  <BR />
+  <BR />
+  <p><img src="/images/show_wait_graph.png" class="img-responsive example-img" alt="日記の表示"></p>
+  <p>体重や血圧など、数値を入力する項目については、週間表示、月間表示時にグラフが表示されます。</p>
   <p><%= link_to '日記の表示へ', show_day_path %></a>
   <BR />
   <BR />
