@@ -14,7 +14,7 @@ class DiariesController < ApplicationController
     @set_prev_date_path = prev_week_path
     @set_next_date_path = next_week_path
     @diaries = Diary.get_diaries(current_form_id, picked_date, 6)
-    render '_show_several_diaries'
+    make_graph
   end
 
   def show_month
@@ -22,6 +22,7 @@ class DiariesController < ApplicationController
     @set_prev_date_path = prev_month_path
     @set_next_date_path = next_month_path
     @diaries = Diary.get_diaries(current_form_id, picked_date, 31)
+    make_graph
   end
 
   def show_3years
@@ -203,5 +204,38 @@ class DiariesController < ApplicationController
     end
 
     JSON.generate(article).to_s
+  end
+
+  def make_graph_hash
+    @graph = {}
+    current_form.each do |key, value|
+      if (value['タイプ'] == '数字')
+        @graph[key] = { name: key, unit: value['単位'], data: {} }
+      end
+    end
+  end
+
+  def get_graph_data
+    @diaries.each do |diary|
+      @graph.each do |key, value|
+        value[:data][diary[:date_of_diary]] = diary.get(key)
+      end
+    end
+  end
+
+
+  def refine_graph_data
+    @graph_data = {}
+    @graph.each do |key, value|
+      @graph_data[value[:unit]] ||= []
+      @graph_data[value[:unit]].push(value)
+      value.delete(:unit)
+    end
+  end
+
+  def make_graph
+    make_graph_hash
+    get_graph_data
+    refine_graph_data
   end
 end
