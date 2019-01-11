@@ -10,12 +10,20 @@ module DiariesHelper
     !(s == nil || /[0-9\.]+/ !~ s)
   end
 
-  def get_max(data)
+  def get_real_max(data)
     @max_values = []
     0.upto(data.length-1) do |i|
       @max_values[i] = data[i][:data].values.map(&:to_f).each.max
     end
-    @max_values.each.max.ceil(-1)
+    @max_values.each.max
+  end
+
+  def significant_digits(data)
+    2-Math::log10(get_real_max(data)).ceil
+  end
+
+  def get_max(data)
+    get_real_max(data).ceil(significant_digits(data))
   end
 
   def get_min(data)
@@ -31,6 +39,6 @@ module DiariesHelper
         @min_values[i] = 0
       end
     end
-    @min_values.each.min.floor(-1)
+    @min_values.each.min.floor(significant_digits(data))
   end
 end
