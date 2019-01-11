@@ -15,7 +15,7 @@ module DiariesHelper
     0.upto(data.length-1) do |i|
       @max_values[i] = data[i][:data].values.map(&:to_f).each.max
     end
-    (@max_values.each.max * 1.05).round(2)
+    @max_values.each.max.ceil(-1)
   end
 
   def get_min(data)
@@ -31,6 +31,6 @@ module DiariesHelper
         @min_values[i] = 0
       end
     end
-    (@min_values.each.min * 0.95).round(2)
+    @min_values.each.min.floor(-1)
   end
 end
