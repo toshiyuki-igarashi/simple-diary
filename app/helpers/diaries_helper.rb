@@ -19,7 +19,12 @@ module DiariesHelper
   end
 
   def significant_digits(data)
-    2-Math::log10(get_real_max(data)).ceil
+    max_value = get_real_max(data)
+    if max_value == 0
+      2
+    else
+      2-Math::log10(max_value).ceil
+    end
   end
 
   def get_max(data)
