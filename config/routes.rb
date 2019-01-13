@@ -16,12 +16,6 @@ Rails.application.routes.draw do
   get 'next_month', to: 'diaries#next_month'
   get 'date/:picked_date', to: 'diaries#select_date', as: 'date'
   get 'show_day', to: 'diaries#show_day'
-  get 'show_week', to: 'diaries#show_week'
-  get 'show_month', to: 'diaries#show_month'
-  get 'show_3years', to: 'diaries#show_3years'
-  get 'show_5years', to: 'diaries#show_5years'
-  get 'show_10years', to: 'diaries#show_10years'
-  get 'show_search', to: 'diaries#show_search'
   resources :diaries, except: [:index]
 
   get 'download', to: 'diary_forms#download'

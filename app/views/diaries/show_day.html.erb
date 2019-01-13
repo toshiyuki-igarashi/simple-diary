@@ -1,43 +1,28 @@
+<% if (session[:view_mode] != 'show_search') %>
   <div class="row">
     <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
       <%= render 'datepick' %>
     </div>
   </div>
+<% end %>
 
-  <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-    <% current_packed_form.each do |key, value| %>
-
-      <% if value["タイプ"] == "長文" %>
-        <h4><%= key %></h4>
-        <% if @diary.get(key) %>
-          <% @diary.get(key).each_line do |line| %>
-            <% count_leading_blank(line).times do %>
-              &nbsp;
-            <% end %>
-            <%= line %><BR>
-          <% end %>
-        <% end %>
-        <hr />
-      <% elsif value["タイプ"] == "短文" %>
-        <h4><%= key %></h4>
-        <%= @diary.get(key) %>
-        <hr />
-      <% else %>
-        <div class="row">
-          <% value.each do |n_key, n_value| %>
-            <span class="col-xs-12 col-sm-6"><%= n_key %>：&nbsp;<%= @diary.get(n_key) %>&nbsp;<%= n_value["単位"] %></span>
-          <% end %>
-          <br />
-          <hr />
-        </div>
-      <% end %>
-    <% end %>
-
-    <% if @diary[:id] %>
-      <div class="row">
-        <br class="col-xs-12">
-        <%= link_to '修正', edit_diary_path(@diary), class: 'btn btn-primary col-xs-2 col-sm-2 col-ls-1' %>
-        <%= link_to '削除', @diary, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-danger col-xs-2 col-sm-2 col-ls-1' %>
-      </div>
+<% case (session[:view_mode]) %>
+<% when 'show_day' %>
+  <%= render 'show_day' %>
+<% when 'show_week' %>
+  <%= render 'show_several_diaries' %>
+  <%= render 'show_graph' %>
+<% when 'show_month' %>
+  <%= render 'show_diaries' %>
+  <%= render 'show_graph' %>
+<% when 'show_3years', 'show_5years', 'show_10years' %>
+  <%= render 'show_several_diaries' %>
+<% when 'show_search' %>
+  <div class="row">
+    <%= form_tag(show_day_path, method: :get) do %>
+      <%= text_field_tag :search , '', { class: 'form-inline col-xs-7 col-xs-offset-1', placeholder: "検索キーワード" } %>
+      <%= submit_tag '絞込検索', class: 'btn btn-primary col-xs-3 col-xs-offset-1 col-sm-2' %>
     <% end %>
   </div>
+  <%= render 'show_diaries' %>
+<% end %>

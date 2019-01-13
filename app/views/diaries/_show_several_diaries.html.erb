@@ -1,44 +1,38 @@
+<% @diaries.each do |diary| %>
   <div class="row">
+    <div class="col-xs-12 col-sm-offset-1 col-sm-8 col-lg-offset-2 col-ls-6">
+      <HR />
+    </div>
+    <div class="col-xs-12 col-sm-offset-1 col-sm-8 col-lg-offset-2 col-ls-6">
+      <% if diary.id %>
+        <%= link_to date_to_string(diary[:date_of_diary]), diary_path(id: diary.id) %>
+      <% else %>
+        <%= link_to date_to_string(diary[:date_of_diary]), new_diary_path(date_of_diary: diary[:date_of_diary]) %>
+      <% end %>
+    </div>
     <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-      <%= render 'datepick' %>
-    </div>
-  </div>
+      <% current_packed_form.each do |key, value| %>
 
-  <% @diaries.each do |diary| %>
-    <div class="row">
-      <div class="col-xs-12 col-sm-offset-1 col-sm-8 col-lg-offset-2 col-ls-6">
-        <HR />
-      </div>
-      <div class="col-xs-12 col-sm-offset-1 col-sm-8 col-lg-offset-2 col-ls-6">
-        <% if diary.id %>
-          <%= link_to date_to_string(diary[:date_of_diary]), diary_path(id: diary.id) %>
-        <% else %>
-          <%= link_to date_to_string(diary[:date_of_diary]), new_diary_path(date_of_diary: diary[:date_of_diary]) %>
-        <% end %>
-      </div>
-      <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-        <% current_packed_form.each do |key, value| %>
-
-          <% if value["タイプ"] == "長文" %>
-            <% if diary.get(key) %>
-              <% diary.get(key).each_line do |line| %>
-                <% count_leading_blank(line).times do %>
-                  &nbsp;
-                <% end %>
-                <%= line %><br />
+        <% if value["タイプ"] == "長文" %>
+          <% if diary.get(key) %>
+            <% diary.get(key).each_line do |line| %>
+              <% count_leading_blank(line).times do %>
+                &nbsp;
               <% end %>
+              <%= line %><br />
             <% end %>
-          <% elsif value["タイプ"] == "短文" %>
-            <%= diary.get(key) %><br />
-          <% else %>
-            <div class="row diary_inline_output">
-              <% value.each do |n_key, n_value| %>
-                <span class="col-xs-12 col-sm-6"><%= n_key %>：&nbsp;<%= diary.get(n_key) %>&nbsp;<%= n_value["単位"] %></span>
-              <% end %>
-            </div>
           <% end %>
+        <% elsif value["タイプ"] == "短文" %>
+          <%= diary.get(key) %><br />
+        <% else %>
+          <div class="row diary_inline_output">
+            <% value.each do |n_key, n_value| %>
+              <span class="col-xs-12 col-sm-6"><%= n_key %>：&nbsp;<%= diary.get(n_key) %>&nbsp;<%= n_value["単位"] %></span>
+            <% end %>
+          </div>
         <% end %>
-      </div>
-      <BR />
+      <% end %>
     </div>
-  <% end %>
+    <BR />
+  </div>
+<% end %>

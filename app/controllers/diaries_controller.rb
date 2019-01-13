@@ -2,51 +2,46 @@ class DiariesController < ApplicationController
   before_action :require_user_logged_in
   before_action :go_to_picked_date
   before_action :search, except: [:show_search]
-  before_action :prepare_picked_diary, only: [:show_day, :show_week, :show_month, :show_3years, :show_5years, :show_10years, :create, :edit]
-  before_action :prepare_move_date, only: [:show_day, :show_3years, :show_5years, :show_10years, :new, :edit]
-  before_action :save_view_mode, only: [:show_day, :show_week, :show_month, :show_3years, :show_5years, :show_10years, :new, :create, :edit]
+  before_action :prepare_picked_diary, only: [:show_day, :create, :edit]
+  before_action :prepare_move_date, only: [:show_day, :new, :edit]
+  before_action :save_view_mode, only: [:new, :create, :edit]
 
   def show_day
-  end
+    session[:view_mode] = params[:view_mode]
 
-  def show_week
-    @show_mode = '週'
-    @set_prev_date_path = prev_week_path
-    @set_next_date_path = next_week_path
-    @diaries = Diary.get_diaries(current_form_id, picked_date, 6)
-    make_graph
-  end
-
-  def show_month
-    @show_mode = '月'
-    @set_prev_date_path = prev_month_path
-    @set_next_date_path = next_month_path
-    @diaries = Diary.get_diaries(current_form_id, picked_date, 31)
-    make_graph
-  end
-
-  def show_3years
-    @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 2)
-    render '_show_several_diaries'
-  end
-
-  def show_5years
-    @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 4)
-    render '_show_several_diaries'
-  end
-
-  def show_10years
-    @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 9)
-    render '_show_several_diaries'
-  end
-
-  def show_search
     if (params[:commit] == "検索")
       session[:search_keyword] = params[:search]
+      session[:view_mode] = 'show_search'
     elsif (params[:commit] == "絞込検索")
       session[:search_keyword] += ' ' + params[:search]
+      session[:view_mode] = 'show_search'
     end
-    @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
+
+    case (session[:view_mode])
+    when 'show_day'
+    when 'show_week'
+      @show_mode = '週'
+      @set_prev_date_path = prev_week_path
+      @set_next_date_path = next_week_path
+      @diaries = Diary.get_diaries(current_form_id, picked_date, 6)
+      make_graph
+    when 'show_month'
+      @show_mode = '月'
+      @set_prev_date_path = prev_month_path
+      @set_next_date_path = next_month_path
+      @diaries = Diary.get_diaries(current_form_id, picked_date, 31)
+      make_graph
+    when 'show_3years'
+      @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 2)
+    when 'show_5years'
+      @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 4)
+    when 'show_10years'
+      @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 9)
+    when 'show_search'
+      @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
+    else
+      redirect_to root_url
+    end
   end
 
   def show
@@ -59,7 +54,7 @@ class DiariesController < ApplicationController
       redirect_to root_url
     else
       session[:picked_date] = @diary[:date_of_diary]
-      redirect_to show_day_url
+      redirect_to show_day_url(view_mode: "show_day")
     end
   end
 
@@ -75,7 +70,7 @@ class DiariesController < ApplicationController
       @diary[:article] = make_article(params)
       if @diary.save
         flash[:success] = '日記が正常に保存されました'
-        redirect_to show_day_url
+        redirect_to show_day_url(view_mode: "show_day")
       else
         flash.now[:danger] = '日記が保存されませんでした'
         render :new
@@ -101,7 +96,7 @@ class DiariesController < ApplicationController
     else
       flash[:danger] = '日記が削除されませんでした'
     end
-    redirect_to show_day_url
+    redirect_to show_day_url(view_mode: "show_day")
   end
 
   def prev_day
@@ -157,18 +152,8 @@ class DiariesController < ApplicationController
 
   def redirect_to_back
     case (session[:view_mode])
-    when 'show_day'
-      redirect_to show_day_url
-    when 'show_week'
-      redirect_to show_week_url
-    when 'show_month'
-      redirect_to show_month_url
-    when 'show_3years'
-      redirect_to show_3years_url
-    when 'show_5years'
-      redirect_to show_5years_url
-    when 'show_10years'
-      redirect_to show_10years_url
+    when 'show_day', 'show_week', 'show_month', 'show_3years', 'show_5years', 'show_10years'
+      redirect_to show_day_url(view_mode: session[:view_mode])
     when 'new'
       redirect_to new_diary_url
     when 'edit'
@@ -190,7 +175,7 @@ class DiariesController < ApplicationController
   def update_diary(diary, articles)
     if diary.update(article: make_article(articles))
       flash[:success] = '日記が正常に修正されました'
-      redirect_to show_day_url
+      redirect_to show_day_url(view_mode: "show_day")
     else
       flash.now[:danger] = '日記が修正されませんでした'
       render :edit
