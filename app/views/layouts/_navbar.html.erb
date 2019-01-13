@@ -20,18 +20,18 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><%= link_to '一日', show_day_path(view_mode: "show_day") %></li>
-              <li><%= link_to '一週間', show_day_path(view_mode: "show_week") %></li>
-              <li><%= link_to '一ヶ月', show_day_path(view_mode: "show_month") %></li>
-              <li><%= link_to '三年', show_day_path(view_mode: "show_3years") %></li>
-              <li><%= link_to '五年', show_day_path(view_mode: "show_5years") %></li>
-              <li><%= link_to '十年', show_day_path(view_mode: "show_10years") %></li>
+              <li><%= link_to '一日', show_diary_path(view_mode: "show_day") %></li>
+              <li><%= link_to '一週間', show_diary_path(view_mode: "show_week") %></li>
+              <li><%= link_to '一ヶ月', show_diary_path(view_mode: "show_month") %></li>
+              <li><%= link_to '三年', show_diary_path(view_mode: "show_3years") %></li>
+              <li><%= link_to '五年', show_diary_path(view_mode: "show_5years") %></li>
+              <li><%= link_to '十年', show_diary_path(view_mode: "show_10years") %></li>
               <li role="separator" class="divider"></li>
-              <li><%= link_to '検索結果', show_day_path(view_mode: "show_search") %></li>
+              <li><%= link_to '検索結果', show_diary_path(view_mode: "show_search") %></li>
             </ul>
           </li>
           <form class="navbar-form navbar-left" role="search">
-            <%= simple_form_for(show_day_path, method: :get) do %>
+            <%= simple_form_for(show_diary_path, method: :get) do %>
               <%= text_field_tag :search, '', placeholder: "検索キーワード" %>
               <%= submit_tag '検索', { class:'btn btn-default', id: 'search_diary' } %>
             <% end %>

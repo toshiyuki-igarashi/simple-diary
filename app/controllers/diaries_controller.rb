@@ -2,11 +2,11 @@ class DiariesController < ApplicationController
   before_action :require_user_logged_in
   before_action :go_to_picked_date
   before_action :search, except: [:show_search]
-  before_action :prepare_picked_diary, only: [:show_day, :create, :edit]
-  before_action :prepare_move_date, only: [:show_day, :new, :edit]
+  before_action :prepare_picked_diary, only: [:show_diary, :create, :edit]
+  before_action :prepare_move_date, only: [:show_diary, :new, :edit]
   before_action :save_view_mode, only: [:new, :create, :edit]
 
-  def show_day
+  def show_diary
     session[:view_mode] = params[:view_mode]
 
     if (params[:commit] == "検索")
@@ -40,7 +40,7 @@ class DiariesController < ApplicationController
     when 'show_search'
       @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
     else
-      redirect_to root_url
+      session[:view_mode] = 'show_day'
     end
   end
 
@@ -54,7 +54,7 @@ class DiariesController < ApplicationController
       redirect_to root_url
     else
       session[:picked_date] = @diary[:date_of_diary]
-      redirect_to show_day_url(view_mode: "show_day")
+      redirect_to show_diary_url(view_mode: "show_day")
     end
   end
 
@@ -70,7 +70,7 @@ class DiariesController < ApplicationController
       @diary[:article] = make_article(params)
       if @diary.save
         flash[:success] = '日記が正常に保存されました'
-        redirect_to show_day_url(view_mode: "show_day")
+        redirect_to show_diary_url(view_mode: "show_day")
       else
         flash.now[:danger] = '日記が保存されませんでした'
         render :new
@@ -96,7 +96,7 @@ class DiariesController < ApplicationController
     else
       flash[:danger] = '日記が削除されませんでした'
     end
-    redirect_to show_day_url(view_mode: "show_day")
+    redirect_to show_diary_url(view_mode: "show_day")
   end
 
   def prev_day
@@ -153,7 +153,7 @@ class DiariesController < ApplicationController
   def redirect_to_back
     case (session[:view_mode])
     when 'show_day', 'show_week', 'show_month', 'show_3years', 'show_5years', 'show_10years'
-      redirect_to show_day_url(view_mode: session[:view_mode])
+      redirect_to show_diary_url(view_mode: session[:view_mode])
     when 'new'
       redirect_to new_diary_url
     when 'edit'
@@ -175,7 +175,7 @@ class DiariesController < ApplicationController
   def update_diary(diary, articles)
     if diary.update(article: make_article(articles))
       flash[:success] = '日記が正常に修正されました'
-      redirect_to show_day_url(view_mode: "show_day")
+      redirect_to show_diary_url(view_mode: "show_day")
     else
       flash.now[:danger] = '日記が修正されませんでした'
       render :edit
