@@ -2,7 +2,7 @@ class DiariesController < ApplicationController
   before_action :require_user_logged_in
   before_action :go_to_picked_date
   before_action :search, except: [:show_search]
-  before_action :prepare_picked_diary, only: [:show_diary, :create, :edit]
+  before_action :prepare_picked_diary, only: [:create, :edit]
   before_action :prepare_move_date, only: [:show_diary, :new, :edit]
   before_action :save_view_mode, only: [:new, :create, :edit]
 
@@ -19,18 +19,15 @@ class DiariesController < ApplicationController
 
     case (session[:view_mode])
     when 'show_day'
+      prepare_picked_diary
     when 'show_week'
-      @show_mode = '週'
-      @set_prev_date_path = prev_week_path
-      @set_next_date_path = next_week_path
       @diaries = Diary.get_diaries(current_form_id, picked_date, 6)
       make_graph
+      session[:move_mode] = 'week'
     when 'show_month'
-      @show_mode = '月'
-      @set_prev_date_path = prev_month_path
-      @set_next_date_path = next_month_path
       @diaries = Diary.get_diaries(current_form_id, picked_date, 31)
       make_graph
+      session[:move_mode] = 'month'
     when 'show_3years'
       @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 2)
     when 'show_5years'
@@ -41,6 +38,7 @@ class DiariesController < ApplicationController
       @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
     else
       session[:view_mode] = 'show_day'
+      prepare_picked_diary
     end
   end
 
@@ -99,38 +97,23 @@ class DiariesController < ApplicationController
     redirect_to show_diary_url(view_mode: "show_day")
   end
 
-  def prev_day
-    session[:picked_date] = picked_date.prev_day.to_s
-    redirect_to_back
-  end
-
-  def next_day
-    session[:picked_date] = picked_date.next_day.to_s
-    redirect_to_back
-  end
-
-  def prev_week
-    session[:picked_date] = (picked_date - 7).to_s
-    redirect_to_back
-  end
-
-  def next_week
-    session[:picked_date] = (picked_date + 7).to_s
-    redirect_to_back
-  end
-
-  def prev_month
-    session[:picked_date] = picked_date.prev_month.to_s
-    redirect_to_back
-  end
-
-  def next_month
-    session[:picked_date] = picked_date.next_month.to_s
-    redirect_to_back
-  end
-
-  def select_date
-    session[:picked_date] = params[:picked_date]
+  def move_date
+    case(params[:move_mode])
+    when 'prev_day'
+      session[:picked_date] = picked_date.prev_day.to_s
+    when 'next_day'
+      session[:picked_date] = picked_date.next_day.to_s
+    when 'prev_week'
+      session[:picked_date] = (picked_date - 7).to_s
+    when 'next_week'
+      session[:picked_date] = (picked_date + 7).to_s
+    when 'prev_month'
+      session[:picked_date] = picked_date.prev_month.to_s
+    when 'next_month'
+      session[:picked_date] = picked_date.next_month.to_s
+    when 'picked_date'
+      session[:picked_date] = params[:picked_date]
+    end
     redirect_to_back
   end
 
@@ -145,9 +128,7 @@ class DiariesController < ApplicationController
   end
 
   def prepare_move_date
-    @show_mode = '日'
-    @set_prev_date_path = prev_day_path
-    @set_next_date_path = next_day_path
+    session[:move_mode] = 'day'
   end
 
   def redirect_to_back

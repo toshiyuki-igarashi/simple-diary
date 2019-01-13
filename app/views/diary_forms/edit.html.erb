@@ -2,7 +2,7 @@
 
 <div class="row">
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-    <%= form_tag(diary_form_url(id: current_form_id), method: :PATCH) do %>
+    <%= form_tag(diary_form_path(id: current_form_id), method: :PATCH) do %>
       <div class="form-group">
         <% current_form.each do |key, value| %>
           <div class="row">

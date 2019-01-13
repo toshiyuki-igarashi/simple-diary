@@ -65,6 +65,17 @@ module SessionsHelper
     end
   end
 
+  def get_move_mode_string
+    case (session[:move_mode])
+    when 'day'
+      '日'
+    when 'week'
+      '週'
+    when 'month'
+      '月'
+    end
+  end
+
   def date_to_string(date)
     "#{date.strftime('%Y/%m/%d')} (#{DAY_OF_WEEK[date.wday]})"
   end
@@ -94,6 +105,7 @@ module SessionsHelper
     session[:picked_date] = date_of_diary
     session[:search_keyword] = ''
     session[:view_mode] = ''
+    session[:move_mode] = ''
   end
 
   def download_file_clear
@@ -107,6 +119,7 @@ module SessionsHelper
     session[:user_id] = nil
     session[:picked_date] = nil
     session[:search_keyword] = nil
+    session[:move_mode] = nil
     session[:view_mode] = nil
     download_file_clear
   end

@@ -8,13 +8,7 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   resources :users, only: [:show, :new, :create, :edit, :update, :destroy]
 
-  get 'prev_day', to: 'diaries#prev_day'
-  get 'next_day', to: 'diaries#next_day'
-  get 'prev_week', to: 'diaries#prev_week'
-  get 'next_week', to: 'diaries#next_week'
-  get 'prev_month', to: 'diaries#prev_month'
-  get 'next_month', to: 'diaries#next_month'
-  get 'date/:picked_date', to: 'diaries#select_date', as: 'date'
+  get 'move_date', to: 'diaries#move_date'
   get 'show_diary', to: 'diaries#show_diary'
   resources :diaries, except: [:index]
 

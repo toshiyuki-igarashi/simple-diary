@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     var dateControl = document.querySelector('input[type="date"]');
-    xmlhttp.open("GET", "/date/"+dateControl.value);
+    xmlhttp.open("GET", "/move_date?move_mode=picked_date&picked_date="+dateControl.value);
     xmlhttp.send();
   }
 
