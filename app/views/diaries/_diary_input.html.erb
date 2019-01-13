@@ -7,36 +7,19 @@
     <%= form_tag(diaries_path, method: :post) do %>
       <%= submit_tag '保存', { class: 'btn btn-primary col-xs-12', id: 'diary_save' } %>
       <div class="form-group" id="input_diary">
-        <% inline = 0 %>
-        <% current_form.each do |key, value| %>
+        <% current_packed_form.each do |key, value| %>
           <% if value["タイプ"] == "長文" %>
-            <% if inline != 0 %>
-              </div>
-              <% inline = 0 %>
-            <% end %>
             <%= text_area_tag key, @diary.get(key), { class: 'form-control', placeholder: key, rows: "20" } %>
-          <% elsif value["タイプ"] == "数字" %>
-            <% if inline == 0 %>
-              <div class="row diary_inline_input">
-            <% elsif inline == 2 %>
-              </div>
-              <div class="row diary_inline_input">
-              <% inline = 0 %>
-            <% end %>
-            <% inline += 1 %>
-            <%= number_field_tag key, @diary.get(key), { class: 'form-inline col-xs-3', placeholder: key, maxlength: 10, step: 0.01 } %>
-            <span class='col-xs-3'><%= value["単位"] %>&nbsp;&nbsp;</span>
-          <% else %>
-            <% if inline != 0 %>
-              </div>
-              <% inline = 0 %>
-            <% end %>
+          <% elsif value["タイプ"] == "短文" %>
             <%= text_field_tag key, @diary.get(key), { class: 'form-control', placeholder: key, maxlength: 50 } %>
+          <% else %>
+            <div class="row diary_inline_input">
+              <% value.each do |n_key, n_value| %>
+                <%= number_field_tag n_key, @diary.get(n_key), { class: 'form-inline col-xs-3', placeholder: n_key, maxlength: 10, step: 0.01 } %>
+                <span class='col-xs-3'><%= n_value["単位"] %>&nbsp;&nbsp;</span>
+              <% end %>
+            </div>
           <% end %>
-        <% end %>
-        <% if inline != 0 %>
-          </div>
-          <% inline = 0 %>
         <% end %>
       </div>
     <% end %>

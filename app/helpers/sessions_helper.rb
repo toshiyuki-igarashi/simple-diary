@@ -22,6 +22,27 @@ module SessionsHelper
     @current_form ||= current_diary_form.get_form
   end
 
+  def current_packed_form
+    if (!@current_packed_form)
+      @current_packed_form = {}
+      keys = current_form.keys
+      number_item = nil
+      0.upto(keys.length-1) do |i|
+        if current_form[keys[i]]["タイプ"] == "数字"
+          if number_item
+            @current_packed_form[keys[i]] = { number_item => current_form[number_item], keys[i] => current_form[keys[i]] }
+            number_item = nil
+          else
+            number_item = keys[i]
+          end
+        else
+          @current_packed_form[keys[i]] = current_form[keys[i]]
+        end
+      end
+    end
+    @current_packed_form
+  end
+
 # 複数の日記を取り扱う際に使う
 #   def change_diary_form(new_form)
 #     @current_diary_form = new_form

@@ -17,44 +17,26 @@
         <% end %>
       </div>
       <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-        <% inline = false %>
-        <% current_form.each do |key, value| %>
+        <% current_packed_form.each do |key, value| %>
 
           <% if value["タイプ"] == "長文" %>
-            <% if inline %>
-              </div>
-              <BR />
-              <% inline = false %>
-            <% end %>
             <% if diary.get(key) %>
               <% diary.get(key).each_line do |line| %>
                 <% count_leading_blank(line).times do %>
                   &nbsp;
                 <% end %>
-                <%= line %><BR>
+                <%= line %><br />
               <% end %>
             <% end %>
-          <% elsif value["タイプ"] == "数字" %>
-            <% if !inline %>
-              <div class="row">
-              <% inline = true %>
-            <% end %>
-            <span class="col-xs-12 col-sm-6"><%= key %>：&nbsp;<%= diary.get(key) %>&nbsp;<%= value["単位"] %></span>
+          <% elsif value["タイプ"] == "短文" %>
+            <%= diary.get(key) %><br />
           <% else %>
-            <% if inline %>
-              </div>
-              <BR />
-              <% inline = false %>
-            <% end %>
-            <%= diary.get(key) %>
+            <div class="row diary_inline_output">
+              <% value.each do |n_key, n_value| %>
+                <span class="col-xs-12 col-sm-6"><%= n_key %>：&nbsp;<%= diary.get(n_key) %>&nbsp;<%= n_value["単位"] %></span>
+              <% end %>
+            </div>
           <% end %>
-          <% if !inline %>
-            <BR />
-          <% end %>
-        <% end %>
-        <% if inline %>
-          </div>
-          <BR />
         <% end %>
       </div>
       <BR />

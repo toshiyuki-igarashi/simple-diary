@@ -5,15 +5,9 @@
   </div>
 
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
-    <% inline = false %>
-    <% current_form.each do |key, value| %>
+    <% current_packed_form.each do |key, value| %>
 
       <% if value["タイプ"] == "長文" %>
-        <% if inline %>
-          </div>
-          <HR />
-          <% inline = false %>
-        <% end %>
         <h4><%= key %></h4>
         <% if @diary.get(key) %>
           <% @diary.get(key).each_line do |line| %>
@@ -23,28 +17,20 @@
             <%= line %><BR>
           <% end %>
         <% end %>
-      <% elsif value["タイプ"] == "数字" %>
-        <% if !inline %>
-          <div class="row">
-          <% inline = true %>
-        <% end %>
-        <span class="col-xs-12 col-sm-6"><%= key %>：&nbsp;<%= @diary.get(key) %>&nbsp;<%= value["単位"] %></span>
-      <% else %>
-        <% if inline %>
-          </div>
-          <HR />
-          <% inline = false %>
-        <% end %>
+        <hr />
+      <% elsif value["タイプ"] == "短文" %>
         <h4><%= key %></h4>
         <%= @diary.get(key) %>
+        <hr />
+      <% else %>
+        <div class="row">
+          <% value.each do |n_key, n_value| %>
+            <span class="col-xs-12 col-sm-6"><%= n_key %>：&nbsp;<%= @diary.get(n_key) %>&nbsp;<%= n_value["単位"] %></span>
+          <% end %>
+          <br />
+          <hr />
+        </div>
       <% end %>
-      <% if !inline %>
-        <HR />
-      <% end %>
-    <% end %>
-    <% if inline %>
-      </div>
-      <HR />
     <% end %>
 
     <% if @diary[:id] %>
