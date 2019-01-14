@@ -36,6 +36,10 @@ module SessionsHelper
             number_item = keys[i]
           end
         else
+          if (number_item)
+            @current_packed_form[number_item] = { number_item => current_form[number_item] }
+            number_item = nil
+          end
           @current_packed_form[keys[i]] = current_form[keys[i]]
         end
       end
