@@ -17,6 +17,10 @@
  *= require bootstrap-datetimepicker
  */
 
+.body {
+  font-display: swap;
+}
+
 #date-form {
   position: relative;
 }

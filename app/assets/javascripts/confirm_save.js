@@ -45,35 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
   var diary_save = document.getElementById("diary_save");
   set_confirm_to_move(diary_save, 'click', cancel_confirm);
 
-  var createXMLHttpRequest = function() {
-    if(window.XMLHttpRequest){return new XMLHttpRequest()}
-    if(window.ActiveXObject){
-      try{return new ActiveXObject("Msxml2.XMLHTTP.6.0")}catch(e){}
-      try{return new ActiveXObject("Msxml2.XMLHTTP.3.0")}catch(e){}
-      try{return new ActiveXObject("Microsoft.XMLHTTP")}catch(e){}
-    }
-    return false;
-  }
-
   var getData = function() {
-    var xmlhttp = createXMLHttpRequest();
-    var wait_time = 300;    // wait to reload page
-
-    xmlhttp.onreadystatechange = function() {
-      if (xmlhttp.readyState == 4) {
-        if (xmlhttp.status == 200) {
-          document.open();
-          document.write(xmlhttp.responseText);
-          document.close();
-        } else {
-          alert("select date error : status = " + xmlhttp.status);
-        }
-      }
-    }
-
     var dateControl = document.querySelector('input[type="date"]');
-    xmlhttp.open("GET", "/move_date?move_mode=picked_date&picked_date="+dateControl.value);
-    xmlhttp.send();
+    location.href = "/move_date?move_mode=picked_date&picked_date="+dateControl.value;
   }
 
   var confirm_to_move = function(e) {
