@@ -61,12 +61,12 @@ class DiaryFormsController < ApplicationController
 
     name = file.original_filename
     name = name.kconv(Kconv::UTF8, Kconv::AUTO)
-    File.open("tmp/diary/#{name}", 'wb') { |f| f.write(file.read) }
+    File.open("#{Rails.root.to_s}/public/data/#{name}", 'wb') { |f| f.write(file.read) }
     if File.extname(name).downcase == '.zip'
-      diary_file_name = uncompress("tmp/diary", "tmp/diary/#{name}", pass)
-      system("rm tmp/diary/#{name}")
+      diary_file_name = uncompress("#{Rails.root.to_s}/public/data", "#{Rails.root.to_s}/public/data/#{name}", pass)
+      system("rm #{Rails.root.to_s}/public/data/#{name}")
     else
-      diary_file_name = "tmp/diary/#{name}"
+      diary_file_name = "#{Rails.root.to_s}/public/data/#{name}"
     end
 
     if diary_file_name && diary_file_name.delete(' ') != ''
