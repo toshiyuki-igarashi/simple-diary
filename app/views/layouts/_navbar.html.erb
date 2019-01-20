@@ -31,7 +31,7 @@
             </ul>
           </li>
           <form class="navbar-form navbar-left" role="search">
-            <%= simple_form_for(show_diary_path, method: :get) do %>
+            <%= simple_form_for :diary, :url => diaries_path, :method => :get do %>
               <%= text_field_tag :search, '', placeholder: "検索キーワード" %>
               <%= submit_tag '検索', { class:'btn btn-default', id: 'search_diary' } %>
             <% end %>
