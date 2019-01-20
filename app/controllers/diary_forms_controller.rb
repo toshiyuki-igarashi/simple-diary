@@ -49,7 +49,7 @@ class DiaryFormsController < ApplicationController
     else
       download_file_clear
     end
-    render :download
+    redirect_to download_url
   end
 
   def upload
