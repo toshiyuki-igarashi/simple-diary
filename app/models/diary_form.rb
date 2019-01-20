@@ -26,6 +26,5 @@ class DiaryForm < ApplicationRecord
 
   def self.initialize_directory
     create_dir("#{Rails.root.to_s}/public/data")
-    create_dir("#{Rails.root.to_s}/tmp/diary")
   end
 end
