@@ -76,3 +76,5 @@ gem 'rubyzip'
 gem 'chartkick'
 gem 'chartable'
 
+# environment variable control
+gem 'dotenv-rails'
