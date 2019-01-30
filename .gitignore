@@ -16,6 +16,7 @@
 # Ignore storage/db files
 /storage/*
 !/storage/.keep
+!/storage/tmp/.keep
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
