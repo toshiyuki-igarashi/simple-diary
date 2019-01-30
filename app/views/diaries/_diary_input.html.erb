@@ -21,7 +21,19 @@
             </div>
           <% end %>
         <% end %>
-        <p class="text-right col-xs-4 col-sm-2">写真：</p>
+
+        <div>
+          <% if @diary.images.attached? %>
+            <br />
+            <p>削除する写真にチェックをしてください</p>
+            <% @diary.images.each do |image| %>
+              <%= check_box_tag 'remove_images[]', image.id, false, multiple: true %>
+              <%= image_tag image.variant(resize: "100x100") %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <br /><p class="text-right col-xs-4 col-sm-2">写真の追加：</p>
         <%= file_field_tag 'images[]', multiple: true, class: "col-xs-8 col-sm-4" %>
       </div>
     <% end %>

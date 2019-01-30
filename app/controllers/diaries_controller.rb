@@ -156,7 +156,12 @@ class DiariesController < ApplicationController
 
   def update_diary(diary, articles)
     if diary.update(article: make_article(articles))
-      diary.images.attach(params[:images])
+      diary.images.attach(params[:images]) if params[:images]
+      if params[:remove_images]
+        params[:remove_images].each do |image_id|
+          diary.images.find(image_id).purge
+        end
+      end
       flash[:success] = '日記が正常に修正されました'
       redirect_to show_diary_url(view_mode: "show_day")
     else

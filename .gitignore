@@ -13,5 +13,11 @@
 !/log/.keep
 !/tmp/.keep
 
+# Ignore storage/db files
+/storage/*
+!/storage/.keep
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
 # Ignore Byebug command history file.
 .byebug_history
