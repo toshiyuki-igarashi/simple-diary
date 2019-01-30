@@ -27,6 +27,14 @@
     <% end %>
   <% end %>
 
+  <div>
+    <% if @diary.images.attached? %>
+      <% @diary.images.each do |image| %>
+        <a href=<%= url_for(image) %> ><%= image_tag image.variant(resize: "100x100") %></a>
+      <% end %>
+    <% end %>
+  </div>
+
   <% if @diary[:id] %>
     <div class="row">
       <br class="col-xs-12">

@@ -1,5 +1,6 @@
 class Diary < ApplicationRecord
   belongs_to :diary_form, :foreign_key => 'form_id'
+  has_many_attached :images
 
   validates :date_of_diary, presence: true, uniqueness: { scope: :diary_form }
 
