@@ -78,3 +78,5 @@ gem 'chartable'
 
 # environment variable control
 gem 'dotenv-rails'
+gem 'google-cloud-storage', '~> 1.8', require: false
+
