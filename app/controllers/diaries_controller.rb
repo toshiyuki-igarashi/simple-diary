@@ -66,7 +66,7 @@ class DiariesController < ApplicationController
   def create
     if @diary.id == nil
       @diary[:article] = make_article(params)
-      @diary.images.attach(params[:images])
+      @diary.images.attach(params[:images]) if params[:images]
       if @diary.save
         flash[:success] = '日記が正常に保存されました'
         redirect_to show_diary_url(view_mode: "show_day")

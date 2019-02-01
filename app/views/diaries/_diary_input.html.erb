@@ -22,20 +22,18 @@
           <% end %>
         <% end %>
 
-        <div>
-          <% if @diary.images.attached? %>
+        <% if @diary.id && @diary.images.attached? %>
+          <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-lg-offset-1 col-ls-6" id="show_pictures">
             <br />
             <p>削除する写真にチェックをしてください</p>
             <% @diary.images.each do |image| %>
               <div class="col-xs-4 col-sm-2">
                 <%= check_box_tag 'remove_images[]', image.id, false, multiple: true %>
-<!--                <%= image_tag image.variant(resize: "100x100") %>
--->
-<img src=<%= url_for(image) %> class="img-thumbnail" alt="image">
+                <img src=<%= url_for(image) %> class="img-thumbnail" alt="image">
               </div>
             <% end %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
 
         <div id="append_picture">
           <p class="text-right col-xs-4 col-sm-3">写真添付</p>

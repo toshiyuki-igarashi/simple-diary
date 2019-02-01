@@ -55,6 +55,14 @@
   border: groove 5px;
 }
 
+.picture {
+  padding: 5px;
+}
+
+#show_pictures {
+  margin-bottom: 10px;
+}
+
 #append_picture {
-  margin-top: 80px;
+  margin-top: 10px;
 }
