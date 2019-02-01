@@ -88,6 +88,17 @@ module SessionsHelper
     "(#{DAY_OF_WEEK[Date.parse(date).wday]}曜日)"
   end
 
+  def kind_of_day(date)
+    case (Date.parse(date))
+    when Date.today - 1
+      '[昨日] '
+    when Date.today
+      '[本日] '
+    when Date.today + 1
+      '[明日] '
+    end
+  end
+
   def password_check(email, password)
     @user = User.find_by(email: email)
     if @user && @user.authenticate(password)

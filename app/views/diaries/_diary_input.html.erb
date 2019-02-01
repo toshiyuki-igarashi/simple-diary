@@ -27,14 +27,20 @@
             <br />
             <p>削除する写真にチェックをしてください</p>
             <% @diary.images.each do |image| %>
-              <%= check_box_tag 'remove_images[]', image.id, false, multiple: true %>
-              <%= image_tag image.variant(resize: "100x100") %>
+              <div class="col-xs-4 col-sm-2">
+                <%= check_box_tag 'remove_images[]', image.id, false, multiple: true %>
+<!--                <%= image_tag image.variant(resize: "100x100") %>
+-->
+<img src=<%= url_for(image) %> class="img-thumbnail" alt="image">
+              </div>
             <% end %>
           <% end %>
         </div>
 
-        <br /><p class="text-right col-xs-4 col-sm-2">写真の添付：</p>
-        <%= file_field_tag 'images[]', multiple: true, class: "col-xs-8 col-sm-4" %>
+        <div id="append_picture">
+          <p class="text-right col-xs-4 col-sm-3">写真添付</p>
+          <%= file_field_tag 'images[]', multiple: true, class: "col-xs-8 col-sm-4" %>
+        </div>
       </div>
     <% end %>
   </div>
