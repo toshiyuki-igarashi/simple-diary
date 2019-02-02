@@ -11,11 +11,7 @@ class User < ApplicationRecord
   def delete_all
     DiaryForm.where(user_id: self.id).each do |diary_form|
       Diary.where(form_id: diary_form.id).each do |diary|
-        if diary.images.attached?
-          diary.images.each do |image|
-            image.purge
-          end
-        end
+        diary.delete_images
         diary.destroy
       end
       diary_form.destroy

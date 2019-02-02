@@ -30,6 +30,14 @@ class Diary < ApplicationRecord
     include_all?(words, JSON.parse(self[:article]).values.join(''))
   end
 
+  def delete_images
+    if images.attached?
+      images.each do |image|
+        image.purge
+      end
+    end
+  end
+
   def self.search_diary(search_keyword, form_id)
     diaries_all = Diary.where(form_id: form_id)
     diaries = []
