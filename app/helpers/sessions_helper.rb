@@ -58,6 +58,10 @@ module SessionsHelper
     current_form.keys[0]
   end
 
+  def today
+    Date.parse(Time.zone.now.to_s)
+  end
+
   def picked_date
     Date.parse(session[:picked_date])
   end
@@ -90,11 +94,11 @@ module SessionsHelper
 
   def kind_of_day(date)
     case (Date.parse(date))
-    when Date.today - 1
+    when today - 1
       '[昨日] '
-    when Date.today
+    when today
       '[本日] '
-    when Date.today + 1
+    when today + 1
       '[明日] '
     end
   end
