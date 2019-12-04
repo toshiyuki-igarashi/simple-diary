@@ -73,7 +73,7 @@ gem 'simple_form'
 gem 'rubyzip'
 
 # chart print
-gem 'chartkick'
+gem 'chartkick', ">= 3.3.0"
 gem 'chartable'
 
 # environment variable control

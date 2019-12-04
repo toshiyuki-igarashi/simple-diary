@@ -1,0 +1,150 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ActiveSupport	test/test_helper.rb	/^class ActiveSupport::TestCase$/;"	c
+AddFormIdToDiaries	db/migrate/20181227043048_add_form_id_to_diaries.rb	/^class AddFormIdToDiaries < ActiveRecord::Migration[5.0]$/;"	c
+Application	config/application.rb	/^  class Application < Rails::Application$/;"	c	class:SimpleDiary
+ApplicationCable	app/channels/application_cable/channel.rb	/^module ApplicationCable$/;"	m
+ApplicationCable	app/channels/application_cable/connection.rb	/^module ApplicationCable$/;"	m
+ApplicationController	app/controllers/application_controller.rb	/^class ApplicationController < ActionController::Base$/;"	c
+ApplicationHelper	app/helpers/application_helper.rb	/^module ApplicationHelper$/;"	m
+ApplicationJob	app/jobs/application_job.rb	/^class ApplicationJob < ActiveJob::Base$/;"	c
+ApplicationMailer	app/mailers/application_mailer.rb	/^class ApplicationMailer < ActionMailer::Base$/;"	c
+ApplicationRecord	app/models/application_record.rb	/^class ApplicationRecord < ActiveRecord::Base$/;"	c
+Channel	app/channels/application_cable/channel.rb	/^  class Channel < ActionCable::Channel::Base$/;"	c	class:ApplicationCable
+Connection	app/channels/application_cable/connection.rb	/^  class Connection < ActionCable::Connection::Base$/;"	c	class:ApplicationCable
+CreateActiveStorageTables	db/migrate/20190130092351_create_active_storage_tables.active_storage.rb	/^class CreateActiveStorageTables < ActiveRecord::Migration[5.2]$/;"	c
+CreateDiaries	db/migrate/20181212011031_create_diaries.rb	/^class CreateDiaries < ActiveRecord::Migration[5.0]$/;"	c
+CreateDiaryForms	db/migrate/20181227015132_create_diary_forms.rb	/^class CreateDiaryForms < ActiveRecord::Migration[5.0]$/;"	c
+CreateUsers	db/migrate/20181207011731_create_users.rb	/^class CreateUsers < ActiveRecord::Migration[5.0]$/;"	c
+DiariesController	app/controllers/diaries_controller.rb	/^class DiariesController < ApplicationController$/;"	c
+DiariesControllerTest	test/controllers/diaries_controller_test.rb	/^class DiariesControllerTest < ActionDispatch::IntegrationTest$/;"	c
+DiariesHelper	app/helpers/diaries_helper.rb	/^module DiariesHelper$/;"	m
+Diary	app/models/diary.rb	/^class Diary < ApplicationRecord$/;"	c
+DiaryForm	app/models/diary_form.rb	/^class DiaryForm < ApplicationRecord$/;"	c
+DiaryFormTest	test/models/diary_form_test.rb	/^class DiaryFormTest < ActiveSupport::TestCase$/;"	c
+DiaryFormsController	app/controllers/diary_forms_controller.rb	/^class DiaryFormsController < ApplicationController$/;"	c
+DiaryFormsControllerTest	test/controllers/diary_forms_controller_test.rb	/^class DiaryFormsControllerTest < ActionDispatch::IntegrationTest$/;"	c
+DiaryFormsHelper	app/helpers/diary_forms_helper.rb	/^module DiaryFormsHelper$/;"	m
+DiaryTest	test/models/diary_test.rb	/^class DiaryTest < ActiveSupport::TestCase$/;"	c
+RemoveSummaryFromDiaries	db/migrate/20181228230150_remove_summary_from_diaries.rb	/^class RemoveSummaryFromDiaries < ActiveRecord::Migration[5.0]$/;"	c
+RemoveUserIdFromDiaries	db/migrate/20181228015720_remove_user_id_from_diaries.rb	/^class RemoveUserIdFromDiaries < ActiveRecord::Migration[5.0]$/;"	c
+SessionsController	app/controllers/sessions_controller.rb	/^class SessionsController < ApplicationController$/;"	c
+SessionsControllerTest	test/controllers/sessions_controller_test.rb	/^class SessionsControllerTest < ActionDispatch::IntegrationTest$/;"	c
+SessionsHelper	app/helpers/sessions_helper.rb	/^module SessionsHelper$/;"	m
+SimpleDiary	config/application.rb	/^module SimpleDiary$/;"	m
+ToppagesController	app/controllers/toppages_controller.rb	/^class ToppagesController < ApplicationController$/;"	c
+User	app/models/user.rb	/^class User < ApplicationRecord$/;"	c
+UserTest	test/models/user_test.rb	/^class UserTest < ActiveSupport::TestCase$/;"	c
+UsersController	app/controllers/users_controller.rb	/^class UsersController < ApplicationController$/;"	c
+UsersControllerTest	test/controllers/users_controller_test.rb	/^class UsersControllerTest < ActionDispatch::IntegrationTest$/;"	c
+UsersHelper	app/helpers/users_helper.rb	/^module UsersHelper$/;"	m
+change	db/migrate/20181207011731_create_users.rb	/^  def change$/;"	f	class:CreateUsers
+change	db/migrate/20181212011031_create_diaries.rb	/^  def change$/;"	f	class:CreateDiaries
+change	db/migrate/20181227015132_create_diary_forms.rb	/^  def change$/;"	f	class:CreateDiaryForms
+change	db/migrate/20181227043048_add_form_id_to_diaries.rb	/^  def change$/;"	f	class:AddFormIdToDiaries
+change	db/migrate/20181228015720_remove_user_id_from_diaries.rb	/^  def change$/;"	f	class:RemoveUserIdFromDiaries
+change	db/migrate/20181228230150_remove_summary_from_diaries.rb	/^  def change$/;"	f	class:RemoveSummaryFromDiaries
+change	db/migrate/20190130092351_create_active_storage_tables.active_storage.rb	/^  def change$/;"	f	class:CreateActiveStorageTables
+compress_string	app/controllers/diary_forms_controller.rb	/^  def compress_string(string, filename, zippath, password)$/;"	f	class:DiaryFormsController
+construct_form	app/controllers/diary_forms_controller.rb	/^  def construct_form(params, selected)$/;"	f	class:DiaryFormsController
+copy_value	app/controllers/diary_forms_controller.rb	/^  def copy_value(keys, original, target)$/;"	f	class:DiaryFormsController
+count_leading_blank	app/helpers/application_helper.rb	/^  def count_leading_blank(str)$/;"	f	class:ApplicationHelper
+create	app/controllers/diaries_controller.rb	/^  def create$/;"	f	class:DiariesController
+create	app/controllers/sessions_controller.rb	/^  def create$/;"	f	class:SessionsController
+create	app/controllers/users_controller.rb	/^  def create$/;"	f	class:UsersController
+create_dir	app/models/diary_form.rb	/^  def self.create_dir(dir_name)$/;"	F	class:DiaryForm
+current_diary_form	app/helpers/sessions_helper.rb	/^  def current_diary_form$/;"	f	class:SessionsHelper
+current_form	app/helpers/sessions_helper.rb	/^  def current_form$/;"	f	class:SessionsHelper
+current_form_id	app/helpers/sessions_helper.rb	/^  def current_form_id$/;"	f	class:SessionsHelper
+current_packed_form	app/helpers/sessions_helper.rb	/^  def current_packed_form$/;"	f	class:SessionsHelper
+current_user	app/helpers/sessions_helper.rb	/^  def current_user$/;"	f	class:SessionsHelper
+date_to_string	app/helpers/sessions_helper.rb	/^  def date_to_string(date)$/;"	f	class:SessionsHelper
+day_of_week	app/helpers/sessions_helper.rb	/^  def day_of_week(date)$/;"	f	class:SessionsHelper
+delete_all	app/models/user.rb	/^  def delete_all$/;"	f	class:User
+delete_images	app/models/diary.rb	/^  def delete_images$/;"	f	class:Diary
+delete_item	app/controllers/diary_forms_controller.rb	/^  def delete_item(items, selected)$/;"	f	class:DiaryFormsController
+destroy	app/controllers/diaries_controller.rb	/^  def destroy$/;"	f	class:DiariesController
+destroy	app/controllers/sessions_controller.rb	/^  def destroy$/;"	f	class:SessionsController
+destroy	app/controllers/users_controller.rb	/^  def destroy$/;"	f	class:UsersController
+download	app/controllers/diary_forms_controller.rb	/^  def download$/;"	f	class:DiaryFormsController
+download_file	app/controllers/diary_forms_controller.rb	/^  def download_file$/;"	f	class:DiaryFormsController
+download_file_clear	app/helpers/sessions_helper.rb	/^  def download_file_clear$/;"	f	class:SessionsHelper
+download_file_exist?	app/helpers/diary_forms_helper.rb	/^  def download_file_exist?$/;"	f	class:DiaryFormsHelper
+download_file_name	app/helpers/diary_forms_helper.rb	/^  def download_file_name$/;"	f	class:DiaryFormsHelper
+edit	app/controllers/diaries_controller.rb	/^  def edit$/;"	f	class:DiariesController
+edit	app/controllers/diary_forms_controller.rb	/^  def edit$/;"	f	class:DiaryFormsController
+edit	app/controllers/users_controller.rb	/^  def edit$/;"	f	class:UsersController
+first_key_of_current_form	app/helpers/sessions_helper.rb	/^  def first_key_of_current_form$/;"	f	class:SessionsHelper
+get	app/models/diary.rb	/^  def get(term)$/;"	f	class:Diary
+get_all_diary	app/controllers/diary_forms_controller.rb	/^  def get_all_diary$/;"	f	class:DiaryFormsController
+get_diaries	app/models/diary.rb	/^  def self.get_diaries(form_id, date, number)$/;"	F	class:Diary
+get_diaries_of_years	app/models/diary.rb	/^  def self.get_diaries_of_years(form_id, date, number)$/;"	F	class:Diary
+get_form	app/models/diary_form.rb	/^  def get_form$/;"	f	class:DiaryForm
+get_graph_data	app/controllers/diaries_controller.rb	/^  def get_graph_data$/;"	f	class:DiariesController
+get_max	app/helpers/diaries_helper.rb	/^  def get_max(data)$/;"	f	class:DiariesHelper
+get_min	app/helpers/diaries_helper.rb	/^  def get_min(data)$/;"	f	class:DiariesHelper
+get_move_mode_string	app/helpers/sessions_helper.rb	/^  def get_move_mode_string$/;"	f	class:SessionsHelper
+get_real_max	app/helpers/diaries_helper.rb	/^  def get_real_max(data)$/;"	f	class:DiariesHelper
+get_user_id	app/models/diary.rb	/^  def get_user_id$/;"	f	class:Diary
+go_to_picked_date	app/helpers/sessions_helper.rb	/^  def go_to_picked_date$/;"	f	class:SessionsHelper
+include?	app/models/diary.rb	/^  def include?(word)$/;"	f	class:Diary
+include_all?	app/models/diary.rb	/^  def include_all?(words, value)$/;"	f	class:Diary
+index	app/controllers/toppages_controller.rb	/^  def index$/;"	f	class:ToppagesController
+initialize_directory	app/models/diary_form.rb	/^  def self.initialize_directory$/;"	F	class:DiaryForm
+insert_item	app/controllers/diary_forms_controller.rb	/^  def insert_item(items, selected)$/;"	f	class:DiaryFormsController
+is_valid_number?	app/helpers/diaries_helper.rb	/^  def is_valid_number?(s)$/;"	f	class:DiariesHelper
+kind_of_day	app/helpers/sessions_helper.rb	/^  def kind_of_day(date)$/;"	f	class:SessionsHelper
+load_diaries	app/controllers/diary_forms_controller.rb	/^  def load_diaries(diaries)$/;"	f	class:DiaryFormsController
+load_diary	app/controllers/diary_forms_controller.rb	/^  def load_diary(diary_file_name)$/;"	f	class:DiaryFormsController
+load_diary_form	app/controllers/diary_forms_controller.rb	/^  def load_diary_form(title, form)$/;"	f	class:DiaryFormsController
+load_one_diary	app/controllers/diary_forms_controller.rb	/^  def load_one_diary(date, diary)$/;"	f	class:DiaryFormsController
+logged_in?	app/helpers/sessions_helper.rb	/^  def logged_in?$/;"	f	class:SessionsHelper
+logged_in_session	app/helpers/sessions_helper.rb	/^  def logged_in_session$/;"	f	class:SessionsHelper
+make_article	app/controllers/diaries_controller.rb	/^  def make_article(article_input)$/;"	f	class:DiariesController
+make_diary_data	app/controllers/diary_forms_controller.rb	/^  def make_diary_data$/;"	f	class:DiaryFormsController
+make_download_file_name	app/controllers/diary_forms_controller.rb	/^  def make_download_file_name$/;"	f	class:DiaryFormsController
+make_form	app/controllers/diary_forms_controller.rb	/^  def make_form(form)$/;"	f	class:DiaryFormsController
+make_graph	app/controllers/diaries_controller.rb	/^  def make_graph$/;"	f	class:DiariesController
+make_graph_hash	app/controllers/diaries_controller.rb	/^  def make_graph_hash$/;"	f	class:DiariesController
+move_date	app/controllers/diaries_controller.rb	/^  def move_date$/;"	f	class:DiariesController
+move_down_item	app/controllers/diary_forms_controller.rb	/^  def move_down_item(items, selected)$/;"	f	class:DiaryFormsController
+move_up_item	app/controllers/diary_forms_controller.rb	/^  def move_up_item(items, selected)$/;"	f	class:DiaryFormsController
+my_diary?	app/controllers/diaries_controller.rb	/^  def my_diary?(diary)$/;"	f	class:DiariesController
+new	app/controllers/diaries_controller.rb	/^  def new$/;"	f	class:DiariesController
+new	app/controllers/sessions_controller.rb	/^  def new$/;"	f	class:SessionsController
+new	app/controllers/users_controller.rb	/^  def new$/;"	f	class:UsersController
+password_check	app/helpers/sessions_helper.rb	/^  def password_check(email, password)$/;"	f	class:SessionsHelper
+picked_date	app/helpers/sessions_helper.rb	/^  def picked_date$/;"	f	class:SessionsHelper
+prepare_diary	app/models/diary.rb	/^  def self.prepare_diary(form_id, date)$/;"	F	class:Diary
+prepare_move_date	app/controllers/diaries_controller.rb	/^  def prepare_move_date$/;"	f	class:DiariesController
+prepare_picked_diary	app/controllers/diaries_controller.rb	/^  def prepare_picked_diary$/;"	f	class:DiariesController
+redirect_to_back	app/controllers/diaries_controller.rb	/^  def redirect_to_back$/;"	f	class:DiariesController
+refine_graph_data	app/controllers/diaries_controller.rb	/^  def refine_graph_data$/;"	f	class:DiariesController
+require_user_logged_in	app/controllers/application_controller.rb	/^  def require_user_logged_in$/;"	f	class:ApplicationController
+save_item	app/controllers/diary_forms_controller.rb	/^  def save_item(items, key, item_name, value)$/;"	f	class:DiaryFormsController
+save_view_mode	app/controllers/diaries_controller.rb	/^  def save_view_mode$/;"	f	class:DiariesController
+search	app/helpers/diaries_helper.rb	/^  def search$/;"	f	class:DiariesHelper
+search_diary	app/models/diary.rb	/^  def self.search_diary(search_keyword, form_id)$/;"	F	class:Diary
+session_clear	app/helpers/sessions_helper.rb	/^  def session_clear$/;"	f	class:SessionsHelper
+show	app/controllers/diaries_controller.rb	/^  def show$/;"	f	class:DiariesController
+show	app/controllers/users_controller.rb	/^  def show$/;"	f	class:UsersController
+show_all	app/models/diary.rb	/^  def self.show_all$/;"	F	class:Diary
+show_all	app/models/diary_form.rb	/^  def self.show_all$/;"	F	class:DiaryForm
+show_all	app/models/user.rb	/^  def self.show_all$/;"	F	class:User
+show_diary	app/controllers/diaries_controller.rb	/^  def show_diary$/;"	f	class:DiariesController
+significant_digits	app/helpers/diaries_helper.rb	/^  def significant_digits(data)$/;"	f	class:DiariesHelper
+system!	bin/setup	/^def system!(*args)$/;"	f
+system!	bin/update	/^def system!(*args)$/;"	f
+today	app/helpers/sessions_helper.rb	/^  def today$/;"	f	class:SessionsHelper
+uncompress	app/controllers/diary_forms_controller.rb	/^  def uncompress(path, zippath, password)$/;"	f	class:DiaryFormsController
+update	app/controllers/diaries_controller.rb	/^  def update$/;"	f	class:DiariesController
+update	app/controllers/diary_forms_controller.rb	/^  def update$/;"	f	class:DiaryFormsController
+update	app/controllers/users_controller.rb	/^  def update$/;"	f	class:UsersController
+update_diary	app/controllers/diaries_controller.rb	/^  def update_diary(diary, articles)$/;"	f	class:DiariesController
+upload	app/controllers/diary_forms_controller.rb	/^  def upload$/;"	f	class:DiaryFormsController
+upload_file	app/controllers/diary_forms_controller.rb	/^  def upload_file$/;"	f	class:DiaryFormsController
+user_params	app/controllers/users_controller.rb	/^  def user_params$/;"	f	class:UsersController
