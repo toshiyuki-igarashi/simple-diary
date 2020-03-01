@@ -1,0 +1,9 @@
+igarashBookpuro:simple-diary toshiyuki_igarashi$ git fetch origin
+remote: Enumerating objects: 8, done.
+remote: Counting objects: 100% (8/8), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 6 (delta 4), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (6/6), done.
+From https://github.com/toshiyuki-igarashi/simple-diary
+ * [new branch]      dependabot/bundler/nokogiri-1.10.8 -> origin/dependabot/bundler/nokogiri-1.10.8
+ * [new branch]      dependabot/bundler/puma-3.12.3     -> origin/dependabot/bundler/puma-3.12.3
