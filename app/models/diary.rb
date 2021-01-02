@@ -74,10 +74,20 @@ class Diary < ApplicationRecord
     diaries
   end
 
+  def self.date_of_years_before(years, date)
+    cwyear = date.cwyear - years
+    cweek = date.cweek
+    cwday = date.cwday
+    last_date = Date.new(cwyear, 12, 28)
+    return Date.commercial(cwyear + 1, 1, cwday) if last_date.cweek < cweek
+
+    Date.commercial(cwyear, cweek, cwday)
+  end
+
   def self.get_diaries_of_years(form_id, date, number)
     diaries = []
     0.upto(number) do |i|
-      diaries[i] = Diary.prepare_diary(form_id, Date.commercial(date.cwyear - i, date.cweek, date.cwday))
+      diaries[i] = Diary.prepare_diary(form_id, date_of_years_before(i, date))
     end
     diaries
   end
