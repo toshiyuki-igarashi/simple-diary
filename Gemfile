@@ -5,10 +5,10 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby '2.6.6'
+ruby '>= 2.6.6'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 6.1.3'
 # Use mysql as the database for Active Record
 # gem 'mysql2', '>= 0.3.18', '< 0.5'
 # Use Puma as the app server
@@ -41,14 +41,14 @@ gem 'mini_magick', '~> 4.9'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 group :production do
-  gem 'pg', '0.21.0'
+  gem 'pg', '~> 1.1'
 end
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
-  gem 'sqlite3', '1.3.13'
+  gem 'sqlite3', '~> 1.4'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
 end
@@ -80,4 +80,4 @@ gem 'chartable'
 # environment variable control
 gem 'dotenv-rails'
 gem 'google-cloud-storage', '~> 1.8', require: false
-
+gem 'image_processing', '~> 1.2'

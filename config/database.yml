@@ -48,6 +48,6 @@ production:
   adapter: postgresql
   encoding: unicode
   pool: 5
-  database: simple-diary_production
-  username: simple-diary
-  password: <%= ENV['SIMPLE-DIARY_DATABASE_PASSWORD'] %>
+  database: simple_diary_production
+  username: toshiyuki
+  password: <%= ENV['SIMPLE_DIARY_DATABASE_PASSWORD'] %>
