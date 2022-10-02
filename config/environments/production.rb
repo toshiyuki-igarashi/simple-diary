@@ -91,4 +91,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+  
+  # enable access by the name: "www.simple-simple-diary.com"
+  config.hosts << "www.simple-simple-diary.com"
 end
