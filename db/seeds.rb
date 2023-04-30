@@ -27,6 +27,15 @@ DiaryForm.create!(
   updated_at: Time.now
 )
 
+DiaryForm.create!(
+  id: 2,
+  user_id: 1,
+  title: '標準日記帳',
+  form: DiaryForm::DEFAULT_FORM,
+  created_at: Time.now,
+  updated_at: Time.now
+)
+
 Diary.create!(
   id: 1,
   article: JSON.generate({'トピック' => '今日のトピックス', '体重' => '53', '本文' => '今日は。。。'}).to_s,

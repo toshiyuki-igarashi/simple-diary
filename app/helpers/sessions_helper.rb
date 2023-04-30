@@ -10,8 +10,13 @@ module SessionsHelper
     !!current_user
   end
 
+  def current_form_idx
+    session[:form_idx] ? session[:form_idx].to_i : 0
+  end
+
   def current_diary_form
-    @current_diary_form ||= DiaryForm.find_by(user_id: current_user.id)
+    @current_diary_form ||= DiaryForm.where(user_id: current_user.id)[current_form_idx]
+    @current_diary_form ||= DiaryForm.where(user_id: current_user.id)[0]
   end
 
   def current_form_id
@@ -135,6 +140,7 @@ module SessionsHelper
   end
 
   def session_clear
+    session[:form_idx] = nil
     session[:user_id] = nil
     session[:picked_date] = nil
     session[:search_keyword] = nil

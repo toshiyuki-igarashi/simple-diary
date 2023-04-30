@@ -45,6 +45,9 @@ document.addEventListener('DOMContentLoaded', function() {
   var diary_save = document.getElementById("diary_save");
   set_confirm_to_move(diary_save, 'click', cancel_confirm);
 
+  var diary_save_bottom = document.getElementById("diary_save_bottom");
+  set_confirm_to_move(diary_save_bottom, 'click', cancel_confirm);
+
   var getData = function() {
     var dateControl = document.querySelector('input[type="date"]');
     location.href = "/move_date?move_mode=picked_date&picked_date="+dateControl.value;
