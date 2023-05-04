@@ -2,13 +2,13 @@ require 'test_helper'
 
 class DiaryFormsControllerTest < ActionDispatch::IntegrationTest
   test "should get edit" do
-    get diary_forms_edit_url
-    assert_response :success
+    get edit_diary_form_url(DiaryForm.first)
+    assert_response :redirect
   end
 
   test "should get update" do
-    get diary_forms_update_url
-    assert_response :success
+    put diary_form_url(DiaryForm.first)
+    assert_response :redirect
   end
 
 end
