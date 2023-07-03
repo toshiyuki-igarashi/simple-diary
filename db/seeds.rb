@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'json'
+include Math
 
 User.create!(
   id: 1,
@@ -36,12 +37,26 @@ DiaryForm.create!(
   updated_at: Time.now
 )
 
-Diary.create!(
-  id: 1,
-  article: JSON.generate({'トピック' => '今日のトピックス', '体重' => '53', '本文' => '今日は。。。'}).to_s,
-  date_of_diary: Date.today,
-  created_at: Time.now,
-  updated_at: Time.now,
-  form_id: 1
-)
+# weight fluctuats between +/- 500g
+def weight_fluctuation(weight)
+  (weight + (rand - 0.5)).round(2)
+end
+
+# weight fluctuates up and down
+DAYS_NUM = 360
+WEIGHT_MAX = 3
+def weight_of_day(day, weight)
+  weight_fluctuation(weight + sin(PI * 2 * DAYS_NUM / day) * WEIGHT_MAX)
+end
+
+1.upto(DAYS_NUM) do |i|
+  Diary.create!(
+    id: i,
+    article: JSON.generate({'トピック' => '今日のトピックス', '体重' => "#{weight_of_day(i, 53)}", '本文' => '今日は。。。'}).to_s,
+    date_of_diary: Date.today - i,
+    created_at: Time.now,
+    updated_at: Time.now,
+    form_id: 1
+  )
+end
 
