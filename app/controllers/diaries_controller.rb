@@ -28,6 +28,9 @@ class DiariesController < ApplicationController
       @diaries = Diary.get_diaries(current_form_id, picked_date, 31)
       make_graph
       session[:move_mode] = 'month'
+    when 'show_year'
+      @diaries = Diary.get_diaries_of_month(current_form_id, picked_date, 11)
+      make_graph
     when 'show_3years'
       @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 2)
     when 'show_5years'
@@ -135,7 +138,7 @@ class DiariesController < ApplicationController
 
   def redirect_to_back
     case (session[:view_mode])
-    when 'show_day', 'show_week', 'show_month', 'show_3years', 'show_5years', 'show_10years'
+    when 'show_day', 'show_week', 'show_month', 'show_year', 'show_3years', 'show_5years', 'show_10years'
       redirect_to show_diary_url(view_mode: session[:view_mode])
     when 'new'
       redirect_to new_diary_url

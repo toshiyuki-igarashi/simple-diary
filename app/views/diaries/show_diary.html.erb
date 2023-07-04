@@ -15,6 +15,9 @@
 <% when 'show_month' %>
   <%= render 'show_diaries' %>
   <%= render 'show_graph' %>
+<% when 'show_year' %>
+  <%= render 'show_diaries' %>
+  <%= render 'show_graph' %>
 <% when 'show_3years', 'show_5years', 'show_10years' %>
   <%= render 'show_several_diaries' %>
 <% when 'show_search' %>

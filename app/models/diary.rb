@@ -74,6 +74,14 @@ class Diary < ApplicationRecord
     diaries
   end
 
+  def self.get_diaries_of_month(form_id, date, number)
+    diaries = []
+    0.upto(number) do |i|
+      diaries[i] = Diary.prepare_diary(form_id, date - (i * 30))
+    end
+    diaries
+  end
+
   def self.date_of_years_before(years, date)
     cwyear = date.cwyear - years
     cweek = date.cweek
