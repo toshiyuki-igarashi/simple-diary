@@ -22,15 +22,15 @@ class DiariesController < ApplicationController
       prepare_picked_diary
     when 'show_week'
       @diaries = Diary.get_diaries(current_form_id, picked_date, 6)
-      make_graph
+      make_graph(current_form_id)
       session[:move_mode] = 'week'
     when 'show_month'
       @diaries = Diary.get_diaries(current_form_id, picked_date, 31)
-      make_graph
+      make_graph(current_form_id)
       session[:move_mode] = 'month'
     when 'show_year'
       @diaries = Diary.get_diaries_of_month(current_form_id, picked_date, 11)
-      make_graph
+      make_graph(current_form_id, 2)
     when 'show_3years'
       @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 2)
     when 'show_5years'
@@ -192,10 +192,34 @@ class DiariesController < ApplicationController
     end
   end
 
-  def get_graph_data
+  def diaries_of_period(form_id, period, center_date)
+    diaries = []
+    first_date = center_date - (period * 2)
+    0.upto(period * 2) do |i|
+      diaries << Diary.prepare_diary(form_id, first_date - i)
+    end
+    diaries
+  end
+
+  def average_value(diaries, key)
+    idx = 0
+    sum = 0.0
+    diaries.each do |diary|
+      unless diary.get(key).nil?
+        idx += 1
+        sum += diary.get(key).to_f
+      end
+    end
+    return nil if idx.zero?
+
+    (sum / idx).to_s
+  end
+
+  def get_graph_data(form_id, average_period)
     @diaries.each do |diary|
+      average_diaries = diaries_of_period(form_id, average_period, diary[:date_of_diary])
       @graph.each do |key, value|
-        value[:data][diary[:date_of_diary]] = diary.get(key)
+        value[:data][diary[:date_of_diary]] = average_value(average_diaries, key)
       end
     end
   end
@@ -210,9 +234,9 @@ class DiariesController < ApplicationController
     end
   end
 
-  def make_graph
+  def make_graph(form_id, average_period = 0)
     make_graph_hash
-    get_graph_data
+    get_graph_data(form_id, average_period)
     refine_graph_data
   end
 end
