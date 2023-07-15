@@ -27,7 +27,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-/config/secrets/simple-diary-owner.json
+/config/secrets/*
 
 /config/credentials/production.key
 
