@@ -44,9 +44,9 @@ end
 
 # weight fluctuates up and down
 DAYS_NUM = 360
-WEIGHT_MAX = 3
+WEIGHT_MAX = 3.0
 def weight_of_day(day, weight)
-  weight_fluctuation(weight + sin(PI * 2 * DAYS_NUM / day) * WEIGHT_MAX)
+  weight_fluctuation(weight + sin(PI * 2.0 * (day.to_f / DAYS_NUM.to_f)) * WEIGHT_MAX)
 end
 
 1.upto(DAYS_NUM) do |i|

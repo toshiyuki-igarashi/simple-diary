@@ -194,7 +194,7 @@ class DiariesController < ApplicationController
 
   def diaries_of_period(form_id, period, center_date)
     diaries = []
-    first_date = center_date - (period * 2)
+    first_date = center_date + period
     0.upto(period * 2) do |i|
       diaries << Diary.prepare_diary(form_id, first_date - i)
     end
@@ -205,9 +205,9 @@ class DiariesController < ApplicationController
     idx = 0
     sum = 0.0
     diaries.each do |diary|
-      unless diary.get(key).nil? || diary.get(key) == ''
+      if !diary.get(key).nil? && /[\d.]+/ =~ diary.get(key)
         idx += 1
-        sum += diary.get(key).to_f
+        sum += Regexp.last_match[0].to_f
       end
     end
     return nil if idx.zero?
