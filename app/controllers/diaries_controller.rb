@@ -205,7 +205,7 @@ class DiariesController < ApplicationController
     idx = 0
     sum = 0.0
     diaries.each do |diary|
-      unless diary.get(key).nil?
+      unless diary.get(key).nil? || diary.get(key) == ''
         idx += 1
         sum += diary.get(key).to_f
       end

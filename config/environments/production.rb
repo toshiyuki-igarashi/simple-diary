@@ -94,4 +94,6 @@ Rails.application.configure do
   
   # enable access by the name: "www.simple-simple-diary.com"
   config.hosts << "www.simple-simple-diary.com"
+  config.hosts << "simple-simple-diary.com"
+  config.hosts << "34.171.236.240"
 end
