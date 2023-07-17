@@ -81,3 +81,6 @@ gem 'chartable'
 gem 'dotenv-rails'
 gem 'google-cloud-storage', '~> 1.8', require: false
 gem 'image_processing', '~> 1.2'
+
+# environment for unicorn
+gem 'unicorn'
