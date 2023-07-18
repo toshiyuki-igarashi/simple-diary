@@ -34,3 +34,4 @@
 # Ignore pre-compiled assets
 /public/assets
 /public/packs
+/node_modules
