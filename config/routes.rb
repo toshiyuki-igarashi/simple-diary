@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get 'move_date', to: 'diaries#move_date'
   get 'show_diary', to: 'diaries#show_diary'
+  get 'move_diary/:id', to: 'diaries#move_diary'
   resources :diaries, except: [:index]
 
   get 'download', to: 'diary_forms#download'

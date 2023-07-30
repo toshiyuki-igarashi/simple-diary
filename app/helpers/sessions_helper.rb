@@ -10,6 +10,10 @@ module SessionsHelper
     !!current_user
   end
 
+  def user_diary_forms
+    @user_diary_forms ||= DiaryForm.where(user_id: current_user.id)
+  end
+
   def current_form_idx
     session[:form_idx] ? session[:form_idx].to_i : 0
   end

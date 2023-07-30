@@ -300,7 +300,6 @@ GEM
     zeitwerk (2.6.8)
 
 PLATFORMS
-  ruby
   x86_64-linux
 
 DEPENDENCIES
@@ -337,7 +336,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 RUBY VERSION
-   ruby 2.7.0p0
+   ruby 3.0.2p107
 
 BUNDLED WITH
-   2.3.22
+   2.4.9

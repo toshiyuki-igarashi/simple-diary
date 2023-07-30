@@ -122,6 +122,11 @@ class DiariesController < ApplicationController
     redirect_to_back
   end
 
+  def move_diary
+    session[:form_idx] = params[:id]
+    redirect_to show_diary_url(view_mode: "show_day")
+  end
+
   private
 
   def my_diary?(diary)
