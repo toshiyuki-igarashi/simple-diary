@@ -18,5 +18,5 @@ Rails.application.routes.draw do
   get 'upload', to: 'diary_forms#upload'
   post 'download_file', to: 'diary_forms#download_file'
   post 'upload_file', to: 'diary_forms#upload_file'
-  resources :diary_forms, only: [:edit, :update]
+  resources :diary_forms, only: [:new, :edit, :update]
 end

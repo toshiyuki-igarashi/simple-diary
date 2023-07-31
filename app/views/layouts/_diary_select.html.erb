@@ -6,8 +6,7 @@
     </a>
     <ul class="dropdown-menu">
       <% if logged_in? %>
-        <% user_diary_forms %>
-        <% (0..@user_diary_forms.size - 1).each do |idx| %>
+        <% (0..user_diary_forms.size - 1).each do |idx| %>
           <li><%= link_to "#{@user_diary_forms[idx][:title]}", "/move_diary/#{idx}" %></li>
         <% end %>
       <% else %>

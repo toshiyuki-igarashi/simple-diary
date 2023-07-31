@@ -8,8 +8,19 @@ class DiaryFormsController < ApplicationController
   def edit
   end
 
+  def new
+    form_idx = user_diary_forms.size
+    if (!DiaryForm.new(user_id: current_user.id, title: "日記帳(#{form_idx})", form: DiaryForm::DEFAULT_FORM).save)
+      puts "**** Alert **** diary_form hasn't saved for user (user_id: #{@user.id}) [CODE 100]"
+      flash[:success] = 'プログラムエラーで新規日記に失敗しました。[CODE 200]'
+    else
+      session[:form_idx] = form_idx
+    end
+  end
+
   def update
     selected = []
+    diary_title = params['日記名']
     items = construct_form(params, selected)
     go_to_url = edit_diary_form_url(current_diary_form)
 
@@ -29,7 +40,7 @@ class DiaryFormsController < ApplicationController
       form = items
     end
 
-    current_diary_form.update(form: make_form(form))
+    current_diary_form.update(title: diary_title, form: make_form(form))
     redirect_to go_to_url
   end
 
