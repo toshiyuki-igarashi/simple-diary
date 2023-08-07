@@ -11,11 +11,23 @@ class DiaryFormsController < ApplicationController
   def new
     form_idx = user_diary_forms.size
     if (!DiaryForm.new(user_id: current_user.id, title: "日記帳(#{form_idx})", form: DiaryForm::DEFAULT_FORM).save)
-      puts "**** Alert **** diary_form hasn't saved for user (user_id: #{@user.id}) [CODE 100]"
+      Rails.logger.debug "**** Alert **** diary_form hasn't saved for user (user_id: #{@user.id}) [CODE 200]"
       flash[:success] = 'プログラムエラーで新規日記に失敗しました。[CODE 200]'
     else
       session[:form_idx] = form_idx
     end
+  end
+
+  def new_memo_form
+    form_idx = user_diary_forms.size
+    new_form = DiaryForm.new(user_id: current_user.id, title: "メモ(#{form_idx})", form: DiaryForm::DEFAULT_MEMO)
+    if (!new_form.save)
+      Rails.logger.debug "**** Alert **** diary_form hasn't saved for user (user_id: #{@user.id}) [CODE 201]"
+      flash[:success] = 'プログラムエラーで新規メモに失敗しました。[CODE 201]'
+    else
+      session[:form_idx] = form_idx
+    end
+    redirect_to edit_diary_form_url(new_form)
   end
 
   def update
