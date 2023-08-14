@@ -1,7 +1,15 @@
 <div class="navbar-brand">
   <ui class="dropdown">
     <a href="/" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-      Simple Diary
+      <% if logged_in? %>
+        <% if memo_mode? %>
+          Simple Memo
+        <% else %>
+          Simple Diary
+        <% end %>
+      <% else %>
+        Simple Diary &amp; Memo
+      <% end %>
       <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">

@@ -10,6 +10,10 @@ module SessionsHelper
     !!current_user
   end
 
+  def memo_mode?
+    current_diary_form.get_form.key?('カテゴリ')
+  end
+
   def user_diary_forms
     @user_diary_forms ||= DiaryForm.where(user_id: current_user.id)
   end
