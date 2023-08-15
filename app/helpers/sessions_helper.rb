@@ -14,6 +14,13 @@ module SessionsHelper
     current_diary_form.get_form.key?('カテゴリ')
   end
 
+  def run_mode
+    return :logged_out unless logged_in?
+    return :memo_mode if memo_mode?
+
+    :dairy_mode
+  end
+
   def user_diary_forms
     @user_diary_forms ||= DiaryForm.where(user_id: current_user.id)
   end
