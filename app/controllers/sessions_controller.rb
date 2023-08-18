@@ -10,7 +10,11 @@ class SessionsController < ApplicationController
     if password_check(email, password)
       logged_in_session
       flash[:success] = 'ログインに成功しました。'
-      redirect_to new_diary_url
+      if memo_mode?
+        redirect_to show_memo_url(view_mode: 'show_all')
+      else
+        redirect_to new_diary_url
+      end
     else
       flash.now[:danger] = 'ログインに失敗しました。'
       render 'new'

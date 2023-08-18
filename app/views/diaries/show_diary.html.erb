@@ -6,7 +6,6 @@
   </div>
 <% end %>
 
-<% Rails.logger.debug ">>>> view_mode = #{session[:view_mode]}" %>
 <% case (session[:view_mode]) %>
 <% when 'show_day' %>
   <%= render 'show_day' %>

@@ -53,11 +53,11 @@ module MemoMode
     end
 
     @memos = Diary.get_memos(current_form_id)
-    @memos.each do |item|
-      Rails.logger.debug ">>>> memo = #{item.get('トピック')}"
+    if session[:view_mode] == 'show_memo'
+      @diary = Diary.find_by(id: session[:memo_id])
+    else
+      @category = '全て'
     end
-    @category = '全て'
-    @diary = Diary.find_by(id: session[:memo_id])
   end
 end
 
