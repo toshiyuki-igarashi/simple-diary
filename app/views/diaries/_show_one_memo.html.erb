@@ -1,0 +1,58 @@
+<div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
+  <% if @diary[:id] %>
+    <div class="row col-12" id="edit_button">
+      <%= link_to '修正', edit_diary_path(@diary), class: 'btn btn-primary btn-sm col-xs-2 col-sm-2 col-ls-1' %>
+      <%= link_to '削除', @diary, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-danger btn-sm col-xs-2 col-sm-2 col-ls-1' %>
+    </div>
+  <% end %>
+
+  <% current_packed_form.each do |key, value| %>
+
+    <% if value["タイプ"] == "長文" %>
+      <h4><%= key %></h4>
+      <% if @diary.get(key) %>
+        <% @diary.get(key).each_line do |line| %>
+          <% count_leading_blank(line).times do %>
+            &nbsp;
+          <% end %>
+          <%= line %><BR>
+        <% end %>
+      <% end %>
+      <hr />
+    <% elsif value["タイプ"] == "短文" %>
+      <h4><%= key %></h4>
+      <%= @diary.get(key) %>
+      <hr />
+    <% else %>
+      <div class="row">
+        <% value.each do |n_key, n_value| %>
+          <span class="col-xs-12 col-sm-6"><%= n_key %>：&nbsp;<%= @diary.get(n_key) %>&nbsp;<%= n_value["単位"] %></span>
+        <% end %>
+        <br />
+        <hr />
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="col-xs-12" id="show_pictures">
+    <% if @diary.images.attached? %>
+      <% @diary.images.each do |image| %>
+        <div class="picture col-xs-4 col-sm-2">
+          <a href=<%= url_for(image) %> ><%= image_tag image.variant(resize: "100x100") %></a>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="col-xs-12" id="show_date">
+    <small>日付 <%= @diary[:date_of_diary] %></small>
+  </div>
+  <br />
+
+  <% if @diary[:id] %>
+    <div class="row col-12" id="edit_button">
+      <%= link_to '修正', edit_diary_path(@diary), class: 'btn btn-primary col-xs-2 col-sm-2 col-ls-1' %>
+      <%= link_to '削除', @diary, method: :delete, data: { confirm: '本当に削除してよろしいですか？' }, class: 'btn btn-danger col-xs-2 col-sm-2 col-ls-1' %>
+    </div>
+  <% end %>
+</div>

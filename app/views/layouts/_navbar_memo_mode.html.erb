@@ -1,5 +1,4 @@
 <header>
-  <% Rails.logger.debug ">>>> run_mode = #{run_mode}" %>
   <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
       <div class="navbar-header">
@@ -20,7 +19,7 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li><%= link_to '全て', show_diary_path(view_mode: "show_day") %></li>
+            <li><%= link_to '全て', show_memo_path(view_mode: "show_all") %></li>
             <li role="separator" class="divider"></li>
             <li><%= link_to '検索結果', show_diary_path(view_mode: "show_search") %></li>
           </ul>
@@ -32,20 +31,7 @@
           <% end %>
         </form>
 
-        <li class="dropdown" id="user_profile">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <%= current_user[:name] %>
-            <span class="caret"></span>
-          </a>
-          <ul class="dropdown-menu">
-            <li><%= link_to 'マイページ', user_path(current_user) %></li>
-            <li role="separator" class="divider"></li>
-            <li><%= link_to '新規日記', new_diary_form_path %></li>
-            <li><%= link_to '新規メモ', new_memo_form_path %></li>
-            <li role="separator" class="divider"></li>
-            <li><%= link_to 'ログアウト', logout_path, method: :delete %></li>
-          </ul>
-        </li>
+        <%= render 'layouts/navbar_user_profile' %>
       </ul>
       </div>
     </div>

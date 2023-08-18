@@ -1,0 +1,14 @@
+<li class="dropdown" id="user_profile">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <%= current_user[:name] %>
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><%= link_to 'マイページ', user_path(current_user) %></li>
+    <li role="separator" class="divider"></li>
+    <li><%= link_to '新規日記帳', new_diary_form_path %></li>
+    <li><%= link_to '新規メモ帳', new_memo_form_path %></li>
+    <li role="separator" class="divider"></li>
+    <li><%= link_to 'ログアウト', logout_path, method: :delete %></li>
+  </ul>
+</li>

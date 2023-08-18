@@ -1,0 +1,14 @@
+<% case (session[:view_mode]) %>
+<% when 'show_all' %>
+  <%= render 'show_all_memos' %>
+<% when 'show_memo' %>
+  <%= render 'show_one_memo' %>
+<% when 'show_search' %>
+  <div class="row">
+    <%= form_tag(show_diary_path, method: :get) do %>
+      <%= text_field_tag :search , '', { class: 'form-inline col-xs-7 col-xs-offset-1', placeholder: "検索キーワード" } %>
+      <%= submit_tag '絞込検索', class: 'btn btn-primary col-xs-3 col-xs-offset-1 col-sm-2' %>
+    <% end %>
+  </div>
+  <%= render 'show_diaries' %>
+<% end %>

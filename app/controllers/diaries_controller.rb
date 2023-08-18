@@ -1,11 +1,4 @@
-class DiariesController < ApplicationController
-  before_action :require_user_logged_in
-  before_action :go_to_picked_date
-  before_action :search, except: [:show_search]
-  before_action :prepare_picked_diary, only: [:create, :edit]
-  before_action :prepare_move_date, only: [:show_diary, :new, :edit]
-  before_action :save_view_mode, only: [:new, :create, :edit]
-
+module DiaryMode
   def show_diary
     session[:view_mode] = params[:view_mode]
 
@@ -44,6 +37,39 @@ class DiariesController < ApplicationController
       prepare_picked_diary
     end
   end
+end
+
+module MemoMode
+  def show_memo
+    session[:view_mode] = params[:view_mode]
+    session[:memo_id] = params[:memo_id]
+
+    if (params[:commit] == "検索")
+      session[:search_keyword] = params[:search]
+      session[:view_mode] = 'show_search'
+    elsif (params[:commit] == "絞込検索")
+      session[:search_keyword] += ' ' + params[:search]
+      session[:view_mode] = 'show_search'
+    end
+
+    @memos = Diary.get_memos(current_form_id)
+    @memos.each do |item|
+      Rails.logger.debug ">>>> memo = #{item.get('トピック')}"
+    end
+    @category = '全て'
+    @diary = Diary.find_by(id: session[:memo_id])
+  end
+end
+
+class DiariesController < ApplicationController
+  include DiaryMode, MemoMode
+
+  before_action :require_user_logged_in
+  before_action :go_to_picked_date
+  before_action :search, except: [:show_search]
+  before_action :prepare_picked_diary, only: [:create, :edit]
+  before_action :prepare_move_date, only: [:show_diary, :new, :edit]
+  before_action :save_view_mode, only: [:new, :create, :edit]
 
   def show
     @diary = Diary.find_by(id: params[:id])
@@ -53,6 +79,8 @@ class DiariesController < ApplicationController
     elsif (!my_diary?(@diary))
       flash[:danger] = '他人の日記は表示できません'
       redirect_to root_url
+    elsif (memo_mode?)
+      redirect_to show_memo_url(view_mode: "show_memo", memo_id: @diary.id)
     else
       session[:picked_date] = @diary[:date_of_diary]
       redirect_to show_diary_url(view_mode: "show_day")

@@ -57,6 +57,10 @@ class Diary < ApplicationRecord
     }
   end
 
+  def self.get_memos(form_id)
+    Diary.where(form_id: form_id)
+  end
+
   def self.prepare_diary(form_id, date)
     diary = Diary.find_by(form_id: form_id, date_of_diary: date)
     if diary == nil

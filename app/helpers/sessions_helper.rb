@@ -18,7 +18,7 @@ module SessionsHelper
     return :logged_out unless logged_in?
     return :memo_mode if memo_mode?
 
-    :dairy_mode
+    :diary_mode
   end
 
   def user_diary_forms
@@ -67,15 +67,12 @@ module SessionsHelper
     @current_packed_form
   end
 
-# 複数の日記を取り扱う際に使う
-#   def change_diary_form(new_form)
-#     @current_diary_form = new_form
-#     @current_form_id = new_form.id
-#     @current_form = new_form.get_form
-#   end
-
   def first_key_of_current_form
     current_form.keys[0]
+  end
+
+  def second_key_of_current_form
+    current_form.keys[1]
   end
 
   def today
