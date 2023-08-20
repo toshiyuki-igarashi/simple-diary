@@ -83,6 +83,7 @@ class DiariesController < ApplicationController
   before_action :save_view_mode, only: [:new, :create, :edit]
 
   def default_show_url
+    prepare_picked_diary
     return show_memo_url(view_mode: "show_memo", memo_id: @diary.id) if memo_mode?
 
     show_diary_url(view_mode: "show_day")
@@ -90,6 +91,7 @@ class DiariesController < ApplicationController
 
   def show
     @diary = Diary.find_by(id: params[:id])
+    session[:memo_id] = params[:id]
     if (@diary == nil)
       flash[:danger] = '日記は存在しません'
       redirect_to root_url
@@ -186,7 +188,7 @@ class DiariesController < ApplicationController
 
   def move_diary
     session[:form_idx] = params[:id]
-    redirect_to show_diary_url(view_mode: "show_day")
+    redirect_to default_show_url
   end
 
   private
@@ -198,7 +200,8 @@ class DiariesController < ApplicationController
   def prepare_picked_diary
     if memo_mode?
       @diary = Diary.find_by(id: session[:memo_id])
-      @diary = Diary.new(form_id: current_form_id, date_of_diary: picked_date) if @diary == nil || !my_diary?(@diary)
+      @diary = Diary.new(form_id: current_form_id, date_of_diary: Date.today.to_s) if @diary == nil || !my_diary?(@diary)
+      session[:picked_date] = @diary[:date_of_diary]
     else
       @diary = Diary.prepare_diary(current_form_id, picked_date)
     end
