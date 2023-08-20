@@ -1,9 +1,11 @@
 <font size="4">
   <div class="row">
     <ul>
-      <li>カテゴリ <%= @category %></li>
-      <hr />
-      <% @memos.each do |memo| %>
+      <% if session[:view_mode] != 'show_search' %>
+        <li>カテゴリ <%= @category %></li>
+        <hr />
+      <% end %>
+      <% @diaries.each do |memo| %>
         <li><%= link_to memo.get(second_key_of_current_form), diary_path(id:memo.id) %></li>
       <% end %>
     </ul>

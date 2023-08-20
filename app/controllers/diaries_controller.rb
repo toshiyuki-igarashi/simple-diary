@@ -45,10 +45,10 @@ module MemoMode
     return if category == 'show_all'
 
     selected = []
-    @memos.each do |memo|
+    @diaries.each do |memo|
       selected << memo if memo.get('カテゴリ') == category
     end
-    @memos = selected
+    @diaries = selected
   end
 
   def show_memo
@@ -63,8 +63,11 @@ module MemoMode
       session[:view_mode] = 'show_search'
     end
 
-    if session[:view_mode] == 'show_memo'
+    case session[:view_mode]
+    when 'show_memo'
       prepare_picked_diary
+    when 'show_search'
+      @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
     else
       select_memo(session[:view_mode])
       session[:view_mode] = 'show_all'

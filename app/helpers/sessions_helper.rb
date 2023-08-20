@@ -23,10 +23,10 @@ module SessionsHelper
 
   def get_category_list
     @category_list = []
-    @memos = []
-    @memos = Diary.get_memos(current_form_id) if memo_mode?
+    @diaries = []
+    @diaries = Diary.get_memos(current_form_id) if memo_mode?
 
-    @memos.each do |memo|
+    @diaries.each do |memo|
       @category_list << memo.get('カテゴリ') unless @category_list.include?(memo.get('カテゴリ'))
     end
   end
