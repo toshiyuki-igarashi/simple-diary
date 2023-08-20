@@ -2,7 +2,11 @@ class Diary < ApplicationRecord
   belongs_to :diary_form, :foreign_key => 'form_id'
   has_many_attached :images
 
-  validates :date_of_diary, presence: true, uniqueness: { scope: :diary_form }
+  validates :date_of_diary, presence: true, uniqueness: { scope: :diary_form }, unless: :memo_mode?
+
+  def memo_mode?
+    JSON.parse(self[:article]).keys.include?('カテゴリ')
+  end
 
   def get_user_id
     DiaryForm.find(self.form_id).user_id
@@ -63,6 +67,7 @@ class Diary < ApplicationRecord
 
   def self.prepare_diary(form_id, date)
     diary = Diary.find_by(form_id: form_id, date_of_diary: date)
+
     if diary == nil
       diary = Diary.new(form_id: form_id, date_of_diary: date)
     else

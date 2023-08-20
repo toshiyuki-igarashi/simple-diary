@@ -1,1 +1,5 @@
-<%= render 'diary_input' %>
+<% if memo_mode? %>
+  <%= render 'memo_input' %>
+<% else %>
+  <%= render 'diary_input' %>
+<% end %>

@@ -21,6 +21,11 @@
           <ul class="dropdown-menu">
             <li><%= link_to '全て', show_memo_path(view_mode: "show_all") %></li>
             <li role="separator" class="divider"></li>
+            <% get_category_list %>
+            <% @category_list.each do |category| %>
+              <li><%= link_to category, show_memo_path(view_mode: category) %></li>
+            <% end %>
+            <li role="separator" class="divider"></li>
             <li><%= link_to '検索結果', show_diary_path(view_mode: "show_search") %></li>
           </ul>
         </li>

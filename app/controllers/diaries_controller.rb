@@ -40,6 +40,15 @@ module DiaryMode
 end
 
 module MemoMode
+  def select_memo(category)
+    get_category_list
+    selected = []
+    @memos.each do |memo|
+      selected << memo if memo.get('カテゴリ') == category
+    end
+    @memos = selected
+  end
+
   def show_memo
     session[:view_mode] = params[:view_mode]
     session[:memo_id] = params[:memo_id]
@@ -52,11 +61,11 @@ module MemoMode
       session[:view_mode] = 'show_search'
     end
 
-    @memos = Diary.get_memos(current_form_id)
     if session[:view_mode] == 'show_memo'
-      @diary = Diary.find_by(id: session[:memo_id])
+      prepare_picked_diary
     else
-      @category = '全て'
+      select_memo(session[:view_mode])
+      session[:view_mode] = 'show_all'
     end
   end
 end
@@ -71,6 +80,12 @@ class DiariesController < ApplicationController
   before_action :prepare_move_date, only: [:show_diary, :new, :edit]
   before_action :save_view_mode, only: [:new, :create, :edit]
 
+  def default_show_url
+    return show_memo_url(view_mode: "show_memo", memo_id: @diary.id) if memo_mode?
+
+    show_diary_url(view_mode: "show_day")
+  end
+
   def show
     @diary = Diary.find_by(id: params[:id])
     if (@diary == nil)
@@ -79,28 +94,33 @@ class DiariesController < ApplicationController
     elsif (!my_diary?(@diary))
       flash[:danger] = '他人の日記は表示できません'
       redirect_to root_url
-    elsif (memo_mode?)
-      redirect_to show_memo_url(view_mode: "show_memo", memo_id: @diary.id)
     else
       session[:picked_date] = @diary[:date_of_diary]
-      redirect_to show_diary_url(view_mode: "show_day")
+      redirect_to default_show_url
     end
   end
 
   def new
-    if params[:date_of_diary]
-      session[:picked_date] = params[:date_of_diary]
+    if memo_mode?
+      @diary = Diary.new(form_id: current_form_id, date_of_diary: picked_date)
+      session[:memo_id] = @diary.id
+    else
+      if params[:date_of_diary]
+        session[:picked_date] = params[:date_of_diary]
+      end
+      prepare_picked_diary
     end
-    prepare_picked_diary
   end
 
   def create
+    session[:picked_date] = params[:date_input] if params[:date_input]
+    @diary[:date_of_diary] = picked_date if memo_mode?
     if @diary.id == nil
       @diary[:article] = make_article(params)
       @diary.images.attach(params[:images]) if params[:images]
       if @diary.save
         flash[:success] = '日記が正常に保存されました'
-        redirect_to show_diary_url(view_mode: "show_day")
+        redirect_to default_show_url
       else
         flash.now[:danger] = '日記が保存されませんでした'
         render :new
@@ -111,23 +131,35 @@ class DiariesController < ApplicationController
   end
 
   def edit
+    session[:memo_id] = params[:id]
+    if memo_mode?
+      @diary = Diary.find_by(id: session[:memo_id])
+      session[:picked_date] = @diary[:date_of_diary]
+    end
   end
 
   def update
-    @diary = Diary.find_by(form_id: current_form_id, date_of_diary: picked_date)
+    @diary = memo_mode? ? Diary.find_by(id: session[:memo_id]) : Diary.find_by(form_id: current_form_id, date_of_diary: picked_date)
     update_diary(@diary, params)
+  end
+
+  def valid_destroy?
+    return false unless @diary.get_user_id == current_user.id
+    return true if @diary.date_of_diary == picked_date || memo_mode?
+
+    false
   end
 
   def destroy
     @diary = Diary.find(params[:id])
-    if @diary.get_user_id == current_user.id && @diary.date_of_diary == picked_date
+    if valid_destroy?
       @diary.delete_images
       @diary.destroy
       flash[:success] = '日記が正常に削除されました'
     else
       flash[:danger] = '日記が削除されませんでした'
     end
-    redirect_to show_diary_url(view_mode: "show_day")
+    redirect_to default_show_url
   end
 
   def move_date
@@ -162,7 +194,12 @@ class DiariesController < ApplicationController
   end
 
   def prepare_picked_diary
-    @diary = Diary.prepare_diary(current_form_id, picked_date)
+    if memo_mode?
+      @diary = Diary.find_by(id: session[:memo_id])
+      @diary = Diary.new(form_id: current_form_id, date_of_diary: picked_date) if @diary == nil || !my_diary?(@diary)
+    else
+      @diary = Diary.prepare_diary(current_form_id, picked_date)
+    end
   end
 
   def prepare_move_date
@@ -200,7 +237,7 @@ class DiariesController < ApplicationController
         end
       end
       flash[:success] = '日記が正常に修正されました'
-      redirect_to show_diary_url(view_mode: "show_day")
+      redirect_to default_show_url
     else
       flash.now[:danger] = '日記が修正されませんでした'
       render :edit
