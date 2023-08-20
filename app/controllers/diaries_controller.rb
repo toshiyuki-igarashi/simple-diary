@@ -42,6 +42,8 @@ end
 module MemoMode
   def select_memo(category)
     get_category_list
+    return if category == 'show_all'
+
     selected = []
     @memos.each do |memo|
       selected << memo if memo.get('カテゴリ') == category
