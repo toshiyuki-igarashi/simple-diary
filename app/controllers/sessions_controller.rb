@@ -1,10 +1,4 @@
 class SessionsController < ApplicationController
-  def select_category
-    return session[:category] if session[:category] && session[:category] != ''
-
-    'show_all'
-  end
-
   def new
     session[:form_idx] = params[:id]
   end

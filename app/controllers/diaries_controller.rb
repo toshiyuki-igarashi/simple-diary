@@ -97,7 +97,7 @@ class DiariesController < ApplicationController
 
   def show_after_move_url
     prepare_picked_diary
-    return show_memo_url(view_mode: session[:category], memo_id: @diary.id) if memo_mode?
+    return show_memo_url(view_mode: select_category, memo_id: @diary.id) if memo_mode?
 
     show_diary_url(view_mode: "show_day")
   end

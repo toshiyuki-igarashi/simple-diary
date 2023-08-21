@@ -31,6 +31,12 @@ module SessionsHelper
     end
   end
 
+  def select_category
+    return session[:category] if session[:category] && session[:category] != ''
+
+    'show_all'
+  end
+
   def user_diary_forms
     @user_diary_forms ||= DiaryForm.where(user_id: current_user.id)
   end
