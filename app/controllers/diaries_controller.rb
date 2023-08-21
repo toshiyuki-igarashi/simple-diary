@@ -42,8 +42,6 @@ end
 module MemoMode
   def select_memo(category)
     get_category_list
-    return if category == 'show_all'
-
     selected = []
     @diaries.each do |memo|
       selected << memo if memo.get('カテゴリ') == category
@@ -68,8 +66,13 @@ module MemoMode
       prepare_picked_diary
     when 'show_search'
       @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
+    when 'show_all', '全て'
+      get_category_list
+      session[:category] = '全て'
+      session[:view_mode] = 'show_all'
     else
       select_memo(session[:view_mode])
+      session[:category] = session[:view_mode]
       session[:view_mode] = 'show_all'
     end
   end
@@ -92,6 +95,13 @@ class DiariesController < ApplicationController
     show_diary_url(view_mode: "show_day")
   end
 
+  def show_after_move_url
+    prepare_picked_diary
+    return show_memo_url(view_mode: session[:category], memo_id: @diary.id) if memo_mode?
+
+    show_diary_url(view_mode: "show_day")
+  end
+
   def show
     @diary = Diary.find_by(id: params[:id])
     session[:memo_id] = params[:id]
@@ -102,7 +112,7 @@ class DiariesController < ApplicationController
       flash[:danger] = '他人の日記は表示できません'
       redirect_to root_url
     else
-      session[:picked_date] = @diary[:date_of_diary]
+      session[:picked_date] = @diary[:date_of_diary].to_s
       redirect_to default_show_url
     end
   end
@@ -127,6 +137,7 @@ class DiariesController < ApplicationController
       @diary.images.attach(params[:images]) if params[:images]
       if @diary.save
         flash[:success] = '日記が正常に保存されました'
+        session[:memo_id] = @diary.id
         redirect_to default_show_url
       else
         flash.now[:danger] = '日記が保存されませんでした'
@@ -141,7 +152,7 @@ class DiariesController < ApplicationController
     session[:memo_id] = params[:id]
     if memo_mode?
       @diary = Diary.find_by(id: session[:memo_id])
-      session[:picked_date] = @diary[:date_of_diary]
+      session[:picked_date] = @diary[:date_of_diary].to_s
     end
   end
 
@@ -166,7 +177,7 @@ class DiariesController < ApplicationController
     else
       flash[:danger] = '日記が削除されませんでした'
     end
-    redirect_to default_show_url
+    redirect_to show_after_move_url
   end
 
   def move_date
@@ -191,20 +202,20 @@ class DiariesController < ApplicationController
 
   def move_diary
     session[:form_idx] = params[:id]
-    redirect_to default_show_url
+    redirect_to show_after_move_url
   end
 
   private
 
   def my_diary?(diary)
-    diary.get_user_id == current_user.id
+    diary.get_user_id == current_user.id && diary.form_id == current_form_id
   end
 
   def prepare_picked_diary
     if memo_mode?
       @diary = Diary.find_by(id: session[:memo_id])
       @diary = Diary.new(form_id: current_form_id, date_of_diary: Date.today.to_s) if @diary == nil || !my_diary?(@diary)
-      session[:picked_date] = @diary[:date_of_diary]
+      session[:picked_date] = @diary[:date_of_diary].to_s
     else
       @diary = Diary.prepare_diary(current_form_id, picked_date)
     end

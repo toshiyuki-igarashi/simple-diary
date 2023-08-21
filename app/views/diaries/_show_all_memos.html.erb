@@ -2,7 +2,7 @@
   <div class="row">
     <ul>
       <% if session[:view_mode] != 'show_search' %>
-        <li>カテゴリ <%= @category %></li>
+        <li>カテゴリ&nbsp;[<strong><%= session[:category] %></strong>]</li>
         <hr />
       <% end %>
       <% @diaries.each do |memo| %>

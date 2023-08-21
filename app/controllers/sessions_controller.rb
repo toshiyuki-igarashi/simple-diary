@@ -1,4 +1,10 @@
 class SessionsController < ApplicationController
+  def select_category
+    return session[:category] if session[:category] && session[:category] != ''
+
+    'show_all'
+  end
+
   def new
     session[:form_idx] = params[:id]
   end
@@ -11,7 +17,7 @@ class SessionsController < ApplicationController
       logged_in_session
       flash[:success] = 'ログインに成功しました。'
       if memo_mode?
-        redirect_to show_memo_url(view_mode: 'show_all')
+        redirect_to show_memo_url(view_mode: select_category)
       else
         redirect_to new_diary_url
       end
