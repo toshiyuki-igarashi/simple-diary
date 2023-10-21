@@ -29,7 +29,11 @@
             <% @diary.images.each do |image| %>
               <div class="col-xs-4 col-sm-2">
                 <%= check_box_tag 'remove_images[]', image.id, false, multiple: true %>
-                <img src=<%= url_for(image) %> class="img-thumbnail" alt="image">
+                <% if @diary.image_file?(url_for(image)) %>
+                  <img src=<%= url_for(image) %> class="img-thumbnail" alt="image">
+                <% else %>
+                  <div id="file_name"><%= File.basename(url_for(image)) %></div>
+                <% end %>
               </div>
             <% end %>
           </div>

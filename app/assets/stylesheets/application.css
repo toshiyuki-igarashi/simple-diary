@@ -71,3 +71,6 @@
   margin-bottom: 20px;
 }
 
+#file_name {
+  overflow-wrap: break-word;
+}

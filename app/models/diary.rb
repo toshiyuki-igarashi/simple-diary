@@ -42,6 +42,13 @@ class Diary < ApplicationRecord
     end
   end
 
+  IMAGE_EXT = ['.jpg', '.jpeg', '.jp2', '.j2k', '.j2c', '.jpf', '.jpx', '.jpe', '.jfif', '.pipeg', '.pjp', '.tiff', '.tif', '.png']
+  def image_file?(file_name)
+    return true if IMAGE_EXT.include?(File.extname(file_name))
+
+    false
+  end
+
   def self.search_diary(search_keyword, form_id)
     diaries_all = Diary.where(form_id: form_id)
     diaries = []

@@ -1,0 +1,80 @@
+1. active storage で写真以外のファイルをアップロードした場合は、写真を表示するのではなく、ファイルをダウンロードするボタンに変更する
+1-1. 現状のhtmlは？
+
+    app/views/diaries/_show_one_memo.html.erb
+---
+  <div class="col-xs-12" id="show_pictures">
+    <% if @diary.images.attached? %>
+      <% @diary.images.each do |image| %>
+        <div class="picture col-xs-4 col-sm-2">
+          <a href=<%= url_for(image) %> ><%= image_tag image.variant(resize: "100x100") %></a>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+---
+  url_for(imaage)でアップロード先のurlが得られる
+  例）https://www.simple-simple-diary.com/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbWtHIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--a091fe9e925de0734a85fcc84345eea3d77b79fd/IMG_20231006_124014.jpg
+  => urlのパス名の拡張子が画像の場合とそれ以外で表示を変えれば良い。
+  　　画像の拡張子は？ jpg, jpeg, jp2, j2k, j2c, jpf, jpx, jpe, jfif, pipeg, pjp, tiff, tif, png, ...
+      format : JPEG, JPEG2000, JPEG-XL, TIFF, PNG, WebP, HEIC, AVIF, FITS, Matlab, OpenEXR, PDF, SVG, HDR, PPM / PGM / PFM, CSV, GIF, Analyze, NIfTI, DeepZoom, and OpenSlide
+  -- 画像処理にはlibvipsを使用
+  cf. https://github.com/libvips/libvips
+
+  メモの場合はファイル名をリスト表示して、リンク先をダウンロードすることで対応する。
+#  jpeg, tiff, pngファイルは画像表示、それ以外はダウンロードとする
+#  ダウンロード方法
+#  cf. https://railsguides.jp/active_storage_overview.html
+
+
+  app/views/diaries/_diary_input.html.erb
+---
+        <div id="append_picture">
+          <p class="text-right col-xs-4 col-sm-3">写真添付</p>
+          <%= file_field_tag 'images[]', multiple: true, class: "col-xs-8 col-sm-4" %>
+        </div>
+---
+  file_field_tagでアップロードするファイルを選択する
+
+  controller(app/controllers/diaries_controller.rb)では、
+---
+  def update_diary(diary, articles)
+    if diary.update(article: make_article(articles))
+      diary.images.attach(params[:images]) if params[:images]
+---
+  画像でなくても、アップロードできる
+
+  fileのcontent-typeには、application/octet-stream (=任意のバイナリーデータ)を指定する
+  cf. https://ja.wikipedia.org/wiki/%E3%83%A1%E3%83%87%E3%82%A3%E3%82%A2%E3%82%BF%E3%82%A4%E3%83%97
+
+1-2. diaryの表示時に、画像とそれ以外を区別して、それ以外はファイル名を表示
+  app/helpers/diaries_helper.rb 中にfile名から画像ファイルかどうかチェックする関数を定義する
+    def image_file?(file_name)
+  >>>> Rails.logger.debug "...." でデバッグを行う
+  app/controllers/diaries_controller.rb 内の関数はview内からはアクセスできない
+  app/helpers/diaries_helper.rb 内に定義して、@diary.image_file(....)でアクセスする
+
+1-3. 編集時は？
+  app/views/diaries/_diary_input.html.erb
+---
+        <% if @diary.id && @diary.images.attached? %>
+          <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-lg-offset-1 col-ls-6" id="show_pictures">
+            <br />
+            <p>削除する写真にチェックをしてください</p>
+            <% @diary.images.each do |image| %>
+              <div class="col-xs-4 col-sm-2">
+                <%= check_box_tag 'remove_images[]', image.id, false, multiple: true %>
+                <img src=<%= url_for(image) %> class="img-thumbnail" alt="image">
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+---
+  htmlのimgタグを使って、thumbnailを表示している
+  画像ファイルの場合はimgタグ、それ以外は aタグを使うように変更する
+
+  画像ファイル以外の場合は名前が重なる
+  対応は、cssで単語の途中でも改行を行う指定をした。id名はfile_name。
+    #file_name { overflow-wrap: break-word; }
+  html 中では、<.. id="file_name" ..> とタグ部に記述
+
