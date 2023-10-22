@@ -34,11 +34,15 @@
     <% end %>
   <% end %>
 
-  <div class="col-xs-12" id="show_pictures">
+  <div class="div">
     <% if @diary.images.attached? %>
       <% @diary.images.each do |image| %>
-        <div class="picture col-xs-4 col-sm-2">
-          <a href=<%= url_for(image) %> ><%= image_tag image.variant(resize: "100x100") %></a>
+        <div class="div">
+          <% if @diary.image_file?(url_for(image)) %>
+            <a href=<%= url_for(image) %> ><%= image_tag image.variant(resize: "100x100") %></a>
+          <% else %>
+            <a id="file_name" href=<%= url_for(image) %> ><%= File.basename(url_for(image)) %></a>
+          <% end %>
         </div>
       <% end %>
     <% end %>

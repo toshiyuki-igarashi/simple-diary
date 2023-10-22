@@ -18,12 +18,33 @@
           <% end %>
         <% end %>
 
-        <div class="row" id="date_select">
-          <br />
-          <div class="form-group col-xs-3 col-sm-2">
-            日付&nbsp;:&nbsp;
+        <% if @diary.id && @diary.images.attached? %>
+          <div class="row">
+            <br />
+            <p>削除するファイルにチェックをしてください</p>
+            <% @diary.images.each do |image| %>
+              <div class="row">
+                <%= check_box_tag 'remove_images[]', image.id, false, multiple: true, class: 'form_item col-xs-1' %>
+                <% if @diary.image_file?(url_for(image)) %>
+                  <img src=<%= url_for(image) %> class="img-thumbnail form-inline col-xs-11" alt="image">
+                <% else %>
+                  <div id="file_name form-inline col-xs-11"><%= File.basename(url_for(image)) %></div>
+                <% end %>
+              </div>
+            <% end %>
           </div>
-          <div class="form-group col-xs-6 col-sm-7 col-ls-1">
+        <% end %>
+
+        <div class="row" id="append_picture">
+          <p class="text-right col-xs-4 col-sm-3">ファイル添付</p>
+          <%= file_field_tag 'images[]', multiple: true, class: "col-xs-8 col-sm-4" %>
+        </div>
+
+        <div class="row" id="date_select">
+          <div class="text-left col-xs-4 col-sm-3">
+            &nbsp;&nbsp;日付:
+          </div>
+          <div class="col">
             <input id="date_get" type="date" name="date_input" value=<%= session[:picked_date] %> class="pull-center" />
           </div>
         </div>

@@ -78,3 +78,7 @@
     #file_name { overflow-wrap: break-word; }
   html 中では、<.. id="file_name" ..> とタグ部に記述
 
+2. memo modeにファイルを添付する機能をついか
+2-1. edit時およびshow時に機能を追加する
+　  <div class="row"> ... </div>
+　で、一つのファイルを選択する。
