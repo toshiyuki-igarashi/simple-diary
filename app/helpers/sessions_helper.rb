@@ -95,8 +95,14 @@ module SessionsHelper
     Date.parse(Time.zone.now.to_s)
   end
 
+  def invalid_date?(date)
+    Date::_parse(date)[:year].nil?
+  end
+
   def picked_date
-    Date.parse(session[:picked_date])
+    session[:picked_date] = Date::today.to_s if invalid_date?(session[:picked_date])
+
+    Date::parse(session[:picked_date])
   end
 
   def go_to_picked_date
