@@ -30,7 +30,7 @@ module DiaryMode
       @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 4)
     when 'show_10years'
       @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 9)
-    when 'show_search'
+    when 'show_search', 'show_search_all'
       @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
     else
       session[:view_mode] = 'show_day'
@@ -64,7 +64,7 @@ module MemoMode
     case session[:view_mode]
     when 'show_memo'
       prepare_picked_diary
-    when 'show_search'
+    when 'show_search', 'show_search_all'
       @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
     when 'show_all', '全て'
       get_category_list
