@@ -42,7 +42,8 @@ class Diary < ApplicationRecord
     end
   end
 
-  IMAGE_EXT = ['.jpg', '.jpeg', '.jp2', '.j2k', '.j2c', '.jpf', '.jpx', '.jpe', '.jfif', '.pipeg', '.pjp', '.tiff', '.tif', '.png']
+  IMAGE_EXT = ['.jpg', '.jpeg', '.jp2', '.j2k', '.j2c', '.jpf', '.jpx', '.jpe', '.jfif', '.pipeg', '.pjp', '.tiff', '.tif', '.png',
+      '.JPG', '.JPEG', '.JP2', '.J2K', '.J2C', '.JPF', '.JPX', '.JPE', '.JFIF', '.PIPEG', '.PJP', '.TIFF', '.TIF', '.PNG']
   def image_file?(file_name)
     return true if IMAGE_EXT.include?(File.extname(file_name))
 
