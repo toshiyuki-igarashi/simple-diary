@@ -26,5 +26,11 @@
 
       <%= yield %>
     </div>
+
+    <span id="back">
+      <a href="">
+        <%= image_tag asset_path('arrow.jpg'), data: {"turbolinks"=>false}, class: "arrow" %>
+      </a>
+    </span>
   </body>
 </html>
