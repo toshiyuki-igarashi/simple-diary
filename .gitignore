@@ -29,9 +29,9 @@
 /config/master.key
 /config/secrets/*
 
-/config/credentials/production.key
+/config/credentials/*
 
 # Ignore pre-compiled assets
-/public/assets
-/public/packs
-/node_modules
+/public/assets/*
+/public/packs/*
+/node_modules/*
