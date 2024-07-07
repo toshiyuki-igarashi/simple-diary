@@ -6,6 +6,7 @@
 
 # Ignore bundler config.
 /.bundle
+Gemfile.lock
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -35,3 +36,6 @@
 /public/assets/*
 /public/packs/*
 /node_modules/*
+
+# Ignore work files
+/public/data/*
