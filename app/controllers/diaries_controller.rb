@@ -1,26 +1,26 @@
 module DiaryMode
   def show_diary
-    session[:view_mode] = params[:view_mode]
+    session[session_sym(:view_mode)] = params[:view_mode]
 
     if (params[:commit] == "検索")
-      session[:search_keyword] = params[:search]
-      session[:view_mode] = 'show_search'
+      session[session_sym(:search_keyword)] = params[:search]
+      session[session_sym(:view_mode)] = 'show_search'
     elsif (params[:commit] == "絞込検索")
-      session[:search_keyword] += ' ' + params[:search]
-      session[:view_mode] = 'show_search'
+      session[session_sym(:search_keyword)] += ' ' + params[:search]
+      session[session_sym(:view_mode)] = 'show_search'
     end
 
-    case (session[:view_mode])
+    case (session[session_sym(:view_mode)])
     when 'show_day'
       prepare_picked_diary
     when 'show_week'
       @diaries = Diary.get_diaries(current_form_id, picked_date, 6)
       make_graph(current_form_id)
-      session[:move_mode] = 'week'
+      session[session_sym(:move_mode)] = 'week'
     when 'show_month'
       @diaries = Diary.get_diaries(current_form_id, picked_date, 31)
       make_graph(current_form_id)
-      session[:move_mode] = 'month'
+      session[session_sym(:move_mode)] = 'month'
     when 'show_year'
       @diaries = Diary.get_diaries_of_month(current_form_id, picked_date, 11)
       make_graph(current_form_id, 2)
@@ -31,9 +31,9 @@ module DiaryMode
     when 'show_10years'
       @diaries = Diary.get_diaries_of_years(current_form_id, picked_date, 9)
     when 'show_search', 'show_search_all'
-      @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
+      @diaries = Diary.search_diary(session[session_sym(:search_keyword)], current_form_id)
     else
-      session[:view_mode] = 'show_day'
+      session[session_sym(:view_mode)] = 'show_day'
       prepare_picked_diary
     end
   end
@@ -50,30 +50,30 @@ module MemoMode
   end
 
   def show_memo
-    session[:view_mode] = params[:view_mode]
-    session[:memo_id] = params[:memo_id]
+    session[session_sym(:view_mode)] = params[:view_mode]
+    session[session_sym(:memo_id)] = params[:memo_id]
 
     if (params[:commit] == "検索")
-      session[:search_keyword] = params[:search]
-      session[:view_mode] = 'show_search'
+      session[session_sym(:search_keyword)] = params[:search]
+      session[session_sym(:view_mode)] = 'show_search'
     elsif (params[:commit] == "絞込検索")
-      session[:search_keyword] += ' ' + params[:search]
-      session[:view_mode] = 'show_search'
+      session[session_sym(:search_keyword)] += ' ' + params[:search]
+      session[session_sym(:view_mode)] = 'show_search'
     end
 
-    case session[:view_mode]
+    case session[session_sym(:view_mode)]
     when 'show_memo'
       prepare_picked_diary
     when 'show_search', 'show_search_all'
-      @diaries = Diary.search_diary(session[:search_keyword], current_form_id)
+      @diaries = Diary.search_diary(session[session_sym(:search_keyword)], current_form_id)
     when 'show_all', '全て'
       get_category_list
-      session[:category] = '全て'
-      session[:view_mode] = 'show_all'
+      session[session_sym(:category)] = '全て'
+      session[session_sym(:view_mode)] = 'show_all'
     else
-      select_memo(session[:view_mode])
-      session[:category] = session[:view_mode]
-      session[:view_mode] = 'show_all'
+      select_memo(session[session_sym(:view_mode)])
+      session[session_sym(:category)] = session[session_sym(:view_mode)]
+      session[session_sym(:view_mode)] = 'show_all'
     end
   end
 end
@@ -104,7 +104,7 @@ class DiariesController < ApplicationController
 
   def show
     @diary = Diary.find_by(id: params[:id])
-    session[:memo_id] = params[:id]
+    session[session_sym(:memo_id)] = params[:id]
     if (@diary == nil)
       flash[:danger] = '日記は存在しません'
       redirect_to root_url
@@ -112,7 +112,7 @@ class DiariesController < ApplicationController
       flash[:danger] = '他人の日記は表示できません'
       redirect_to root_url
     else
-      session[:picked_date] = @diary[:date_of_diary].to_s
+      session[session_sym(:picked_date)] = @diary[:date_of_diary].to_s
       redirect_to default_show_url
     end
   end
@@ -120,24 +120,24 @@ class DiariesController < ApplicationController
   def new
     if memo_mode?
       @diary = Diary.new(form_id: current_form_id, date_of_diary: picked_date)
-      session[:memo_id] = @diary.id
+      session[session_sym(:memo_id)] = @diary.id
     else
       if params[:date_of_diary]
-        session[:picked_date] = params[:date_of_diary]
+        session[session_sym(:picked_date)] = params[:date_of_diary]
       end
       prepare_picked_diary
     end
   end
 
   def create
-    session[:picked_date] = params[:date_input] if params[:date_input]
+    session[session_sym(:picked_date)] = params[:date_input] if params[:date_input]
     @diary[:date_of_diary] = picked_date if memo_mode?
     if @diary.id == nil
       @diary[:article] = make_article(params)
       @diary.images.attach(params[:images]) if params[:images]
       if @diary.save
         flash[:success] = '日記が正常に保存されました'
-        session[:memo_id] = @diary.id
+        session[session_sym(:memo_id)] = @diary.id
         redirect_to default_show_url
       else
         flash.now[:danger] = '日記が保存されませんでした'
@@ -149,15 +149,15 @@ class DiariesController < ApplicationController
   end
 
   def edit
-    session[:memo_id] = params[:id]
+    session[session_sym(:memo_id)] = params[:id]
     if memo_mode?
-      @diary = Diary.find_by(id: session[:memo_id])
-      session[:picked_date] = @diary[:date_of_diary].to_s
+      @diary = Diary.find_by(id: session[session_sym(:memo_id)])
+      session[session_sym(:picked_date)] = @diary[:date_of_diary].to_s
     end
   end
 
   def update
-    @diary = memo_mode? ? Diary.find_by(id: session[:memo_id]) : Diary.find_by(form_id: current_form_id, date_of_diary: picked_date)
+    @diary = memo_mode? ? Diary.find_by(id: session[session_sym(:memo_id)]) : Diary.find_by(form_id: current_form_id, date_of_diary: picked_date)
     update_diary(@diary, params)
   end
 
@@ -183,19 +183,19 @@ class DiariesController < ApplicationController
   def move_date
     case(params[:move_mode])
     when 'prev_day'
-      session[:picked_date] = picked_date.prev_day.to_s
+      session[session_sym(:picked_date)] = picked_date.prev_day.to_s
     when 'next_day'
-      session[:picked_date] = picked_date.next_day.to_s
+      session[session_sym(:picked_date)] = picked_date.next_day.to_s
     when 'prev_week'
-      session[:picked_date] = (picked_date - 7).to_s
+      session[session_sym(:picked_date)] = (picked_date - 7).to_s
     when 'next_week'
-      session[:picked_date] = (picked_date + 7).to_s
+      session[session_sym(:picked_date)] = (picked_date + 7).to_s
     when 'prev_month'
-      session[:picked_date] = picked_date.prev_month.to_s
+      session[session_sym(:picked_date)] = picked_date.prev_month.to_s
     when 'next_month'
-      session[:picked_date] = picked_date.next_month.to_s
+      session[session_sym(:picked_date)] = picked_date.next_month.to_s
     when 'picked_date'
-      session[:picked_date] = params[:picked_date]
+      session[session_sym(:picked_date)] = params[:picked_date]
     end
     redirect_to_back
   end
@@ -213,22 +213,22 @@ class DiariesController < ApplicationController
 
   def prepare_picked_diary
     if memo_mode?
-      @diary = Diary.find_by(id: session[:memo_id])
+      @diary = Diary.find_by(id: session[session_sym(:memo_id)])
       @diary = Diary.new(form_id: current_form_id, date_of_diary: Date.today.to_s) if @diary == nil || !my_diary?(@diary)
-      session[:picked_date] = @diary[:date_of_diary].to_s
+      session[session_sym(:picked_date)] = @diary[:date_of_diary].to_s
     else
       @diary = Diary.prepare_diary(current_form_id, picked_date)
     end
   end
 
   def prepare_move_date
-    session[:move_mode] = 'day'
+    session[session_sym(:move_mode)] = 'day'
   end
 
   def redirect_to_back
-    case (session[:view_mode])
+    case (session[session_sym(:view_mode)])
     when 'show_day', 'show_week', 'show_month', 'show_year', 'show_3years', 'show_5years', 'show_10years'
-      redirect_to show_diary_url(view_mode: session[:view_mode])
+      redirect_to show_diary_url(view_mode: session[session_sym(:view_mode)])
     when 'new'
       redirect_to new_diary_url
     when 'edit'
@@ -244,7 +244,7 @@ class DiariesController < ApplicationController
   end
 
   def save_view_mode
-    session[:view_mode] = action_name
+    session[session_sym(:view_mode)] = action_name
   end
 
   def update_diary(diary, articles)

@@ -1,8 +1,8 @@
 <font size="4">
   <div class="row">
     <ul>
-      <% if session[:view_mode] != 'show_search' %>
-        <li>カテゴリ&nbsp;[<strong><%= session[:category] %></strong>]</li>
+      <% if session[session_sym(:view_mode)] != 'show_search' %>
+        <li>カテゴリ&nbsp;[<strong><%= session[session_sym(:category)] %></strong>]</li>
         <hr />
       <% end %>
       <% @diaries.each do |memo| %>

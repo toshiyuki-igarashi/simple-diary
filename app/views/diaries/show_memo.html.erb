@@ -1,4 +1,4 @@
-<% case (session[:view_mode]) %>
+<% case (session[session_sym(:view_mode)]) %>
 <% when 'show_all' %>
   <%= render 'show_all_memos' %>
 <% when 'show_memo' %>

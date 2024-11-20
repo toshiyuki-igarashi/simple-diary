@@ -1,9 +1,9 @@
 module DiaryFormsHelper
   def download_file_name
-    @download_file ||= session[:download_file]
+    @download_file ||= session[session_sym(:download_file)]
   end
 
   def download_file_exist?
-    session[:download_file] != nil
+    session[session_sym(:download_file)] != nil
   end
 end

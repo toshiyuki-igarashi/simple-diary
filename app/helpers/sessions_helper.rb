@@ -31,8 +31,17 @@ module SessionsHelper
     end
   end
 
+  def concat_sym(sym, num)
+    num = (num.class == Integer ? num.to_s : '')
+    "#{sym.to_s}#{num}".to_sym
+  end
+
+  def session_sym(sym)
+    concat_sym(sym, current_form_idx)
+  end
+
   def select_category
-    return session[:category] if session[:category] && session[:category] != ''
+    return session[session_sym(:category)] if session[session_sym(:category)] && session[session_sym(:category)] != ''
 
     'show_all'
   end
@@ -100,20 +109,20 @@ module SessionsHelper
   end
 
   def picked_date
-    session[:picked_date] = Date::today.to_s if invalid_date?(session[:picked_date])
+    session[session_sym(:picked_date)] = Date::today.to_s if invalid_date?(session[session_sym(:picked_date)])
 
-    Date::parse(session[:picked_date])
+    Date::parse(session[session_sym(:picked_date)])
   end
 
   def go_to_picked_date
     if params[:commit] == "移動"
-      session[:picked_date] = params[:diary][:date_of_diary]
+      session[session_sym(:picked_date)] = params[:diary][:date_of_diary]
       redirect_to :back
     end
   end
 
   def get_move_mode_string
-    case (session[:move_mode])
+    case (session[session_sym(:move_mode)])
     when 'day'
       '日'
     when 'week'
@@ -160,26 +169,34 @@ module SessionsHelper
     else
       date_of_diary = Time.zone.yesterday.to_s[0..9]
     end
-    session[:picked_date] = date_of_diary
-    session[:search_keyword] = ''
-    session[:view_mode] = ''
-    session[:move_mode] = ''
+    session[session_sym(:picked_date)] = date_of_diary
+    session[session_sym(:search_keyword)] = ''
+    session[session_sym(:view_mode)] = ''
+    session[session_sym(:move_mode)] = ''
   end
 
-  def download_file_clear
-    if session[:download_file] != nil
-      system("rm #{Rails.root.to_s}/public/data/#{session[:download_file]}")
+  def session_status_clear(form_idx)
+    session[concat_sym(:picked_date, form_idx)] = nil
+    session[concat_sym(:search_keyword, form_idx)] = nil
+    session[concat_sym(:move_mode, form_idx)] = nil
+    session[concat_sym(:view_mode, form_idx)] = nil
+    session[concat_sym(:category, form_idx)] = nil
+    session[concat_sym(:memo_id, form_idx)] = nil
+  end
+
+  def download_file_clear(form_idx)
+    download_sym = concat_sym(:download_file, form_idx)
+    if session[session_sym(:download_file)] != nil
+      system("rm #{Rails.root.to_s}/public/data/#{session[session_sym(:download_file)]}")
     end
-    session[:download_file] = nil
+    session[session_sym(:download_file)] = nil
   end
 
   def session_clear
-    session[:form_idx] = nil
+    (0..user_diary_forms.size-1).each do |form_idx|
+      session_status_clear(form_idx)
+      download_file_clear(form_idx)
+    end
     session[:user_id] = nil
-    session[:picked_date] = nil
-    session[:search_keyword] = nil
-    session[:move_mode] = nil
-    session[:view_mode] = nil
-    download_file_clear
   end
 end

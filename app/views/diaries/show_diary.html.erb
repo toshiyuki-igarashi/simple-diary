@@ -1,4 +1,4 @@
-<% if (session[:view_mode] != 'show_search'&& !memo_mode?) %>
+<% if (session[session_sym(:view_mode)] != 'show_search'&& !memo_mode?) %>
   <div class="row">
     <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
       <%= render 'datepick' %>
@@ -6,7 +6,7 @@
   </div>
 <% end %>
 
-<% case (session[:view_mode]) %>
+<% case (session[session_sym(:view_mode)]) %>
 <% when 'show_day' %>
   <%= render 'show_day' %>
 <% when 'show_week' %>

@@ -39,3 +39,4 @@ Gemfile.lock
 
 # Ignore work files
 /public/data/*
+!/public/data/directory.txt
