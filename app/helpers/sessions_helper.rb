@@ -50,8 +50,12 @@ module SessionsHelper
     @user_diary_forms ||= DiaryForm.where(user_id: current_user.id)
   end
 
+  def check_form_idx
+    session[:form_idx] = params[:form_idx].to_i if params[:form_idx]
+  end
+
   def current_form_idx
-    session[:form_idx] ? session[:form_idx].to_i : 0
+    session[:form_idx] ||= 0
   end
 
   def current_diary_form
@@ -105,7 +109,7 @@ module SessionsHelper
   end
 
   def invalid_date?(date)
-    Date::_parse(date)[:year].nil?
+    date.nil? || Date::_parse(date)[:year].nil?
   end
 
   def picked_date
@@ -198,5 +202,6 @@ module SessionsHelper
       download_file_clear(form_idx)
     end
     session[:user_id] = nil
+    session[:form_idx] = nil
   end
 end

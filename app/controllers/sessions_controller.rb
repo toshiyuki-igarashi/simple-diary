@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    session[:form_idx] = params[:id]
+    session[:form_idx] = params[:id].to_i
   end
 
   def create

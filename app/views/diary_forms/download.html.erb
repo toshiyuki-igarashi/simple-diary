@@ -1,19 +1,21 @@
 <% if download_file_exist? %>
-  <h4>ダウンロードする日記のファイルが用意できました</h4>
+  <h4>ダウンロードする日記/メモのファイルが用意できました</h4>
 
   <div class="row">
     <a href=<%= "/data/" + download_file_name %> download class="badge badge-success col-xs-12"><span style="font-size:large"><%= download_file_name %></span></a>
     <%= form_tag(download_file_path, method: :POST) do %>
+      <%= hidden_field_tag :form_idx, session[:form_idx] %>
       <%= submit_tag 'ファイルの再作成', class: 'btn btn-primary col-xs-6 col-sm-3' %>
     <% end %>
   </div>
 
 <% else %>
-  <h4>ダウンロードする日記のファイルを作成します</h4>
+  <h4>ダウンロードする日記/メモのファイルを作成します</h4>
 
   <div class="row">
     <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
       <%= form_tag(download_file_path, method: :POST) do %>
+        <%= hidden_field_tag :form_idx, session[:form_idx] %>
         <div class="form-group">
           <%= password_field "pass", '', { class: 'form-control col-xs-3', placeholder: "ファイルのパスワード", maxlength: 50 } %>
         </div>

@@ -5,9 +5,9 @@
     </div>
     <div class="col-xs-12 col-sm-offset-1 col-sm-8 col-lg-offset-2 col-ls-6">
       <% if diary.id %>
-        <%= link_to date_to_string(diary[:date_of_diary]), diary_path(id: diary.id) %>
+        <%= link_to date_to_string(diary[:date_of_diary]), diary_path(id: diary.id, form_idx: session[:form_idx]) %>
       <% else %>
-        <%= link_to date_to_string(diary[:date_of_diary]), new_diary_path(date_of_diary: diary[:date_of_diary]) %>
+        <%= link_to date_to_string(diary[:date_of_diary]), new_diary_path(date_of_diary: diary[:date_of_diary], form_idx: session[:form_idx]) %>
       <% end %>
     </div>
     <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">

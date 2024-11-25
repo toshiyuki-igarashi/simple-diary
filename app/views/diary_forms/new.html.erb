@@ -3,6 +3,7 @@
 <div class="row">
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
     <%= form_tag(diary_form_path(id: current_form_id), method: :PATCH) do %>
+      <%= hidden_field_tag :form_idx, session[:form_idx] %>
       <div class="form-group">
         <div class="row">
           <p class="col-xs-3 col-sm-2 col-ls-1">日記名</p>

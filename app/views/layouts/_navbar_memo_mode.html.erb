@@ -12,26 +12,27 @@
       </div>
       <div class="collapse navbar-collapse" id="navbar-main-menu">
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to 'メモの入力', new_diary_path, id: "new_diary" %></li>
+        <li><%= link_to 'メモの入力', new_diary_path(form_idx: session[:form_idx]), id: "new_diary" %></li>
         <li class="dropdown" id="show_diary" >
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             メモの表示
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li><%= link_to '全て', show_memo_path(view_mode: "show_all") %></li>
+            <li><%= link_to '全て', show_memo_path({ view_mode: "show_all", form_idx: session[:form_idx] }) %></li>
             <li role="separator" class="divider"></li>
             <% get_category_list %>
             <% @category_list.each do |category| %>
-              <li><%= link_to category, show_memo_path(view_mode: category) %></li>
+              <li><%= link_to category, show_memo_path({ view_mode: category, form_idx: session[:form_idx] }) %></li>
             <% end %>
             <li role="separator" class="divider"></li>
-            <li><%= link_to '検索結果', show_memo_path(view_mode: "show_search") %></li>
-            <li><%= link_to '検索結果(全文表示)', show_memo_path(view_mode: "show_search_all") %></li>
+            <li><%= link_to '検索結果', show_memo_path({ view_mode: "show_search", form_idx: session[:form_idx] }) %></li>
+            <li><%= link_to '検索結果(全文表示)', show_memo_path({ view_mode: "show_search_all", form_idx: session[:form_idx] }) %></li>
           </ul>
         </li>
         <form class="navbar-form navbar-left" role="search">
           <%= simple_form_for :diary, :url => diaries_path, :method => :get do %>
+            <%= hidden_field_tag :form_idx, session[:form_idx] %>
             <%= text_field_tag :search, '', placeholder: "検索キーワード" %>
             <%= submit_tag '検索', { class:'btn btn-default', id: 'search_diary' } %>
           <% end %>

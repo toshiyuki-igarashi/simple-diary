@@ -51,6 +51,7 @@ class Diary < ApplicationRecord
 
   def self.search_diary(search_keyword, form_id)
     diaries_all = Diary.where(form_id: form_id)
+    return diaries_all if search_keyword.nil?
     diaries = []
     diaries_all.each do |diary|
       if (diary.include?(search_keyword))

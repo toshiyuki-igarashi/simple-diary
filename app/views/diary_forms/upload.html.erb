@@ -3,6 +3,7 @@
 <div class="row">
   <div class="col-xs-12 col-sm-offset-2 col-sm-8 col-lg-offset-3 col-ls-6">
     <%= form_tag(upload_file_path, method: :POST, multipart: true) do %>
+      <%= hidden_field_tag :form_idx, session[:form_idx] %>
       <div class="form-group">
         <label>アップロードしたい日記ファイル:<br/>
         <%= file_field_tag 'upload', :size => 200 %></label>

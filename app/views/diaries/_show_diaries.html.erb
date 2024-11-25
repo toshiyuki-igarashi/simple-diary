@@ -10,9 +10,9 @@
       <% @diaries.each do |diary| %>
         <tr>
           <% if diary.id %>
-            <td class="col-xs-4 col-sm-2 col-ls-1"><small><%= link_to date_to_string(diary[:date_of_diary]), diary_path(id: diary.id) %></small></td>
+            <td class="col-xs-4 col-sm-2 col-ls-1"><small><%= link_to date_to_string(diary[:date_of_diary]), diary_path(id: diary.id, form_idx: session[:form_idx]) %></small></td>
           <% else %>
-            <td class="col-xs-4 col-sm-2 col-ls-1"><small><%= link_to date_to_string(diary[:date_of_diary]), new_diary_path(date_of_diary: diary[:date_of_diary]) %></small></td>
+            <td class="col-xs-4 col-sm-2 col-ls-1"><small><%= link_to date_to_string(diary[:date_of_diary]), new_diary_path({ date_of_diary: diary[:date_of_diary], form_idx: session[:form_idx] }) %></small></td>
           <% end %>
           <td><%= diary.get(first_key_of_current_form) %></td>
         </tr>

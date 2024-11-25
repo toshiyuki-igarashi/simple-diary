@@ -4,6 +4,7 @@ require 'kconv'
 class DiaryFormsController < ApplicationController
   before_action :require_user_logged_in
   before_action :search
+  before_action :check_form_idx
 
   def edit
   end

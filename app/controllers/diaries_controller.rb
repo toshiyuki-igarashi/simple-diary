@@ -1,4 +1,5 @@
 module DiaryMode
+
   def show_diary
     session[session_sym(:view_mode)] = params[:view_mode]
 
@@ -6,7 +7,11 @@ module DiaryMode
       session[session_sym(:search_keyword)] = params[:search]
       session[session_sym(:view_mode)] = 'show_search'
     elsif (params[:commit] == "絞込検索")
-      session[session_sym(:search_keyword)] += ' ' + params[:search]
+      if session[session_sym(:search_keyword)].nil?
+        session[session_sym(:search_keyword)] = params[:search]
+      else
+        session[session_sym(:search_keyword)] += ' ' + params[:search]
+      end
       session[session_sym(:view_mode)] = 'show_search'
     end
 
@@ -57,7 +62,11 @@ module MemoMode
       session[session_sym(:search_keyword)] = params[:search]
       session[session_sym(:view_mode)] = 'show_search'
     elsif (params[:commit] == "絞込検索")
-      session[session_sym(:search_keyword)] += ' ' + params[:search]
+      if session[session_sym(:search_keyword)].nil?
+        session[session_sym(:search_keyword)] = params[:search]
+      else
+        session[session_sym(:search_keyword)] += ' ' + params[:search]
+      end
       session[session_sym(:view_mode)] = 'show_search'
     end
 
@@ -87,6 +96,7 @@ class DiariesController < ApplicationController
   before_action :prepare_picked_diary, only: [:create, :edit]
   before_action :prepare_move_date, only: [:show_diary, :new, :edit]
   before_action :save_view_mode, only: [:new, :create, :edit]
+  before_action :check_form_idx
 
   def default_show_url
     prepare_picked_diary
@@ -201,7 +211,7 @@ class DiariesController < ApplicationController
   end
 
   def move_diary
-    session[:form_idx] = params[:id]
+    session[:form_idx] = params[:id].to_i
     redirect_to show_after_move_url
   end
 

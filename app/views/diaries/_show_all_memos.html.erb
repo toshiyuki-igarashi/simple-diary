@@ -6,7 +6,7 @@
         <hr />
       <% end %>
       <% @diaries.each do |memo| %>
-        <li><%= link_to memo.get(second_key_of_current_form), diary_path(id:memo.id) %></li>
+        <li><%= link_to memo.get(second_key_of_current_form), diary_path({ id: memo.id, form_idx: session[:form_idx] }) %></li>
       <% end %>
     </ul>
   </div>

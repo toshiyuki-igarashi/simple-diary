@@ -4,5 +4,6 @@ class ToppagesController < ApplicationController
   include DiariesHelper
 
   def index
+    session[:form_idx] = 0
   end
 end

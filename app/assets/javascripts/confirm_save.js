@@ -50,7 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var getData = function() {
     var dateControl = document.querySelector('input[type="date"]');
-    location.href = "/move_date?move_mode=picked_date&picked_date="+dateControl.value;
+    var formIdx = document.querySelector('input[id="form_idx"]');
+    location.href = "/move_date?move_mode=picked_date&picked_date="+dateControl.value+"&form_idx="+formIdx.value;
   }
 
   var confirm_to_move = function(e) {

@@ -14,17 +14,18 @@
 
     <div class="row" id="date_pick">
       <div class="form-group col-xs-2 col-sm-2">
-        <%= link_to move_date_path(move_mode: 'prev_'+session[session_sym(:move_mode)]), { class: "btn btn-link", id: "prev_date" } do %>
+        <%= link_to move_date_path({ move_mode: 'prev_'+session[session_sym(:move_mode)], form_idx: session[:form_idx] }), { class: "btn btn-link", id: "prev_date" } do %>
           <span class="glyphicon glyphicon-triangle-left"></span>
         <% end %>
       </div>
 
       <div class="form-group col-xs-7 col-sm-7 col-ls-1">
         <input id="date_Get" type="date" value=<%= session[session_sym(:picked_date)] %> class="pull-center" />
+        <input id="form_idx" type="hidden" value=<%= session[:form_idx] %> />
       </div>
 
       <div class="form-group col-xs-2 col-sm-2">
-        <%= link_to move_date_path(move_mode: 'next_'+session[session_sym(:move_mode)]), { class: "btn btn-link", id: "next_date" } do %>
+        <%= link_to move_date_path({ move_mode: 'next_'+session[session_sym(:move_mode)], form_idx: session[:form_idx] }), { class: "btn btn-link", id: "next_date" } do %>
           <span class="glyphicon glyphicon-triangle-right pull-left"></span>
         <% end %>
       </div>
