@@ -194,6 +194,7 @@ module SessionsHelper
       system("rm #{Rails.root.to_s}/public/data/#{session[session_sym(:download_file)]}")
     end
     session[session_sym(:download_file)] = nil
+    session[:user_id] = nil
   end
 
   def session_clear

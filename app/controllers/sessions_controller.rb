@@ -22,8 +22,10 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session_clear
-    flash[:success] = 'ログアウトしました。'
+    if logged_in?
+      session_clear
+      flash[:success] = 'ログアウトしました。'
+    end
     redirect_to root_url
   end
 end
