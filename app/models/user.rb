@@ -8,6 +8,15 @@ class User < ApplicationRecord
 
   has_many :diary_forms
 
+  def print_all_diaries
+    DiaryForm.where(user_id: self.id).each do |diary_form|
+      Diary.where(form_id: diary_form.id).each do |diary|
+        diary.print_diary
+      end
+    end
+    nil
+  end
+
   def delete_all
     DiaryForm.where(user_id: self.id).each do |diary_form|
       Diary.where(form_id: diary_form.id).each do |diary|

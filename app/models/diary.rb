@@ -49,6 +49,10 @@ class Diary < ApplicationRecord
     false
   end
 
+  def print_diary
+    puts "id:#{id}, form_id:#{form_id}, date:#{date_of_diary}, summary:#{get("トピック")}"
+  end
+
   def self.search_diary(search_keyword, form_id)
     diaries_all = Diary.where(form_id: form_id)
     return diaries_all if search_keyword.nil?
@@ -119,7 +123,7 @@ class Diary < ApplicationRecord
 
   def self.show_all
     self.all.each do |diary|
-      puts "id:#{diary.id}, form_id:#{diary.form_id}, date:#{diary.date_of_diary}, summary:#{diary.get("トピック")}"
+      diary.print_diary
     end
     nil
   end
