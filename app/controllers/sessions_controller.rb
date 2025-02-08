@@ -11,9 +11,9 @@ class SessionsController < ApplicationController
       logged_in_session
       flash[:success] = 'ログインに成功しました。'
       if memo_mode?
-        redirect_to show_memo_url(view_mode: select_category)
+        redirect_to show_memo_url(view_mode: select_category, form_idx: session[:form_idx])
       else
-        redirect_to new_diary_url
+        redirect_to new_diary_url(form_idx: session[:form_idx])
       end
     else
       flash.now[:danger] = 'ログインに失敗しました。'

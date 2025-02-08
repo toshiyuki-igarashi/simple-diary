@@ -91,25 +91,25 @@ class DiariesController < ApplicationController
   include DiaryMode, MemoMode
 
   before_action :require_user_logged_in
+  before_action :check_form_idx
   before_action :go_to_picked_date
   before_action :search, except: [:show_search]
   before_action :prepare_picked_diary, only: [:create, :edit]
   before_action :prepare_move_date, only: [:show_diary, :new, :edit]
   before_action :save_view_mode, only: [:new, :create, :edit]
-  before_action :check_form_idx
 
   def default_show_url
     prepare_picked_diary
-    return show_memo_url(view_mode: "show_memo", memo_id: @diary.id) if memo_mode?
+    return show_memo_url(view_mode: "show_memo", memo_id: @diary.id, form_idx: session[:form_idx]) if memo_mode?
 
-    show_diary_url(view_mode: "show_day")
+    show_diary_url(view_mode: "show_day", form_idx: session[:form_idx])
   end
 
   def show_after_move_url
     prepare_picked_diary
-    return show_memo_url(view_mode: select_category, memo_id: @diary.id) if memo_mode?
+    return show_memo_url(view_mode: select_category, memo_id: @diary.id, form_idx: session[:form_idx]) if memo_mode?
 
-    show_diary_url(view_mode: "show_day")
+    show_diary_url(view_mode: "show_day", form_idx: session[:form_idx])
   end
 
   def show
@@ -238,15 +238,15 @@ class DiariesController < ApplicationController
   def redirect_to_back
     case (session[session_sym(:view_mode)])
     when 'show_day', 'show_week', 'show_month', 'show_year', 'show_3years', 'show_5years', 'show_10years'
-      redirect_to show_diary_url(view_mode: session[session_sym(:view_mode)])
+      redirect_to show_diary_url(view_mode: session[session_sym(:view_mode)], form_idx: session[:form_idx])
     when 'new'
-      redirect_to new_diary_url
+      redirect_to new_diary_url(form_idx: session[:form_idx])
     when 'edit'
       prepare_picked_diary
       if (@diary.id)
-        redirect_to edit_diary_url(@diary)
+        redirect_to edit_diary_url(@diary, form_idx: session[:form_idx])
       else
-        redirect_to new_diary_url
+        redirect_to new_diary_url(form_idx: session[:form_idx])
       end
     else
       redirect_to root_url

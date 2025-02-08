@@ -3,8 +3,8 @@ require 'kconv'
 
 class DiaryFormsController < ApplicationController
   before_action :require_user_logged_in
-  before_action :search
   before_action :check_form_idx
+  before_action :search
 
   def edit
   end
@@ -28,19 +28,19 @@ class DiaryFormsController < ApplicationController
     else
       session[:form_idx] = form_idx
     end
-    redirect_to edit_diary_form_url(new_form)
+    redirect_to edit_diary_form_url(new_form, form_idx: session[:form_idx])
   end
 
   def update
     selected = []
     diary_title = params['日記名']
     items = construct_form(params, selected)
-    go_to_url = edit_diary_form_url(current_diary_form)
+    go_to_url = edit_diary_form_url(current_diary_form, form_idx: session[:form_idx])
 
     case (params[:commit])
     when "保存"
       form = items
-      go_to_url = user_url(current_user)
+      go_to_url = user_url(current_user, form_idx: session[:form_idx])
     when "追加"
       form = insert_item(items, selected)
     when "上"
@@ -73,7 +73,7 @@ class DiaryFormsController < ApplicationController
     else
       download_file_clear(current_form_idx)
     end
-    redirect_to download_url
+    redirect_to download_url(form_idx: session[:form_idx])
   end
 
   def upload
@@ -101,7 +101,7 @@ class DiaryFormsController < ApplicationController
       flash[:danger] = 'パスワードエラーまたは他の理由で日記のアップロードに失敗しました'
     end
 
-    redirect_to user_url(current_user)
+    redirect_to user_url(current_user, form_idx: session[:form_idx])
   end
 
   private
